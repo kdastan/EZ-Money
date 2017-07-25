@@ -48,7 +48,8 @@ class SignUpViewController: RegistrationView {
     }()
     
     func signUpButtonPressed() {
-        print("Register press!")
+        //navigationController?.pushViewController(BorrowViewController(), animated: true)
+        //navigationController?.present(BorrowViewController(), animated: true, completion: nil)
     }
     
     override func viewDidLoad() {

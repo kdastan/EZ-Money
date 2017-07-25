@@ -24,10 +24,20 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SwipeViewController.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>930CAD2B411C2009A5E07E4896DB457E</key>
+		<key>46AD8252001B1FCA15A3CF225B97DA08</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>97FA618989E75928B42E67EF59405D7C</key>
 		<dict>
 			<key>primary</key>
 			<true/>

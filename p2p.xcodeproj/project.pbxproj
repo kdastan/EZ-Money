@@ -17,6 +17,12 @@
 		18540A551F260C030004CBD4 /* TextFieldWithIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18540A541F260C030004CBD4 /* TextFieldWithIcon.swift */; };
 		18F07DE51F26524A0095F3A0 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F07DE41F26524A0095F3A0 /* SignUpViewController.swift */; };
 		18F07DE71F2653000095F3A0 /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F07DE61F2653000095F3A0 /* RegistrationView.swift */; };
+		18F07DE91F272BD00095F3A0 /* BorrowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F07DE81F272BD00095F3A0 /* BorrowViewController.swift */; };
+		18F07DEB1F272E630095F3A0 /* TakeBorrowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F07DEA1F272E630095F3A0 /* TakeBorrowViewController.swift */; };
+		18F07DED1F272E790095F3A0 /* RequestListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F07DEC1F272E790095F3A0 /* RequestListViewController.swift */; };
+		18F07DEF1F273E700095F3A0 /* BorrowContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F07DEE1F273E700095F3A0 /* BorrowContainer.swift */; };
+		18F07DF11F273FC90095F3A0 /* ContainerContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F07DF01F273FC90095F3A0 /* ContainerContent.swift */; };
+		18F07DF41F2765370095F3A0 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F07DF31F2765370095F3A0 /* Extensions.swift */; };
 		AA7F0E7D56BC5FEF47F9E8F2 /* Pods_p2p.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5A262F04144181EFFAFE1F9 /* Pods_p2p.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +39,12 @@
 		18540A541F260C030004CBD4 /* TextFieldWithIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldWithIcon.swift; sourceTree = "<group>"; };
 		18F07DE41F26524A0095F3A0 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		18F07DE61F2653000095F3A0 /* RegistrationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
+		18F07DE81F272BD00095F3A0 /* BorrowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorrowViewController.swift; sourceTree = "<group>"; };
+		18F07DEA1F272E630095F3A0 /* TakeBorrowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TakeBorrowViewController.swift; sourceTree = "<group>"; };
+		18F07DEC1F272E790095F3A0 /* RequestListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestListViewController.swift; sourceTree = "<group>"; };
+		18F07DEE1F273E700095F3A0 /* BorrowContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorrowContainer.swift; sourceTree = "<group>"; };
+		18F07DF01F273FC90095F3A0 /* ContainerContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerContent.swift; sourceTree = "<group>"; };
+		18F07DF31F2765370095F3A0 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		43C6A4945C93D41544EBDEFD /* Pods-p2p.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-p2p.release.xcconfig"; path = "Pods/Target Support Files/Pods-p2p/Pods-p2p.release.xcconfig"; sourceTree = "<group>"; };
 		D0AF5F208D91E9370492736A /* Pods-p2p.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-p2p.debug.xcconfig"; path = "Pods/Target Support Files/Pods-p2p/Pods-p2p.debug.xcconfig"; sourceTree = "<group>"; };
 		F5A262F04144181EFFAFE1F9 /* Pods_p2p.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_p2p.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,6 +92,7 @@
 		18540A391F25B5660004CBD4 /* p2p */ = {
 			isa = PBXGroup;
 			children = (
+				18F07DF21F2765200095F3A0 /* Extensions */,
 				18540A511F25BB8D0004CBD4 /* Tints */,
 				18540A501F25B97B0004CBD4 /* Controller */,
 				18540A4F1F25B9730004CBD4 /* View */,
@@ -105,6 +118,8 @@
 			isa = PBXGroup;
 			children = (
 				18540A541F260C030004CBD4 /* TextFieldWithIcon.swift */,
+				18F07DEE1F273E700095F3A0 /* BorrowContainer.swift */,
+				18F07DF01F273FC90095F3A0 /* ContainerContent.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -115,6 +130,9 @@
 				18F07DE61F2653000095F3A0 /* RegistrationView.swift */,
 				18540A4C1F25B8740004CBD4 /* LoginViewController.swift */,
 				18F07DE41F26524A0095F3A0 /* SignUpViewController.swift */,
+				18F07DE81F272BD00095F3A0 /* BorrowViewController.swift */,
+				18F07DEA1F272E630095F3A0 /* TakeBorrowViewController.swift */,
+				18F07DEC1F272E790095F3A0 /* RequestListViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -125,6 +143,14 @@
 				18540A521F25C5450004CBD4 /* helpers.swift */,
 			);
 			name = Tints;
+			sourceTree = "<group>";
+		};
+		18F07DF21F2765200095F3A0 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				18F07DF31F2765370095F3A0 /* Extensions.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 		5785EA5FCBC0369DEA967E4D /* Frameworks */ = {
@@ -259,13 +285,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18F07DEF1F273E700095F3A0 /* BorrowContainer.swift in Sources */,
 				18F07DE51F26524A0095F3A0 /* SignUpViewController.swift in Sources */,
 				18540A4D1F25B8740004CBD4 /* LoginViewController.swift in Sources */,
 				18540A551F260C030004CBD4 /* TextFieldWithIcon.swift in Sources */,
 				18F07DE71F2653000095F3A0 /* RegistrationView.swift in Sources */,
 				18540A3D1F25B5660004CBD4 /* ViewController.swift in Sources */,
+				18F07DEB1F272E630095F3A0 /* TakeBorrowViewController.swift in Sources */,
+				18F07DED1F272E790095F3A0 /* RequestListViewController.swift in Sources */,
+				18F07DF41F2765370095F3A0 /* Extensions.swift in Sources */,
 				18540A3B1F25B5660004CBD4 /* AppDelegate.swift in Sources */,
 				18540A531F25C5450004CBD4 /* helpers.swift in Sources */,
+				18F07DE91F272BD00095F3A0 /* BorrowViewController.swift in Sources */,
+				18F07DF11F273FC90095F3A0 /* ContainerContent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

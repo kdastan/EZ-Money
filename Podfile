@@ -9,5 +9,6 @@ target 'p2p' do
   pod "EasyPeasy"
   pod "IQKeyboardManagerSwift"
   pod "BEMCheckBox"
+  pod 'SwipeViewController'
 
 end

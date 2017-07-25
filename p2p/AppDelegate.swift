@@ -13,6 +13,7 @@ import IQKeyboardManagerSwift
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var isLogged = false
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -24,14 +25,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func cordinateAppFlow() {
         window = UIWindow(frame: UIScreen.main.bounds)
+        
+        let pageController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+        
+        if isLogged {
+            let navigationController = BorrowViewController(rootViewController: pageController)
+            window?.rootViewController = navigationController
+        } else {
+            let loginController = UINavigationController(rootViewController: LoginViewController())
+            window?.rootViewController = loginController
+        }
         window?.makeKeyAndVisible()
-        
-        let loginController = UINavigationController(rootViewController: LoginViewController())
-        
-        
-        
-        
-        window?.rootViewController = loginController
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

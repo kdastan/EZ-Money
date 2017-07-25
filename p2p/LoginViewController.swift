@@ -38,6 +38,12 @@ class LoginViewController: RegistrationView {
     }
     
     func submitButtonPressed() {
+        
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            appDelegate.isLogged = true
+            appDelegate.cordinateAppFlow()
+        }
+        
         print("Submit button pressed")
     }
     
