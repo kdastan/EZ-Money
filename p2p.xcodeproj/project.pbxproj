@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18109F781F27A72700DDA339 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18109F771F27A72700DDA339 /* Container.swift */; };
+		18109F7A1F27B20C00DDA339 /* BorrowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18109F791F27B20C00DDA339 /* BorrowTableViewCell.swift */; };
+		18109F7C1F27B75C00DDA339 /* BarrowTableViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18109F7B1F27B75C00DDA339 /* BarrowTableViewContainer.swift */; };
+		18109F7E1F27C86200DDA339 /* BarrowContainerTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18109F7D1F27C86200DDA339 /* BarrowContainerTable.swift */; };
 		18540A3B1F25B5660004CBD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18540A3A1F25B5660004CBD4 /* AppDelegate.swift */; };
 		18540A3D1F25B5660004CBD4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18540A3C1F25B5660004CBD4 /* ViewController.swift */; };
 		18540A401F25B5660004CBD4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18540A3E1F25B5660004CBD4 /* Main.storyboard */; };
@@ -27,6 +31,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		18109F771F27A72700DDA339 /* Container.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
+		18109F791F27B20C00DDA339 /* BorrowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorrowTableViewCell.swift; sourceTree = "<group>"; };
+		18109F7B1F27B75C00DDA339 /* BarrowTableViewContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarrowTableViewContainer.swift; sourceTree = "<group>"; };
+		18109F7D1F27C86200DDA339 /* BarrowContainerTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarrowContainerTable.swift; sourceTree = "<group>"; };
 		18540A371F25B5660004CBD4 /* p2p.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = p2p.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18540A3A1F25B5660004CBD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		18540A3C1F25B5660004CBD4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -118,8 +126,12 @@
 			isa = PBXGroup;
 			children = (
 				18540A541F260C030004CBD4 /* TextFieldWithIcon.swift */,
+				18109F771F27A72700DDA339 /* Container.swift */,
 				18F07DEE1F273E700095F3A0 /* BorrowContainer.swift */,
 				18F07DF01F273FC90095F3A0 /* ContainerContent.swift */,
+				18109F791F27B20C00DDA339 /* BorrowTableViewCell.swift */,
+				18109F7D1F27C86200DDA339 /* BarrowContainerTable.swift */,
+				18109F7B1F27B75C00DDA339 /* BarrowTableViewContainer.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -288,7 +300,9 @@
 				18F07DEF1F273E700095F3A0 /* BorrowContainer.swift in Sources */,
 				18F07DE51F26524A0095F3A0 /* SignUpViewController.swift in Sources */,
 				18540A4D1F25B8740004CBD4 /* LoginViewController.swift in Sources */,
+				18109F7E1F27C86200DDA339 /* BarrowContainerTable.swift in Sources */,
 				18540A551F260C030004CBD4 /* TextFieldWithIcon.swift in Sources */,
+				18109F7A1F27B20C00DDA339 /* BorrowTableViewCell.swift in Sources */,
 				18F07DE71F2653000095F3A0 /* RegistrationView.swift in Sources */,
 				18540A3D1F25B5660004CBD4 /* ViewController.swift in Sources */,
 				18F07DEB1F272E630095F3A0 /* TakeBorrowViewController.swift in Sources */,
@@ -296,6 +310,8 @@
 				18F07DF41F2765370095F3A0 /* Extensions.swift in Sources */,
 				18540A3B1F25B5660004CBD4 /* AppDelegate.swift in Sources */,
 				18540A531F25C5450004CBD4 /* helpers.swift in Sources */,
+				18109F7C1F27B75C00DDA339 /* BarrowTableViewContainer.swift in Sources */,
+				18109F781F27A72700DDA339 /* Container.swift in Sources */,
 				18F07DE91F272BD00095F3A0 /* BorrowViewController.swift in Sources */,
 				18F07DF11F273FC90095F3A0 /* ContainerContent.swift in Sources */,
 			);
