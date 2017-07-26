@@ -13,22 +13,22 @@ class BarrowContainer: UIView {
     
     lazy var firstField: BarrowTableViewContainer = {
         let field = BarrowTableViewContainer()
-        field.image.image = UIImage(named: "coins")
-        field.labelName.text = "ASAP"
+        field.image.image = UIImage(named: "user")
+        field.labelName.text = "Дина Динмухамед Аксерикович"
         return field
     }()
     
     lazy var secondField: BarrowTableViewContainer = {
         let field = BarrowTableViewContainer()
-        field.image.image = UIImage(named: "coins")
-        field.labelName.text = "ASAL"
+        field.image.image = UIImage(named: "hourglass")
+        field.labelName.text = "6 месяцев"
         return field
     }()
     
     lazy var thirdField: BarrowTableViewContainer = {
         let field = BarrowTableViewContainer()
-        field.image.image = UIImage(named: "coins")
-        field.labelName.text = "ASAM"
+        field.image.image = UIImage(named: "percentage")
+        field.labelName.text = "2.4 %"
         return field
     }()
 
@@ -51,7 +51,7 @@ class BarrowContainer: UIView {
     func setupConstraints() {
     
         firstField <- [
-            Bottom(10).to(secondField, .top),
+            Bottom(15).to(secondField, .top),
             Left(10),
             Width(300),
             Height(20)
@@ -65,7 +65,7 @@ class BarrowContainer: UIView {
         ]
         
         thirdField <- [
-            Top(10).to(secondField, .bottom),
+            Top(15).to(secondField, .bottom),
             Left(10),
             Width(300),
             Height(20)

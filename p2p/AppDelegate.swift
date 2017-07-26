@@ -8,6 +8,7 @@
 
 import UIKit
 import IQKeyboardManagerSwift
+import RESideMenu
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -27,13 +28,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         
         let pageController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+        let navigationController = BorrowViewController(rootViewController: pageController)
+        
+        
+        
+        let sideMenu = RESideMenu(contentViewController: navigationController, leftMenuViewController: MenuViewController(), rightMenuViewController: nil)
+        sideMenu?.backgroundImage = UIImage(named: "sample")
+        
+
         
         if isLogged {
-            let navigationController = BorrowViewController(rootViewController: pageController)
-            window?.rootViewController = navigationController
+//            let navigationController = BorrowViewController(rootViewController: pageController)
+//            window?.rootViewController = navigationController
+            window?.rootViewController = sideMenu
+       
         } else {
             let loginController = UINavigationController(rootViewController: LoginViewController())
             window?.rootViewController = loginController
+            //window?.rootViewController = sideMenu
         }
         window?.makeKeyAndVisible()
     }

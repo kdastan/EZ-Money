@@ -18,6 +18,7 @@ class BarrowTableViewContainer: UIView {
     
     lazy var labelName: UILabel = {
         let label = UILabel()
+        label.numberOfLines = 0
         return label
     }()
     

@@ -2,20 +2,23 @@ PODS:
   - BEMCheckBox (1.4.1)
   - EasyPeasy (1.4.2)
   - IQKeyboardManagerSwift (4.0.10)
+  - RESideMenu (4.0.7)
   - SwipeViewController (0.1.8)
 
 DEPENDENCIES:
   - BEMCheckBox
   - EasyPeasy
   - IQKeyboardManagerSwift
+  - RESideMenu
   - SwipeViewController
 
 SPEC CHECKSUMS:
   BEMCheckBox: 5ba6e37ade3d3657b36caecc35c8b75c6c2b1a4e
   EasyPeasy: 50e7130b61f495ce105796e438d4136e2c8d2cc0
   IQKeyboardManagerSwift: 75ba21a23794a1e6b6fe6d9a267ea17f80e06771
+  RESideMenu: f24c508404b49c667344c54aba7e590883533958
   SwipeViewController: 0e396aa7d7756c30f8914ef59aea2a3d7d7798bc
 
-PODFILE CHECKSUM: b1102752d89e61c0696ce1887170a2a86dfb58e0
+PODFILE CHECKSUM: a078072db435fdf4dba9e35b75fa0e6c6eeaae1e
 
 COCOAPODS: 1.2.1

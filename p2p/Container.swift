@@ -49,23 +49,56 @@ class Container: UIView {
         button.isHidden = true
         button.setTitleColor(.black, for: .normal)
         button.layer.cornerRadius = 15
+        button.addTarget(self, action: #selector(investorSearch), for: .touchUpInside)
         return button
     }()
+    
+    lazy var label: UILabel = {
+        let label = UILabel()
+        label.text = "10 подходящих вариантов"
+        label.isHidden = true
+        label.textColor = .white
+        label.font = UIFont(name: "Helvetica", size: 20)
+        return label
+    }()
+    
+    lazy var searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.isHidden = true
+        searchBar.barTintColor = UIColor(colorLiteralRed: 70/255, green: 161/255, blue: 213/255, alpha: 1)
+        searchBar.placeholder = "Введите имя"
+        searchBar.layer.borderColor = UIColor(colorLiteralRed: 70/255, green: 161/255, blue: 213/255, alpha: 1).cgColor
+        searchBar.layer.borderWidth = 1
+        searchBar.tintColor = .white
+        searchBar.setValue("Отмена", forKey: "cancelButtonText")
+        return searchBar
+    }()
+    
+    func investorSearch() {
+        searchBar.isHidden = false
+        requestButton.isHidden = true
+        investorSearchButton.isHidden = true
+        print("Hello")
+    }
     
     func pressed() {
         button.isHidden = true
         requestButton.isHidden = false
         investorSearchButton.isHidden = false
-        
+        label.isHidden = false
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         self.addSubview(container)
-        container.addSubview(button)
-        container.addSubview(requestButton)
-        container.addSubview(investorSearchButton)
+        
+        [button, requestButton, investorSearchButton, label, searchBar].forEach{
+            container.addSubview($0)
+        }
+        
+        searchBar.delegate = self
+    
         
         setupConstraints()
         
@@ -90,20 +123,47 @@ class Container: UIView {
             Height(50)
         ]
         
+        label <- [
+            CenterX(0),
+            Bottom(0).to(button, .top),
+            Height(25)
+        ]
+        
+        searchBar <- [
+            Top(15).to(button, .top),
+            CenterX(0),
+            Height(50),
+            Width(sizeX-10)
+        ]
+        
         requestButton <- [
-            Top(0).to(button, .top),
+            Top(15).to(button, .top),
             Width(newSizeX),
             Height(50),
             Left(10)
         ]
         
         investorSearchButton <- [
-            Top(0).to(button, .top),
+            Top(15).to(button, .top),
             Width(newSizeX),
             Height(50),
             Right(10)
         ]
     }
     
+}
+
+extension Container: UISearchBarDelegate {
     
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = true
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        searchBar.showsCancelButton = false
+        searchBar.endEditing(true)
+    }
+
 }

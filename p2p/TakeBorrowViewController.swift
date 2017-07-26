@@ -16,7 +16,7 @@ class TakeBorrowViewController: UIViewController {
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(BorrowTableViewCell.self, forCellReuseIdentifier: "cell")
-        tableView.rowHeight = 100
+        tableView.rowHeight = 150
         return tableView
     }()
     
@@ -26,13 +26,16 @@ class TakeBorrowViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .white
+        view.backgroundColor = .blueBackground
+
         
         tableView.dataSource = self
         
         tableView.tableHeaderView = Container()
         tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: Int(sizeX), height: 260)
-        
+        tableView.separatorStyle = .none
+        tableView.allowsSelection = false
+        tableView.backgroundColor = .blueBackground
         
         setupView()
         setupConstraints()
@@ -48,7 +51,7 @@ class TakeBorrowViewController: UIViewController {
         tableView <- [
             Width(sizeX),
             Bottom(10),
-            Top(10),
+            Top(0),
             CenterX(0)
         ]
         

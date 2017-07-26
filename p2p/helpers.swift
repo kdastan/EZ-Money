@@ -30,3 +30,7 @@ func createTextField(_ isMail: Bool) -> TextFieldWithIcon {
     }()
     return textField
 }
+
+extension UIColor {
+    static let blueBackground = UIColor(colorLiteralRed: 227/255, green: 242/255, blue: 253/255, alpha: 1)
+}

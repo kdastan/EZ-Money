@@ -1,9 +1,9 @@
 ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
-FRAMEWORK_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/BEMCheckBox" "$PODS_CONFIGURATION_BUILD_DIR/EasyPeasy" "$PODS_CONFIGURATION_BUILD_DIR/IQKeyboardManagerSwift" "$PODS_CONFIGURATION_BUILD_DIR/SwipeViewController"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/BEMCheckBox" "$PODS_CONFIGURATION_BUILD_DIR/EasyPeasy" "$PODS_CONFIGURATION_BUILD_DIR/IQKeyboardManagerSwift" "$PODS_CONFIGURATION_BUILD_DIR/RESideMenu" "$PODS_CONFIGURATION_BUILD_DIR/SwipeViewController"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
-OTHER_CFLAGS = $(inherited) -iquote "$PODS_CONFIGURATION_BUILD_DIR/BEMCheckBox/BEMCheckBox.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/EasyPeasy/EasyPeasy.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/SwipeViewController/SwipeViewController.framework/Headers"
-OTHER_LDFLAGS = $(inherited) -framework "BEMCheckBox" -framework "EasyPeasy" -framework "IQKeyboardManagerSwift" -framework "SwipeViewController"
+OTHER_CFLAGS = $(inherited) -iquote "$PODS_CONFIGURATION_BUILD_DIR/BEMCheckBox/BEMCheckBox.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/EasyPeasy/EasyPeasy.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/RESideMenu/RESideMenu.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/SwipeViewController/SwipeViewController.framework/Headers"
+OTHER_LDFLAGS = $(inherited) -framework "BEMCheckBox" -framework "EasyPeasy" -framework "IQKeyboardManagerSwift" -framework "RESideMenu" -framework "SwipeViewController"
 OTHER_SWIFT_FLAGS = $(inherited) "-D" "COCOAPODS"
 PODS_BUILD_DIR = $BUILD_DIR
 PODS_CONFIGURATION_BUILD_DIR = $PODS_BUILD_DIR/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)

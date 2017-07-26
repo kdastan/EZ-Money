@@ -24,6 +24,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>RESideMenu.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SwipeViewController.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -32,17 +37,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>46AD8252001B1FCA15A3CF225B97DA08</key>
+		<key>655E4A67ED0BB69FC3489BCF8AAA9298</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>97FA618989E75928B42E67EF59405D7C</key>
+		<key>82A24FCDDE90B57495CDE8936B7BB221</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>B5221EA08C01208C608AC6ECB17B9F2E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B6E14ADCE8E8C3FB4412EF8A34B6E4D9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
