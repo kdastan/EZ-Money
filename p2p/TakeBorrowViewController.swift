@@ -28,7 +28,6 @@ class TakeBorrowViewController: UIViewController {
 
         view.backgroundColor = .blueBackground
 
-        
         tableView.dataSource = self
         
         tableView.tableHeaderView = Container()

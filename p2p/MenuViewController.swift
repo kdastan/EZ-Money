@@ -11,11 +11,16 @@ import EasyPeasy
 
 class MenuViewController: UIViewController {
     
-    let sizeX = UIScreen.main.bounds.width
+    let arr = ["Мои данные", "Пополнить баланс", "История запросов", "Настройка аккаунта", "Выйти"]
+    let imgArr = ["user", "wallet", "file", "settings", "logout"] 
 
+    let sizeX = UIScreen.main.bounds.width
+    
     lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "menuReusableCell")
+        tableView.rowHeight = 60
+        tableView.register(MenuSideTableViewCell.self, forCellReuseIdentifier: "menuReusableCell")
+        tableView.isScrollEnabled = false
         return tableView
     }()
     
@@ -45,16 +50,4 @@ class MenuViewController: UIViewController {
 
 }
 
-extension MenuViewController: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "menuReusableCell", for: indexPath)
-        cell.textLabel?.text = "Smth"
-        return cell
-    }
 
-}

@@ -50,8 +50,8 @@ class TextFieldWithIcon: UITextField {
         imageView <- [
             CenterY(0),
             Left(10),
-            Width(24),
-            Height(16)
+            Size(24)
+            //Height(16)
         ]
     }
 }

@@ -11,7 +11,7 @@ import EasyPeasy
 
 class LoginViewController: RegistrationView {
     
-    
+    let sizeX = UIScreen.main.bounds.width
     
     lazy var textField = createTextField(true)
     lazy var textFieldPassword = createTextField(false)
@@ -50,6 +50,8 @@ class LoginViewController: RegistrationView {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        
+        print(sizeX)
         
         setupView()
         setupConstraints()

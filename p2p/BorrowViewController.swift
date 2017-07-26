@@ -31,11 +31,19 @@ class BorrowViewController: SwipeViewController {
         
         setViewControllerArray([VC1, VC2])
         setFirstViewController(0)
-        //setSelectionBar(80, height: 3, color: UIColor(red: 0.23, green: 0.55, blue: 0.92, alpha: 1.0))
-        setButtonsWithSelectedColor(UIFont.systemFont(ofSize: 18), color: UIColor.black, selectedColor: UIColor(red: 0.23, green: 0.55, blue: 0.92, alpha: 1.0))
+        
+        if sizeX == 320 {
+            setButtonsWithSelectedColor(UIFont.systemFont(ofSize: 15), color: UIColor.black, selectedColor: UIColor(red: 0.23, green: 0.55, blue: 0.92, alpha: 1.0))
+            setSelectionBar(110, height: 3, color: UIColor(red: 0.23, green: 0.55, blue: 0.92, alpha: 1.0))
+        } else {
+            setButtonsWithSelectedColor(UIFont.systemFont(ofSize: 18), color: UIColor.black, selectedColor: UIColor(red: 0.23, green: 0.55, blue: 0.92, alpha: 1.0))
+            setSelectionBar(145, height: 3, color: UIColor(red: 0.23, green: 0.55, blue: 0.92, alpha: 1.0))
+        }
+        
+        
         equalSpaces = false
         setButtonsOffset(35, bottomOffset: 10)
-        setSelectionBar(150, height: 3, color: UIColor(red: 0.23, green: 0.55, blue: 0.92, alpha: 1.0))
+        
         
     }
     

@@ -47,6 +47,8 @@ class Container: UIView {
         button.backgroundColor = .white
         button.setTitle("Найти инвестора", for: .normal)
         button.isHidden = true
+        button.titleLabel?.numberOfLines = 0
+        button.titleLabel?.textAlignment = NSTextAlignment.center
         button.setTitleColor(.black, for: .normal)
         button.layer.cornerRadius = 15
         button.addTarget(self, action: #selector(investorSearch), for: .touchUpInside)
@@ -70,6 +72,7 @@ class Container: UIView {
         searchBar.layer.borderColor = UIColor(colorLiteralRed: 70/255, green: 161/255, blue: 213/255, alpha: 1).cgColor
         searchBar.layer.borderWidth = 1
         searchBar.tintColor = .white
+//        searchBar.
         searchBar.setValue("Отмена", forKey: "cancelButtonText")
         return searchBar
     }()
@@ -155,15 +158,23 @@ class Container: UIView {
 
 extension Container: UISearchBarDelegate {
     
-    
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.showsCancelButton = true
+    }
+    
+    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+        searchBar.showsCancelButton = false
+        return true
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
         searchBar.showsCancelButton = false
         searchBar.endEditing(true)
+        searchBar.isHidden = true
+        
+        requestButton.isHidden = false
+        investorSearchButton.isHidden = false
     }
 
 }
