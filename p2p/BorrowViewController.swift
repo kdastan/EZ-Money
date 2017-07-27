@@ -42,7 +42,7 @@ class BorrowViewController: SwipeViewController {
         
         
         equalSpaces = false
-        setButtonsOffset(35, bottomOffset: 10)
+        setButtonsOffset(35, bottomOffset: 13)
         
         
     }

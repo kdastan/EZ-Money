@@ -9,7 +9,6 @@
 import UIKit
 
 extension TakeBorrowViewController: UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cell
     }
@@ -20,12 +19,9 @@ extension TakeBorrowViewController: UITableViewDataSource {
         cell.button.tag = indexPath.row
         return cell
     }
-    
-    
 }
 
 extension RequestListViewController: UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
     }
@@ -36,11 +32,9 @@ extension RequestListViewController: UITableViewDataSource {
         cell.button.tag = indexPath.row
         return cell
     }
-    
 }
 
 extension MenuViewController: UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return arr.count
     }
@@ -51,5 +45,4 @@ extension MenuViewController: UITableViewDataSource {
         cell.iconImage.image = UIImage(named: "\(imgArr[indexPath.row])")
         return cell
     }
-    
 }

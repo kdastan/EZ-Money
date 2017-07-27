@@ -17,6 +17,7 @@ class RequestListViewController: UIViewController {
         tableView.backgroundColor = .blueBackground
         tableView.separatorStyle = .none
         tableView.rowHeight = 150
+        tableView.allowsSelection = false
         return tableView
     }()
 

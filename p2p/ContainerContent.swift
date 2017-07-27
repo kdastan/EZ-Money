@@ -25,14 +25,16 @@ class ContainerContent: UIView {
         return label
     }()
     
-    lazy var textField: UITextField = {
-        let text = UITextField()
+    lazy var textField: PaddingTextField = {
+        let text = PaddingTextField()
         //text.backgroundColor = .white
         text.layer.cornerRadius = 12
         text.backgroundColor = .white
         text.keyboardType = .numberPad
         return text
     }()
+    
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)

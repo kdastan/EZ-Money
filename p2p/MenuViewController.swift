@@ -21,6 +21,7 @@ class MenuViewController: UIViewController {
         tableView.rowHeight = 60
         tableView.register(MenuSideTableViewCell.self, forCellReuseIdentifier: "menuReusableCell")
         tableView.isScrollEnabled = false
+        
         return tableView
     }()
     
@@ -28,6 +29,9 @@ class MenuViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .white
+        
+        tableView.tableHeaderView = MenuHeaderView()
+        tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: Int(sizeX), height: 58)
         
         tableView.dataSource = self
         
@@ -42,7 +46,8 @@ class MenuViewController: UIViewController {
     func setupConstraints() {
         edgesForExtendedLayout = []
         tableView <- [
-            Size(sizeX),
+            Width(UIScreen.main.bounds.width),
+            Height(358),
             CenterY(0),
             Left(0)
         ]
