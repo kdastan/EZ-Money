@@ -8,6 +8,7 @@
 
 import UIKit
 import EasyPeasy
+import Firebase
 
 class Container: UIView {
    
@@ -89,6 +90,25 @@ class Container: UIView {
         requestButton.isHidden = false
         investorSearchButton.isHidden = false
         label.isHidden = false
+        
+        let ref = Database.database().reference()
+        let auth = Auth.auth().currentUser?.uid
+        
+        ref.child("users").child(auth!).observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            let isData = value?["isInvestor"] as? Bool
+            
+            if isData! {
+                print(isData!)
+            } else {
+                print(isData!)
+            }
+            
+        }) {(error) in
+            print(error.localizedDescription)
+        }
+        
+        //asdasdASdasdasdasdasdasdasdassadasd
     }
     
     override init(frame: CGRect) {

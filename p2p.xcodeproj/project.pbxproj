@@ -23,6 +23,7 @@
 		18540A4D1F25B8740004CBD4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18540A4C1F25B8740004CBD4 /* LoginViewController.swift */; };
 		18540A531F25C5450004CBD4 /* helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18540A521F25C5450004CBD4 /* helpers.swift */; };
 		18540A551F260C030004CBD4 /* TextFieldWithIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18540A541F260C030004CBD4 /* TextFieldWithIcon.swift */; };
+		18ED1D421F2B4BA3001B7A90 /* MenuMyDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ED1D411F2B4BA3001B7A90 /* MenuMyDataViewController.swift */; };
 		18ED8E241F28E3CB00848ACD /* MenuSideTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ED8E231F28E3CB00848ACD /* MenuSideTableViewCell.swift */; };
 		18F07DE51F26524A0095F3A0 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F07DE41F26524A0095F3A0 /* SignUpViewController.swift */; };
 		18F07DE71F2653000095F3A0 /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F07DE61F2653000095F3A0 /* RegistrationView.swift */; };
@@ -54,6 +55,7 @@
 		18540A4C1F25B8740004CBD4 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		18540A521F25C5450004CBD4 /* helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = helpers.swift; sourceTree = "<group>"; };
 		18540A541F260C030004CBD4 /* TextFieldWithIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldWithIcon.swift; sourceTree = "<group>"; };
+		18ED1D411F2B4BA3001B7A90 /* MenuMyDataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuMyDataViewController.swift; sourceTree = "<group>"; };
 		18ED8E231F28E3CB00848ACD /* MenuSideTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuSideTableViewCell.swift; sourceTree = "<group>"; };
 		18F07DE41F26524A0095F3A0 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		18F07DE61F2653000095F3A0 /* RegistrationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 				18F07DEA1F272E630095F3A0 /* TakeBorrowViewController.swift */,
 				18F07DEC1F272E790095F3A0 /* RequestListViewController.swift */,
 				182A9EF31F288B700039BFB8 /* MenuViewController.swift */,
+				18ED1D411F2B4BA3001B7A90 /* MenuMyDataViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -330,6 +333,7 @@
 				18540A3B1F25B5660004CBD4 /* AppDelegate.swift in Sources */,
 				18540A531F25C5450004CBD4 /* helpers.swift in Sources */,
 				182A9EF41F288B700039BFB8 /* MenuViewController.swift in Sources */,
+				18ED1D421F2B4BA3001B7A90 /* MenuMyDataViewController.swift in Sources */,
 				18109F7C1F27B75C00DDA339 /* BarrowTableViewContainer.swift in Sources */,
 				18109F781F27A72700DDA339 /* Container.swift in Sources */,
 				18F07DE91F272BD00095F3A0 /* BorrowViewController.swift in Sources */,

@@ -8,6 +8,7 @@
 
 import UIKit
 import EasyPeasy
+import Firebase
 
 class TakeBorrowViewController: UIViewController {
     
@@ -38,6 +39,30 @@ class TakeBorrowViewController: UIViewController {
         
         setupView()
         setupConstraints()
+        
+        fetchFromFirebase()
+        
+    }
+    
+    func fetchFromFirebase() {
+        
+        let ref = Database.database().reference()
+        let userID = Auth.auth().currentUser?.uid
+    
+        ref.child("users").child(userID!).observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            
+            let balance = value?["balance"] as? Int
+            let email = value?["email"] as? String
+            let investor = value?["isInvestor"] as? Bool
+            let password = value?["password"] as?  String
+            let token = value?["token"] as? String
+            let userData = value?["userData"] as? Bool
+            
+            
+        }){ (error) in
+            print(error.localizedDescription)
+        }
     }
     
     func setupView() {

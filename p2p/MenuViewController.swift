@@ -8,6 +8,7 @@
 
 import UIKit
 import EasyPeasy
+import Firebase
 
 class MenuViewController: UIViewController {
     
@@ -34,6 +35,7 @@ class MenuViewController: UIViewController {
         tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: Int(sizeX), height: 58)
         
         tableView.dataSource = self
+        tableView.delegate = self
         
         setupView()
         setupConstraints()
@@ -52,6 +54,24 @@ class MenuViewController: UIViewController {
             Left(0)
         ]
     }
+    
+    func signOut() {
+        
+        let auth = Auth.auth()
+        
+            do {
+                
+                try auth.signOut()
+                
+            } catch let signOutError as NSError {
+                print ("Error signing out: %@", signOutError)
+            }
+            
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                appDelegate.isLogged = false
+                appDelegate.cordinateAppFlow()
+            }
+        }
 
 }
 

@@ -3,6 +3,9 @@ PODS:
   - EasyPeasy (1.4.2)
   - Firebase (4.0.3):
     - Firebase/Core (= 4.0.3)
+  - Firebase/Auth (4.0.3):
+    - Firebase/Core
+    - FirebaseAuth (= 4.0.0)
   - Firebase/Core (4.0.3):
     - FirebaseAnalytics (= 4.0.2)
     - FirebaseCore (= 4.0.3)
@@ -13,15 +16,27 @@ PODS:
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseAuth (4.0.0):
+    - FirebaseAnalytics (~> 4.0)
+    - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
+    - GTMSessionFetcher/Core (~> 1.1)
   - FirebaseCore (4.0.3):
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
   - FirebaseDatabase (4.0.0):
     - FirebaseAnalytics (~> 4.0)
   - FirebaseInstanceID (2.0.0):
     - FirebaseCore (~> 4.0)
+  - GoogleToolboxForMac/DebugUtils (2.1.1):
+    - GoogleToolboxForMac/Defines (= 2.1.1)
   - GoogleToolboxForMac/Defines (2.1.1)
   - GoogleToolboxForMac/NSData+zlib (2.1.1):
     - GoogleToolboxForMac/Defines (= 2.1.1)
+  - GoogleToolboxForMac/NSDictionary+URLArguments (2.1.1):
+    - GoogleToolboxForMac/DebugUtils (= 2.1.1)
+    - GoogleToolboxForMac/Defines (= 2.1.1)
+    - GoogleToolboxForMac/NSString+URLArguments (= 2.1.1)
+  - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
+  - GTMSessionFetcher/Core (1.1.11)
   - IQKeyboardManagerSwift (4.0.10)
   - RESideMenu (4.0.7)
   - SwipeViewController (0.1.8)
@@ -30,6 +45,7 @@ DEPENDENCIES:
   - BEMCheckBox
   - EasyPeasy
   - Firebase
+  - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
   - IQKeyboardManagerSwift
@@ -41,14 +57,16 @@ SPEC CHECKSUMS:
   EasyPeasy: 50e7130b61f495ce105796e438d4136e2c8d2cc0
   Firebase: 9e33fdfbca37cab635c693883caa90a4475b842b
   FirebaseAnalytics: ad41720e3e67fc63fbe3d2948d3e26932a8de311
+  FirebaseAuth: ebb6abcbabae00fc47446d690c19ce68d8484fde
   FirebaseCore: c709067051de07bdaffdc4e735cd7299a23c463a
   FirebaseDatabase: d829b3a8c3e2ac7a16773c5df226966b0805dfc2
   FirebaseInstanceID: 9fbf536668f4d3f0880e7438456dabd1376e294b
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
+  GTMSessionFetcher: 5ad62e8200fa00ed011fe5e08d27fef72c5b1429
   IQKeyboardManagerSwift: 75ba21a23794a1e6b6fe6d9a267ea17f80e06771
   RESideMenu: f24c508404b49c667344c54aba7e590883533958
   SwipeViewController: 0e396aa7d7756c30f8914ef59aea2a3d7d7798bc
 
-PODFILE CHECKSUM: 2284b721e1a43993b248cc73340c578d4130ca67
+PODFILE CHECKSUM: 59abab636d36b6d399cf873c949b124087d362b9
 
 COCOAPODS: 1.2.1

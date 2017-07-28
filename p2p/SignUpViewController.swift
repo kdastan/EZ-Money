@@ -11,6 +11,7 @@ import EasyPeasy
 import BEMCheckBox
 import Firebase
 import FirebaseDatabase
+import FirebaseAuth
 
 class SignUpViewController: RegistrationView {
 
@@ -63,17 +64,38 @@ class SignUpViewController: RegistrationView {
         let email = text
         let isInvestor = tapped
         let password = text2
-        let token = InstanceID.instanceID().token()
+        let token = (InstanceID.instanceID().token())!
         let userData = false
         
-//        let post = ["balance": "Ashat",
-//                    "Surname": "Kim" ]
-//        
-        //ref.child("users").childByAutoId().setValue(post)
+        let post: [String: Any] = [
+                    "balance": balance,
+                    "email": email,
+                    "isInvestor": isInvestor,
+                    "password": password,
+                    "token": token,
+                    "userData": userData
+        ]
         
         
         
-        print(token)
+        
+        Auth.auth().createUser(withEmail: email, password: password){ (user, error) in
+            if let error = error {
+                print("User with this email is already created")
+                
+            } else {
+                print("You successfuly registered")
+                let asd = Auth.auth().currentUser?.uid
+                self.ref.child("users").child("\(asd!)").setValue(post)
+                print(asd)
+                if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                    appDelegate.isLogged = true
+                    appDelegate.cordinateAppFlow()
+                }
+//
+            }
+            
+        }
     }
     
     override func viewDidLoad() {

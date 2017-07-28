@@ -8,6 +8,7 @@
 
 import UIKit
 import EasyPeasy
+import Firebase
 
 class LoginViewController: RegistrationView {
     
@@ -39,12 +40,23 @@ class LoginViewController: RegistrationView {
     
     func submitButtonPressed() {
         
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            appDelegate.isLogged = true
-            appDelegate.cordinateAppFlow()
+        guard let text = textField.text, let text2 = textFieldPassword.text else {
+            return
         }
         
-        print("Submit button pressed")
+        Auth.auth().signIn(withEmail: text, password: text2) { (user, error) in
+            if let error = error {
+                print("Something goes wrong please try to register first")
+            } else {
+                print(Auth.auth().currentUser?.uid)
+                if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                    appDelegate.isLogged = true
+                    appDelegate.cordinateAppFlow()
+                }
+                print("You signed in successfully")
+            }
+        }
+
     }
     
     override func viewDidLoad() {

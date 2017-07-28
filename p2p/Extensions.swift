@@ -46,3 +46,23 @@ extension MenuViewController: UITableViewDataSource {
         return cell
     }
 }
+
+
+extension MenuViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.row {
+        case 0:
+            print("0")
+        case 1:
+            print("1")
+        case 2:
+            print("2")
+        case 3:
+            print("3")
+        case 4:
+            self.signOut()
+        default:
+            print("Nothing")
+        }
+    }
+}
