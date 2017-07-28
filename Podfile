@@ -11,5 +11,8 @@ target 'p2p' do
   pod "BEMCheckBox"
   pod 'SwipeViewController'
   pod 'RESideMenu'
+  pod 'Firebase/Core'
+  pod 'Firebase'
+  pod 'Firebase/Database'
 
 end

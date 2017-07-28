@@ -9,17 +9,21 @@
 import UIKit
 import IQKeyboardManagerSwift
 import RESideMenu
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var isLogged = false
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        FirebaseApp.configure()
         cordinateAppFlow()
         IQKeyboardManager.sharedManager().enable = true
+        
+        
         
         return true
     }

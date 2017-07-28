@@ -9,10 +9,14 @@
 import UIKit
 import EasyPeasy
 import BEMCheckBox
+import Firebase
+import FirebaseDatabase
 
 class SignUpViewController: RegistrationView {
 
     var tapped = false
+    
+    let ref = Database.database().reference()
     
     lazy var textField = createTextField(true)
     lazy var textFieldPassword = createTextField(false)
@@ -48,8 +52,28 @@ class SignUpViewController: RegistrationView {
     }()
     
     func signUpButtonPressed() {
-        //navigationController?.pushViewController(BorrowViewController(), animated: true)
-        //navigationController?.present(BorrowViewController(), animated: true, completion: nil)
+        
+        guard let text = textField.text, let text2 = textFieldPassword.text else {
+            return
+        }
+        
+        //, email, , password, token, userData
+        
+        let balance = 0
+        let email = text
+        let isInvestor = tapped
+        let password = text2
+        let token = InstanceID.instanceID().token()
+        let userData = false
+        
+//        let post = ["balance": "Ashat",
+//                    "Surname": "Kim" ]
+//        
+        //ref.child("users").childByAutoId().setValue(post)
+        
+        
+        
+        print(token)
     }
     
     override func viewDidLoad() {
@@ -60,6 +84,9 @@ class SignUpViewController: RegistrationView {
         
         setupView()
         setupConstraints()
+        
+        
+        
     }
     
     func setupView() {
@@ -110,6 +137,5 @@ extension SignUpViewController: BEMCheckBoxDelegate {
 
     func didTap(_ checkBox: BEMCheckBox) {
         tapped = !tapped
-        print(tapped)
     }
 }

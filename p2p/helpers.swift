@@ -20,11 +20,13 @@ func createTextField(_ isMail: Bool) -> TextFieldWithIcon {
         textfield.attributedPlaceholder = NSAttributedString(string: "Почта", attributes: [NSForegroundColorAttributeName: UIColor.white])
         textfield.textColor = .white
         textfield.imageView.image = UIImage(named: "mail")
+        textfield.keyboardType = .emailAddress
         }
         else{
             textfield.attributedPlaceholder = NSAttributedString(string: "Пароль", attributes: [NSForegroundColorAttributeName: UIColor.white])
             textfield.textColor = .white
             textfield.imageView.image = UIImage(named: "password")
+            
         }
         return textfield
     }()
