@@ -35,21 +35,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationController = BorrowViewController(rootViewController: pageController)
         
         
+        let a = UINavigationController(rootViewController: MenuViewController())
         
-        let sideMenu = RESideMenu(contentViewController: navigationController, leftMenuViewController: MenuViewController(), rightMenuViewController: nil)
+        let sideMenu = RESideMenu(contentViewController: navigationController, leftMenuViewController: a, rightMenuViewController: nil)
         sideMenu?.backgroundImage = UIImage(named: "sample")
         
-
-        
         if isLogged {
-//            let navigationController = BorrowViewController(rootViewController: pageController)
-//            window?.rootViewController = navigationController
             window?.rootViewController = sideMenu
-       
         } else {
             let loginController = UINavigationController(rootViewController: LoginViewController())
             window?.rootViewController = loginController
-            //window?.rootViewController = sideMenu
         }
         window?.makeKeyAndVisible()
     }

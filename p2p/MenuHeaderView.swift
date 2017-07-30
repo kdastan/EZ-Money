@@ -52,6 +52,13 @@ class MenuHeaderView: UIView {
         }) { (error) in
             print(error.localizedDescription)
         }
+        
+        ref.child("userData").child(currentID!).observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            self.nameInfoLabel.text = value?["name"] as? String ?? "Name Surname"
+        }) {(error) in
+            print(error.localizedDescription)
+        }
     }
     
     func setupView() {
@@ -68,13 +75,13 @@ class MenuHeaderView: UIView {
         ]
         
         nameInfoLabel <- [
-            Top(5).to(avatar, .top),
+            Top(0).to(avatar, .top),
             Left(10).to(avatar, .right),
-            Height(20)
+            Height(25)
         ]
         
         email <- [
-            Bottom(5).to(avatar, .bottom),
+            Bottom(0).to(avatar, .bottom),
             Left(10).to(avatar, .right),
             Height(20)
         ]

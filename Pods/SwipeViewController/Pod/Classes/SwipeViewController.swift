@@ -34,6 +34,9 @@ open class SwipeViewController: UINavigationController, UIPageViewControllerDele
     var navigationBarColor = UIColor.white
     var leftBarButtonItem: UIBarButtonItem?
     var rightBarButtonItem: UIBarButtonItem?
+    //
+    
+    //
     open var equalSpaces = true
     
     

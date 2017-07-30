@@ -39,6 +39,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SwiftValidator.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SwipeViewController.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -47,22 +52,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>07F91488F0D378A53F211579CABA2B09</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>107A9565F9DF88517DFD3E28C05B2B96</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>505CE76F662036398A6C12D10E2761DA</key>
+		<key>160B8AB16D7C156BC8949870D6BFF6B7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8222C995B26C46B79147764F5390ADBC</key>
+		<key>72211F70EBBCE8A7AE8AAF7128EF3236</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A70DFED05DFBCA0FAE5475DD1205674D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -83,6 +88,11 @@
 			<true/>
 		</dict>
 		<key>C235F77E101E742652CCF98FFDFA5182</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D308D45EE6AF9BB3CDCC5244BA961780</key>
 		<dict>
 			<key>primary</key>
 			<true/>

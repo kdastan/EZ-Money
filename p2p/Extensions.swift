@@ -52,7 +52,9 @@ extension MenuViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
-            print("0")
+            
+            self.present(MenuMyDataViewController(), animated: true, completion: nil)
+            
         case 1:
             print("1")
         case 2:
@@ -66,3 +68,27 @@ extension MenuViewController: UITableViewDelegate {
         }
     }
 }
+
+extension TakeBorrowViewController: UISearchBarDelegate {
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = true
+    }
+    
+    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+        searchBar.showsCancelButton = false
+        return true
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        searchBar.showsCancelButton = false
+        searchBar.endEditing(true)
+        searchBar.isHidden = true
+        
+        requestButton.isHidden = false
+        investorSearchButton.isHidden = false
+    }
+    
+}
+

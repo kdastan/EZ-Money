@@ -10,7 +10,6 @@ import UIKit
 import SwipeViewController
 import RESideMenu
 
-
 class BorrowViewController: SwipeViewController {
     
     override func viewDidLoad() {
@@ -26,11 +25,13 @@ class BorrowViewController: SwipeViewController {
         let VC2 = RequestListViewController()
         VC2.title = "Список запросов"
         
+        
         let barButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(push))
         setNavigationWithItem(UIColor.white, leftItem: barButtonItem, rightItem: nil)
         
         setViewControllerArray([VC1, VC2])
-        setFirstViewController(0)
+        //setFirstViewController(0)
+        
         
         if sizeX == 320 {
             setButtonsWithSelectedColor(UIFont.systemFont(ofSize: 15), color: UIColor.black, selectedColor: UIColor(red: 0.23, green: 0.55, blue: 0.92, alpha: 1.0))
@@ -39,7 +40,6 @@ class BorrowViewController: SwipeViewController {
             setButtonsWithSelectedColor(UIFont.systemFont(ofSize: 18), color: UIColor.black, selectedColor: UIColor(red: 0.23, green: 0.55, blue: 0.92, alpha: 1.0))
             setSelectionBar(145, height: 3, color: UIColor(red: 0.23, green: 0.55, blue: 0.92, alpha: 1.0))
         }
-        
         
         equalSpaces = false
         setButtonsOffset(35, bottomOffset: 13)
