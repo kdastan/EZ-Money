@@ -24,6 +24,7 @@
 		18540A531F25C5450004CBD4 /* helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18540A521F25C5450004CBD4 /* helpers.swift */; };
 		18540A551F260C030004CBD4 /* TextFieldWithIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18540A541F260C030004CBD4 /* TextFieldWithIcon.swift */; };
 		18854C031F2F289500ACEC52 /* paddingTextFieldsForUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18854C021F2F289500ACEC52 /* paddingTextFieldsForUserData.swift */; };
+		18854C051F2FB11B00ACEC52 /* nameValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18854C041F2FB11B00ACEC52 /* nameValidation.swift */; };
 		18ED1D421F2B4BA3001B7A90 /* MenuMyDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ED1D411F2B4BA3001B7A90 /* MenuMyDataViewController.swift */; };
 		18ED1D441F2B78BF001B7A90 /* userDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ED1D431F2B78BF001B7A90 /* userDataModel.swift */; };
 		18ED1D461F2B7C3B001B7A90 /* userModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ED1D451F2B7C3B001B7A90 /* userModel.swift */; };
@@ -59,6 +60,7 @@
 		18540A521F25C5450004CBD4 /* helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = helpers.swift; sourceTree = "<group>"; };
 		18540A541F260C030004CBD4 /* TextFieldWithIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldWithIcon.swift; sourceTree = "<group>"; };
 		18854C021F2F289500ACEC52 /* paddingTextFieldsForUserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = paddingTextFieldsForUserData.swift; sourceTree = "<group>"; };
+		18854C041F2FB11B00ACEC52 /* nameValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = nameValidation.swift; sourceTree = "<group>"; };
 		18ED1D411F2B4BA3001B7A90 /* MenuMyDataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuMyDataViewController.swift; sourceTree = "<group>"; };
 		18ED1D431F2B78BF001B7A90 /* userDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = userDataModel.swift; sourceTree = "<group>"; };
 		18ED1D451F2B7C3B001B7A90 /* userModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = userModel.swift; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 				18109F7B1F27B75C00DDA339 /* BarrowTableViewContainer.swift */,
 				18ED8E231F28E3CB00848ACD /* MenuSideTableViewCell.swift */,
 				184256B51F29AA5800ECEDE3 /* MenuHeaderView.swift */,
+				18854C041F2FB11B00ACEC52 /* nameValidation.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -326,6 +329,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18F07DEF1F273E700095F3A0 /* BorrowContainer.swift in Sources */,
+				18854C051F2FB11B00ACEC52 /* nameValidation.swift in Sources */,
 				18F07DE51F26524A0095F3A0 /* SignUpViewController.swift in Sources */,
 				18ED1D461F2B7C3B001B7A90 /* userModel.swift in Sources */,
 				18540A4D1F25B8740004CBD4 /* LoginViewController.swift in Sources */,

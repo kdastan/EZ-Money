@@ -17,7 +17,7 @@ class MenuMyDataViewController: UIViewController {
         let scroll = UIScrollView()
         scroll.isScrollEnabled = true
         scroll.isUserInteractionEnabled = true
-        scroll.contentSize = CGSize(width: 300, height: 800)
+        scroll.contentSize = CGSize(width: 300, height: 1200)
         return scroll
     }()
     
@@ -61,21 +61,21 @@ class MenuMyDataViewController: UIViewController {
     //MARK: User name error labels
     lazy var labelUserNameError: UILabel = {
         let label = UILabel()
-        label.text = "asd"
-        label.font = UIFont(name: "Helvetica", size: 14)
+        label.text = ""
+        label.font = UIFont(name: "Helvetica", size: 12)
         return label
     }()
     
     lazy var labelUserSurnameError: UILabel = {
         let label = UILabel()
-        label.text = "asd"
+        label.text = ""
         label.font = UIFont(name: "Helvetica", size: 12)
         return label
     }()
     
     lazy var labelUserPatronymicError: UILabel = {
         let label = UILabel()
-        label.text = "asd"
+        label.text = ""
         label.font = UIFont(name: "Helvetica", size: 12)
         return label
     }()
@@ -83,19 +83,21 @@ class MenuMyDataViewController: UIViewController {
     //MARK: User phone information
     lazy var mobilePhone: PaddingTextFieldForUserData = {
         let text = PaddingTextFieldForUserData()
-        text.placeholder = "Мобильный телефон"
+        text.placeholder = "Моб. телефон: 8(xxx)xxx-xx-xx"
         text.backgroundColor = .white
         text.layer.cornerRadius = 10
         text.floatingLabelXPadding = 5
+        text.keyboardType = .numberPad
         return text
     }()
     
     lazy var homePhone: PaddingTextFieldForUserData = {
         let text = PaddingTextFieldForUserData()
-        text.placeholder = "Рабочий телефон"
+        text.placeholder = "Раб. телефон: 8(xxxx)xx-xx-xx"
         text.backgroundColor = .white
         text.layer.cornerRadius = 10
         text.floatingLabelXPadding = 5
+        text.keyboardType = .numberPad
         return text
     }()
     
@@ -192,18 +194,20 @@ class MenuMyDataViewController: UIViewController {
             }
         })
        
-        //
-        //validator.registerField(fullNameTextField, rules: [FullNameRule()])
+        
+        validator.registerField(userName, errorLabel: labelUserNameError, rules: [SSNVRule()])
+        validator.registerField(userSurname, errorLabel: labelUserSurnameError, rules: [FullNameRule()])
+        validator.registerField(userPatronymic, errorLabel: labelUserPatronymicError, rules: [FullNameRule()])
         //validator.registerField(emailTextField, errorLabel: label, rules: [RequiredRule(), EmailRule(message: "Invalid email")])
         //validator.registerField(emailConfirmTextField, errorLabel: label2, rules: [ConfirmationRule(confirmField: emailTextField)])
-        //
+        
         
     }
     
     func press() {
-        //validator.validate(self)
+        validator.validate(self)
         
-        self.dismiss(animated: true, completion: nil)
+        //self.dismiss(animated: true, completion: nil)
     }
     
     func setupViews() {
@@ -239,53 +243,53 @@ class MenuMyDataViewController: UIViewController {
         
         labelUserNameError <- [
             Height(10),
-            Left(10).to(userName, .left),
-            Top(40).to(userName, .top)
+            Left(18),
+            Top(40)
         ]
         
         userName <- [
             Height(50),
-            Width(200),
-            Top(10).to(labelUserNameError, .bottom),
+            Width(300),
+            Top(6).to(labelUserNameError, .bottom),
             Left(8)
         ]
         
         labelUserSurnameError <- [
             Height(10),
-            Left(10).to(userName, .left),
+            Left(18),
             Top(10).to(userName, .bottom)
         ]
         
         userSurname <- [
             Height(50),
-            Width(200),
-            Left(0).to(userName, .left),
-            Top(10).to(labelUserSurnameError, .bottom)
+            Width(300),
+            Left(8),
+            Top(6).to(labelUserSurnameError, .bottom)
         ]
         
         labelUserPatronymicError <- [
             Height(10),
-            Left(10).to(userName, .left),
+            Left(18),
             Top(10).to(userSurname, .bottom)
         ]
         
         userPatronymic <- [
             Height(50),
-            Width(200),
-            Left(0).to(userSurname, .left),
-            Top(10).to(userSurname, .bottom)
+            Width(300),
+            Left(8),
+            Top(6).to(labelUserPatronymicError, .bottom)
         ]
         
         mobilePhone <- [
             Height(50),
-            Width(200),
+            Width(300),
             Left(0).to(userPatronymic, .left),
             Top(10).to(userPatronymic, .bottom)
         ]
         
         homePhone <- [
             Height(50),
-            Width(200),
+            Width(300),
             Left(0).to(mobilePhone, .left),
             Top(10).to(mobilePhone, .bottom)
         ]
