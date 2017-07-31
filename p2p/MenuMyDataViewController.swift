@@ -9,8 +9,17 @@
 import UIKit
 import EasyPeasy
 import SwiftValidator
+import JVFloatLabeledTextField
 
 class MenuMyDataViewController: UIViewController {
+    
+    lazy var scroll: UIScrollView = {
+        let scroll = UIScrollView()
+        scroll.isScrollEnabled = true
+        scroll.isUserInteractionEnabled = true
+        scroll.contentSize = CGSize(width: 300, height: 800)
+        return scroll
+    }()
     
     lazy var button: UIButton = {
         let button = UIButton()
@@ -21,39 +30,139 @@ class MenuMyDataViewController: UIViewController {
     
     let validator = Validator()
     
-    
-    lazy var fullNameTextField: UITextField = {
-        let text = UITextField()
+    //MARK: User name information
+    lazy var userName: PaddingTextFieldForUserData = {
+        let text = PaddingTextFieldForUserData()
+        text.placeholder = "Имя"
         text.backgroundColor = .white
+        text.layer.cornerRadius = 10
+        text.floatingLabelXPadding = 5
         return text
     }()
     
-    lazy var emailTextField: UITextField = {
-        let text = UITextField()
+    lazy var userSurname: PaddingTextFieldForUserData = {
+        let text = PaddingTextFieldForUserData()
+        text.placeholder = "Фамилия"
         text.backgroundColor = .white
+        text.layer.cornerRadius = 10
+        text.floatingLabelXPadding = 5
         return text
     }()
     
-    lazy var emailConfirmTextField: UITextField = {
-        let text = UITextField()
+    lazy var userPatronymic: PaddingTextFieldForUserData = {
+        let text = PaddingTextFieldForUserData()
+        text.placeholder = "Отчество"
         text.backgroundColor = .white
+        text.layer.cornerRadius = 10
+        text.floatingLabelXPadding = 5
         return text
     }()
     
-    lazy var label: UILabel = {
+    //MARK: User name error labels
+    lazy var labelUserNameError: UILabel = {
         let label = UILabel()
-        label.text = ""
-        label.textColor = .red
+        label.text = "asd"
+        label.font = UIFont(name: "Helvetica", size: 14)
         return label
     }()
     
-    lazy var label2: UILabel = {
+    lazy var labelUserSurnameError: UILabel = {
         let label = UILabel()
-        label.text = ""
-        label.textColor = .red
+        label.text = "asd"
+        label.font = UIFont(name: "Helvetica", size: 12)
         return label
     }()
-  
+    
+    lazy var labelUserPatronymicError: UILabel = {
+        let label = UILabel()
+        label.text = "asd"
+        label.font = UIFont(name: "Helvetica", size: 12)
+        return label
+    }()
+    
+    //MARK: User phone information
+    lazy var mobilePhone: PaddingTextFieldForUserData = {
+        let text = PaddingTextFieldForUserData()
+        text.placeholder = "Мобильный телефон"
+        text.backgroundColor = .white
+        text.layer.cornerRadius = 10
+        text.floatingLabelXPadding = 5
+        return text
+    }()
+    
+    lazy var homePhone: PaddingTextFieldForUserData = {
+        let text = PaddingTextFieldForUserData()
+        text.placeholder = "Рабочий телефон"
+        text.backgroundColor = .white
+        text.layer.cornerRadius = 10
+        text.floatingLabelXPadding = 5
+        return text
+    }()
+    
+    //MARK: User date information
+    lazy var birthDate: PaddingTextFieldForUserData = {
+        let text = PaddingTextFieldForUserData()
+        text.placeholder = "Год рождения"
+        text.backgroundColor = .white
+        text.layer.cornerRadius = 10
+        text.floatingLabelXPadding = 5
+        return text
+    }()
+    
+    lazy var birthPlace: PaddingTextFieldForUserData = {
+        let text = PaddingTextFieldForUserData()
+        text.placeholder = "Место рождения"
+        text.backgroundColor = .white
+        text.layer.cornerRadius = 10
+        text.floatingLabelXPadding = 5
+        return text
+    }()
+    
+    //MARK: User document information
+    lazy var idNumber: PaddingTextFieldForUserData = {
+        let text = PaddingTextFieldForUserData()
+        text.placeholder = "Номер документа"
+        text.backgroundColor = .white
+        text.layer.cornerRadius = 10
+        text.floatingLabelXPadding = 5
+        return text
+    }()
+    
+    lazy var iinNumber: PaddingTextFieldForUserData = {
+        let text = PaddingTextFieldForUserData()
+        text.placeholder = "ИИН"
+        text.backgroundColor = .white
+        text.layer.cornerRadius = 10
+        text.floatingLabelXPadding = 5
+        return text
+    }()
+    
+    lazy var issuingAuthority: PaddingTextFieldForUserData = {
+        let text = PaddingTextFieldForUserData()
+        text.placeholder = "Место выдочи"
+        text.backgroundColor = .white
+        text.layer.cornerRadius = 10
+        text.floatingLabelXPadding = 5
+        return text
+    }()
+    
+    lazy var dateOfIssue: PaddingTextFieldForUserData = {
+        let text = PaddingTextFieldForUserData()
+        text.placeholder = "Дата выдачи"
+        text.backgroundColor = .white
+        text.layer.cornerRadius = 10
+        text.floatingLabelXPadding = 5
+        return text
+    }()
+    
+    lazy var validatyDate: PaddingTextFieldForUserData = {
+        let text = PaddingTextFieldForUserData()
+        text.placeholder = "Дата истечения"
+        text.backgroundColor = .white
+        text.layer.cornerRadius = 10
+        text.floatingLabelXPadding = 5
+        return text
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,68 +192,159 @@ class MenuMyDataViewController: UIViewController {
             }
         })
        
-        validator.registerField(fullNameTextField, rules: [FullNameRule()])
-        validator.registerField(emailTextField, errorLabel: label, rules: [RequiredRule(), EmailRule(message: "Invalid email")])
-        validator.registerField(emailConfirmTextField, errorLabel: label2, rules: [ConfirmationRule(confirmField: emailTextField)])
+        //
+        //validator.registerField(fullNameTextField, rules: [FullNameRule()])
+        //validator.registerField(emailTextField, errorLabel: label, rules: [RequiredRule(), EmailRule(message: "Invalid email")])
+        //validator.registerField(emailConfirmTextField, errorLabel: label2, rules: [ConfirmationRule(confirmField: emailTextField)])
+        //
         
     }
     
     func press() {
         //validator.validate(self)
+        
         self.dismiss(animated: true, completion: nil)
     }
     
     func setupViews() {
-        view.addSubview(button)
-        view.addSubview(fullNameTextField)
-        view.addSubview(emailTextField)
-        view.addSubview(emailConfirmTextField)
-        view.addSubview(label)
-        view.addSubview(label2)
+        view.addSubview(scroll)
+        scroll.addSubview(button)
+        
+        scroll.addSubview(userName)
+        scroll.addSubview(userSurname)
+        scroll.addSubview(userPatronymic)
+        scroll.addSubview(mobilePhone)
+        scroll.addSubview(homePhone)
+        scroll.addSubview(birthDate)
+        scroll.addSubview(birthPlace)
+        scroll.addSubview(idNumber)
+        scroll.addSubview(iinNumber)
+        scroll.addSubview(dateOfIssue)
+        scroll.addSubview(issuingAuthority)
+        scroll.addSubview(validatyDate)
+        
+        scroll.addSubview(labelUserNameError)
+        scroll.addSubview(labelUserSurnameError)
+        scroll.addSubview(labelUserPatronymicError)
     }
     
     func setupConstraints() {
-        button <- [
-            
-            Size(48),
+        edgesForExtendedLayout = []
+        scroll <- [
+            Width(UIScreen.main.bounds.width),
+            Height(UIScreen.main.bounds.height),
             Top(0),
+            Left(0)
+        ]
+        
+        labelUserNameError <- [
+            Height(10),
+            Left(10).to(userName, .left),
+            Top(40).to(userName, .top)
+        ]
+        
+        userName <- [
+            Height(50),
+            Width(200),
+            Top(10).to(labelUserNameError, .bottom),
+            Left(8)
+        ]
+        
+        labelUserSurnameError <- [
+            Height(10),
+            Left(10).to(userName, .left),
+            Top(10).to(userName, .bottom)
+        ]
+        
+        userSurname <- [
+            Height(50),
+            Width(200),
+            Left(0).to(userName, .left),
+            Top(10).to(labelUserSurnameError, .bottom)
+        ]
+        
+        labelUserPatronymicError <- [
+            Height(10),
+            Left(10).to(userName, .left),
+            Top(10).to(userSurname, .bottom)
+        ]
+        
+        userPatronymic <- [
+            Height(50),
+            Width(200),
+            Left(0).to(userSurname, .left),
+            Top(10).to(userSurname, .bottom)
+        ]
+        
+        mobilePhone <- [
+            Height(50),
+            Width(200),
+            Left(0).to(userPatronymic, .left),
+            Top(10).to(userPatronymic, .bottom)
+        ]
+        
+        homePhone <- [
+            Height(50),
+            Width(200),
+            Left(0).to(mobilePhone, .left),
+            Top(10).to(mobilePhone, .bottom)
+        ]
+        
+        birthDate <- [
+            Height(50),
+            Width(200),
+            Left(0).to(homePhone, .left),
+            Top(10).to(homePhone, .bottom)
+        ]
+        
+        birthPlace <- [
+            Height(50),
+            Width(200),
+            Left(0).to(birthDate, .left),
+            Top(10).to(birthDate, .bottom)
+        ]
+        
+        idNumber <- [
+            Height(50),
+            Width(200),
+            Left(0).to(birthPlace, .left),
+            Top(10).to(birthPlace, .bottom)
+        ]
+        
+        iinNumber <- [
+            Height(50),
+            Width(200),
+            Left(0).to(idNumber, .left),
+            Top(10).to(idNumber, .bottom)
+        ]
+        
+        dateOfIssue <- [
+            Height(50),
+            Width(200),
+            Left(0).to(iinNumber, .left),
+            Top(10).to(iinNumber, .bottom)
+        ]
+        
+        validatyDate <- [
+            Height(50),
+            Width(200),
+            Left(0).to(dateOfIssue, .left),
+            Top(10).to(dateOfIssue, .bottom)
+        ]
+        
+        issuingAuthority <- [
+            Height(50),
+            Width(200),
+            Left(0).to(validatyDate, .left),
+            Top(10).to(validatyDate, .bottom)
+        ]
+        
+        button <- [
+            Size(48),
+            Top(10).to(issuingAuthority, .bottom),
             CenterX(0)
-            
         ]
-        
-        fullNameTextField <- [
-            Height(50),
-            Width(200),
-            Center(0)
-        ]
-        
-        emailTextField <- [
-            Height(50),
-            Width(200),
-            Left(0).to(fullNameTextField, .left),
-            Top(10).to(fullNameTextField, .bottom)
-        ]
-        
-        emailConfirmTextField <- [
-            Height(50),
-            Width(200),
-            Left(0).to(fullNameTextField, .left),
-            Top(10).to(emailTextField, .bottom)
-        ]
-        
-        label <- [
-            Height(48),
-            Width(150),
-            Top(20),
-            Left(20)
-        ]
-        
-        label2 <- [
-            Height(48),
-            Width(150),
-            Top(60),
-            Left(20)
-        ]
+       
     }
 
 }

@@ -16,5 +16,6 @@ target 'p2p' do
   pod 'Firebase/Database'
   pod 'Firebase/Auth'
   pod 'SwiftValidator', :git => 'https://github.com/jpotts18/SwiftValidator.git', :branch => 'master'
+  pod 'JVFloatLabeledTextField'
 
 end

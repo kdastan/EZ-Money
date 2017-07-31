@@ -153,7 +153,7 @@ class TakeBorrowViewController: UIViewController {
             let value = snapshot.value as? NSDictionary
             
             
-            let isData = value?["userData"] as? Bool ?? false
+            let isData = value?["userDatam"] as? Bool ?? false
             
             if isData {
                 print("Good")
