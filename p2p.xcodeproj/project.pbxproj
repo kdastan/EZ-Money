@@ -25,6 +25,10 @@
 		18540A551F260C030004CBD4 /* TextFieldWithIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18540A541F260C030004CBD4 /* TextFieldWithIcon.swift */; };
 		187966911F3034FC0001ED8B /* phoneValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187966901F3034FC0001ED8B /* phoneValidation.swift */; };
 		187966941F3051740001ED8B /* documentNumbersValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187966931F3051740001ED8B /* documentNumbersValidation.swift */; };
+		187966971F3067C50001ED8B /* RadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187966961F3067C50001ED8B /* RadioButton.swift */; };
+		187966991F3084200001ED8B /* MenuFieldContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187966981F3084200001ED8B /* MenuFieldContainer.swift */; };
+		1879669C1F30F1E00001ED8B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1879669B1F30F1E00001ED8B /* Constants.swift */; };
+		1879669E1F30FF330001ED8B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1879669D1F30FF330001ED8B /* User.swift */; };
 		18854C031F2F289500ACEC52 /* paddingTextFieldsForUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18854C021F2F289500ACEC52 /* paddingTextFieldsForUserData.swift */; };
 		18854C051F2FB11B00ACEC52 /* nameValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18854C041F2FB11B00ACEC52 /* nameValidation.swift */; };
 		18ED1D421F2B4BA3001B7A90 /* MenuMyDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ED1D411F2B4BA3001B7A90 /* MenuMyDataViewController.swift */; };
@@ -63,6 +67,10 @@
 		18540A541F260C030004CBD4 /* TextFieldWithIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldWithIcon.swift; sourceTree = "<group>"; };
 		187966901F3034FC0001ED8B /* phoneValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = phoneValidation.swift; sourceTree = "<group>"; };
 		187966931F3051740001ED8B /* documentNumbersValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = documentNumbersValidation.swift; sourceTree = "<group>"; };
+		187966961F3067C50001ED8B /* RadioButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadioButton.swift; sourceTree = "<group>"; };
+		187966981F3084200001ED8B /* MenuFieldContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuFieldContainer.swift; sourceTree = "<group>"; };
+		1879669B1F30F1E00001ED8B /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		1879669D1F30FF330001ED8B /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		18854C021F2F289500ACEC52 /* paddingTextFieldsForUserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = paddingTextFieldsForUserData.swift; sourceTree = "<group>"; };
 		18854C041F2FB11B00ACEC52 /* nameValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = nameValidation.swift; sourceTree = "<group>"; };
 		18ED1D411F2B4BA3001B7A90 /* MenuMyDataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuMyDataViewController.swift; sourceTree = "<group>"; };
@@ -124,6 +132,7 @@
 		18540A391F25B5660004CBD4 /* p2p */ = {
 			isa = PBXGroup;
 			children = (
+				1879669A1F30F1D20001ED8B /* Helpers */,
 				18F07DF21F2765200095F3A0 /* Extensions */,
 				18540A511F25BB8D0004CBD4 /* Tints */,
 				18540A501F25B97B0004CBD4 /* Controller */,
@@ -145,6 +154,7 @@
 			children = (
 				18ED1D431F2B78BF001B7A90 /* userDataModel.swift */,
 				18ED1D451F2B7C3B001B7A90 /* userModel.swift */,
+				1879669D1F30FF330001ED8B /* User.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -163,7 +173,9 @@
 				18109F7B1F27B75C00DDA339 /* BarrowTableViewContainer.swift */,
 				18ED8E231F28E3CB00848ACD /* MenuSideTableViewCell.swift */,
 				184256B51F29AA5800ECEDE3 /* MenuHeaderView.swift */,
+				187966951F3067780001ED8B /* RadioButton */,
 				187966921F30351C0001ED8B /* Validation */,
+				187966981F3084200001ED8B /* MenuFieldContainer.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -199,6 +211,22 @@
 				187966931F3051740001ED8B /* documentNumbersValidation.swift */,
 			);
 			name = Validation;
+			sourceTree = "<group>";
+		};
+		187966951F3067780001ED8B /* RadioButton */ = {
+			isa = PBXGroup;
+			children = (
+				187966961F3067C50001ED8B /* RadioButton.swift */,
+			);
+			name = RadioButton;
+			sourceTree = "<group>";
+		};
+		1879669A1F30F1D20001ED8B /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				1879669B1F30F1E00001ED8B /* Constants.swift */,
+			);
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 		18F07DF21F2765200095F3A0 /* Extensions */ = {
@@ -346,21 +374,25 @@
 				18F07DEF1F273E700095F3A0 /* BorrowContainer.swift in Sources */,
 				18854C051F2FB11B00ACEC52 /* nameValidation.swift in Sources */,
 				18F07DE51F26524A0095F3A0 /* SignUpViewController.swift in Sources */,
+				1879669E1F30FF330001ED8B /* User.swift in Sources */,
 				18ED1D461F2B7C3B001B7A90 /* userModel.swift in Sources */,
 				18540A4D1F25B8740004CBD4 /* LoginViewController.swift in Sources */,
 				18ED8E241F28E3CB00848ACD /* MenuSideTableViewCell.swift in Sources */,
 				18109F7E1F27C86200DDA339 /* BarrowContainerTable.swift in Sources */,
 				18540A551F260C030004CBD4 /* TextFieldWithIcon.swift in Sources */,
+				1879669C1F30F1E00001ED8B /* Constants.swift in Sources */,
 				18109F7A1F27B20C00DDA339 /* BorrowTableViewCell.swift in Sources */,
 				18F07DE71F2653000095F3A0 /* RegistrationView.swift in Sources */,
 				18540A3D1F25B5660004CBD4 /* ViewController.swift in Sources */,
 				184256B41F29A72500ECEDE3 /* PaddingTextField.swift in Sources */,
+				187966991F3084200001ED8B /* MenuFieldContainer.swift in Sources */,
 				18F07DEB1F272E630095F3A0 /* TakeBorrowViewController.swift in Sources */,
 				184256B61F29AA5800ECEDE3 /* MenuHeaderView.swift in Sources */,
 				18F07DED1F272E790095F3A0 /* RequestListViewController.swift in Sources */,
 				18ED1D441F2B78BF001B7A90 /* userDataModel.swift in Sources */,
 				18F07DF41F2765370095F3A0 /* Extensions.swift in Sources */,
 				18540A3B1F25B5660004CBD4 /* AppDelegate.swift in Sources */,
+				187966971F3067C50001ED8B /* RadioButton.swift in Sources */,
 				18540A531F25C5450004CBD4 /* helpers.swift in Sources */,
 				182A9EF41F288B700039BFB8 /* MenuViewController.swift in Sources */,
 				187966911F3034FC0001ED8B /* phoneValidation.swift in Sources */,

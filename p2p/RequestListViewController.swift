@@ -18,31 +18,27 @@ class RequestListViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.rowHeight = 150
         tableView.allowsSelection = false
+        tableView.dataSource = self
         return tableView
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .blueBackground
-        
-        tableView.dataSource = self
-        
         setupView()
         setupConstraints()
     }
     
     func setupView() {
+        view.backgroundColor = .blueBackground
         view.addSubview(tableView)
     }
     
     func setupConstraints() {
         edgesForExtendedLayout = []
         tableView <- [
-            Width(UIScreen.main.bounds.width-20),
+            Width(Screen.width - 20),
             Bottom(0),
             Top(0),
-            Left(10),
             CenterX(0)
         ]
     }

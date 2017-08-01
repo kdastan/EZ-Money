@@ -8,19 +8,6 @@
 
 import UIKit
 
-extension TakeBorrowViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! BorrowTableViewCell
-        cell.backgroundColor = .blueBackground
-        cell.button.tag = indexPath.row
-        return cell
-    }
-}
-
 extension RequestListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
@@ -91,3 +78,5 @@ extension TakeBorrowViewController: UISearchBarDelegate {
     }
     
 }
+
+

@@ -21,7 +21,7 @@ class PaddingTextFieldForUserData: JVFloatLabeledTextField {
         fatalError("init(coder:) has not been implemented")
     }
     
-    let padding = UIEdgeInsets(top: 5, left: 5, bottom: 0, right: 5);
+    let padding = UIEdgeInsets(top: 5, left: 10, bottom: 0, right: 5);
     
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         return UIEdgeInsetsInsetRect(bounds, padding)

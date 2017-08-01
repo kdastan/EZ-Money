@@ -11,8 +11,6 @@ import EasyPeasy
 
 class MenuSideTableViewCell: UITableViewCell {
     
-    
-
     lazy var iconImage: UIImageView = {
         let iconImage = UIImageView()
         return iconImage

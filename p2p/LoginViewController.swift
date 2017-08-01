@@ -12,8 +12,6 @@ import Firebase
 
 class LoginViewController: RegistrationView {
     
-    let sizeX = UIScreen.main.bounds.width
-    
     lazy var textField = createTextField(true)
     lazy var textFieldPassword = createTextField(false)
     
@@ -34,63 +32,32 @@ class LoginViewController: RegistrationView {
         return button
     }()
     
-    func registrationButtonPressed() {
-        self.navigationController?.pushViewController(SignUpViewController(), animated: true)
-    }
-    
-    func submitButtonPressed() {
-        
-        guard let text = textField.text, let text2 = textFieldPassword.text else {
-            return
-        }
-        
-        Auth.auth().signIn(withEmail: text, password: text2) { (user, error) in
-            if let error = error {
-                print("Something goes wrong please try to register first")
-            } else {
-                print(Auth.auth().currentUser?.uid)
-                if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                    appDelegate.isLogged = true
-                    appDelegate.cordinateAppFlow()
-                }
-                print("You signed in successfully")
-            }
-        }
-
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        
-        print(sizeX)
-        
         setupView()
         setupConstraints()
-        
-//        UINavigationController?.navigationBar.isTranslucent = true
     }
     
+    //MARK:  Configurations
+    
     func setupView() {
+        view.backgroundColor = .white
         [imageView, labelName, labelProjectName, textField, textFieldPassword, button, registrationButton].forEach{
             view.addSubview($0)
         }
     }
     
-    
-    //MARK:  constr
     func setupConstraints() {
-        
         imageView <- [
-            Width(SizeX),
-            Height(SizeY)
+            Width(Screen.width),
+            Height(Screen.height)
         ]
         
         textField <- [
             Width(280),
             Height(42),
             Center(0)
-        
+            
         ]
         
         textFieldPassword <- [
@@ -103,7 +70,7 @@ class LoginViewController: RegistrationView {
         button <- [
             Width(280),
             Height(42),
-            Top(halfSizeY*3),
+            Top(Screen.height / 4 * 3),
             CenterX(0)
         ]
         
@@ -113,6 +80,28 @@ class LoginViewController: RegistrationView {
             Top(0).to(button, .bottom),
             CenterX(0)
         ]
+    }
+    
+    // MARK: User Interactions
+    
+    func registrationButtonPressed() {
+        self.navigationController?.pushViewController(SignUpViewController(), animated: true)
+    }
+    
+    func submitButtonPressed() {
+        guard let text = textField.text, let text2 = textFieldPassword.text else {
+            return
+        }
+        
+        Auth.auth().signIn(withEmail: text, password: text2) { (user, error) in
+            if let error = error {
+                print(error.localizedDescription)
+            } else {
+                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+                appDelegate.isLogged = true
+                appDelegate.cordinateAppFlow()
+            }
+        }
     }
     
 }

@@ -17,8 +17,6 @@ class SignUpViewController: RegistrationView {
 
     var tapped = false
     
-    let ref = Database.database().reference()
-    
     lazy var textField = createTextField(true)
     lazy var textFieldPassword = createTextField(false)
     
@@ -39,7 +37,7 @@ class SignUpViewController: RegistrationView {
         cBox.onTintColor = .white
         cBox.onCheckColor = .white
         cBox.onFillColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0.3)
-        
+        cBox.delegate = self
         return cBox
     }()
     
@@ -52,66 +50,16 @@ class SignUpViewController: RegistrationView {
         return label
     }()
     
-    func signUpButtonPressed() {
-        
-        guard let text = textField.text, let text2 = textFieldPassword.text else {
-            return
-        }
-        
-        //, email, , password, token, userData
-        
-        let balance = 0
-        let email = text
-        let isInvestor = tapped
-        let password = text2
-        let token = (InstanceID.instanceID().token())!
-        let userData = false
-        
-        let post: [String: Any] = [
-                    "balance": balance,
-                    "email": email,
-                    "isInvestor": isInvestor,
-                    "password": password,
-                    "token": token,
-                    "userData": userData
-        ]
-        
-        
-        
-        
-        Auth.auth().createUser(withEmail: email, password: password){ (user, error) in
-            if let error = error {
-                print("User with this email is already created")
-                
-            } else {
-                print("You successfuly registered")
-                let asd = Auth.auth().currentUser?.uid
-                self.ref.child("users").child("\(asd!)").setValue(post)
-                print(asd)
-                if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                    appDelegate.isLogged = true
-                    appDelegate.cordinateAppFlow()
-                }
-//
-            }
-            
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .white
-        cBox.delegate = self 
-        
         setupView()
         setupConstraints()
-        
-        
-        
     }
     
+    // MARK: Configuarations
+    
     func setupView() {
+        view.backgroundColor = .white
         [imageView, labelName, labelProjectName, textField, textFieldPassword, button, cBox, label].forEach{
             view.addSubview($0)
         }
@@ -144,19 +92,51 @@ class SignUpViewController: RegistrationView {
             CenterY(0).to(cBox)
         ]
         
-        
         button <- [
             Width(280),
             Height(42),
-            Top(halfSizeY*3),
+            Top(Screen.height / 4 * 3),
             CenterX(0)
         ]
+    }
+    
+    // MARK: User Interactions
+    
+    func signUpButtonPressed() {
+        guard let text = textField.text, let text2 = textFieldPassword.text, let token = InstanceID.instanceID().token() else { return }
+        let balance = 0
+        let email = text
+        let isInvestor = tapped
+        let password = text2
+        let userData = false
+        
+        let post: [String: Any] = [
+            "balance": balance,
+            "email": email,
+            "isInvestor": isInvestor,
+            "password": password,
+            "token": token,
+            "userData": userData
+        ]
+        
+        Auth.auth().createUser(withEmail: email, password: password){ (user, error) in
+            if let error = error {
+                print(error.localizedDescription)
+            } else {
+                guard let uid = Auth.auth().currentUser?.uid else {return}
+                let ref = Database.database().reference()
+                ref.child("users").child("\(uid)").setValue(post)
+                if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                    appDelegate.isLogged = true
+                    appDelegate.cordinateAppFlow()
+                }
+            }
+        }
     }
 
 }
 
 extension SignUpViewController: BEMCheckBoxDelegate {
-
     func didTap(_ checkBox: BEMCheckBox) {
         tapped = !tapped
     }

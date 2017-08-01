@@ -9,12 +9,7 @@
 import UIKit
 import EasyPeasy
 
-class RegistrationView: UIViewController {
-    
-    let halfSizeY = UIScreen.main.bounds.height/4
-    
-    let SizeX = UIScreen.main.bounds.width
-    let SizeY = UIScreen.main.bounds.height
+class RegistrationView: UIViewController { // name change to Viewcontroller
     
     lazy var labelName: UILabel = {
         let label = UILabel()
@@ -34,37 +29,39 @@ class RegistrationView: UIViewController {
     
     lazy var imageView: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "sample")
+        image.image = #imageLiteral(resourceName: "sample")
         image.contentMode = .scaleToFill
         return image
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.addSubview(imageView)
-        view.addSubview(labelName)
-        view.addSubview(labelProjectName)
-        
+        setupViews()
+        setupConstraint()
+    }
+    
+    private func setupViews() {
+        [imageView, labelName, labelProjectName].forEach {view.addSubview($0)}
+        setupNavigationBar()
+    }
+    
+    private func setupNavigationBar() {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.view.backgroundColor = .clear
         self.navigationController?.navigationBar.topItem?.title = ""
         self.navigationController?.navigationBar.tintColor = .white
-        
-        setupConstraint()
     }
     
-    func setupConstraint() {
-    
+    private func setupConstraint() {
         imageView <- [
-            Width(SizeX),
-            Height(SizeY)
+            Width(Screen.width),
+            Height(Screen.height)
         ]
         
         labelName <- [
-            Top(SizeY*0.15),
+            Top(Screen.height * 0.15),
             CenterX(0)
         ]
         
@@ -72,9 +69,6 @@ class RegistrationView: UIViewController {
             Top(0).to(labelName, .bottom),
             Left(-15).to(labelName, .right)
         ]
-        
-               
-    
     }
 
 }

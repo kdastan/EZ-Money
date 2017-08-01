@@ -12,16 +12,20 @@ import Firebase
 
 class TakeBorrowViewController: UIViewController {
     
-    var cell = 10
-
+    var a = Container()
+    
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(BorrowTableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.rowHeight = 150
+        tableView.tableHeaderView = self.a
+        tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: Int(Screen.width - 20), height: 260)
+        tableView.separatorStyle = .none
+        tableView.allowsSelection = false
+        tableView.backgroundColor = .blueBackground
+        tableView.dataSource = self
         return tableView
     }()
-    
-    var a = Container()
     
     lazy var button: UIButton = {
         let button = UIButton()
@@ -73,44 +77,19 @@ class TakeBorrowViewController: UIViewController {
         searchBar.layer.borderColor = UIColor(colorLiteralRed: 70/255, green: 161/255, blue: 213/255, alpha: 1).cgColor
         searchBar.layer.borderWidth = 1
         searchBar.tintColor = .white
-        //        searchBar.
+        searchBar.delegate = self
         searchBar.setValue("Отмена", forKey: "cancelButtonText")
         return searchBar
     }()
     
-    let sizeX = UIScreen.main.bounds.width - 20
-    let newSizeX = (UIScreen.main.bounds.width - 50)/2
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .blueBackground
-
-        tableView.dataSource = self
-        searchBar.delegate = self
-        
-        tableView.tableHeaderView = a
-        tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: Int(sizeX), height: 260)
-        tableView.separatorStyle = .none
-        tableView.allowsSelection = false
-        tableView.backgroundColor = .blueBackground
-        
         setupView()
         setupConstraints()
-        
         fetchFromFirebase()
-        
     }
-//    
-//    func pr() {
-//     
-//        print("Good and it works")
-//        self.present(MenuMyDataViewController(), animated: true, completion: nil)
-//        
-//    }
     
     func fetchFromFirebase() {
-        
         let ref = Database.database().reference()
         let userID = Auth.auth().currentUser?.uid
     
@@ -123,21 +102,16 @@ class TakeBorrowViewController: UIViewController {
             let password = value?["password"] as?  String
             let token = value?["token"] as? String
             let userData = value?["userData"] as? Bool
-            
-            
-            
-            
+     
         }){ (error) in
             print(error.localizedDescription)
         }
-    
     }
     
     func investorSearch() {
         searchBar.isHidden = false
         requestButton.isHidden = true
         investorSearchButton.isHidden = true
-        print("Hello")
     }
     
     func pressed() {
@@ -148,19 +122,13 @@ class TakeBorrowViewController: UIViewController {
         
         let ref = Database.database().reference()
         let auth = Auth.auth().currentUser?.uid
-        
         ref.child("users").child(auth!).observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
-            
-            
             let isData = value?["userDatam"] as? Bool ?? false
-            
-            if isData {
-                print("Good")
-            } else {
-                self.present(MenuMyDataViewController(), animated: true, completion: nil)
+        
+            if !isData {
+                //self.present(MenuMyDataViewController(), animated: true, completion: nil)
             }
-            
         }) {(error) in
             print(error.localizedDescription)
         }
@@ -168,24 +136,20 @@ class TakeBorrowViewController: UIViewController {
     }
     
     func setupView() {
+        edgesForExtendedLayout = []
+        view.backgroundColor = .blueBackground
         view.addSubview(tableView)
-        a.addSubview(button)
-        a.addSubview(requestButton)
-        a.addSubview(investorSearchButton)
-        a.addSubview(label)
-        a.addSubview(searchBar)
+        [button, requestButton, investorSearchButton, label, searchBar].forEach {a.addSubview($0)}
     }
     
     func setupConstraints() {
-        edgesForExtendedLayout = []
-        
         tableView <- [
-            Width(sizeX),
+            Width(Screen.width - 20),
             Bottom(10),
             Top(0),
             CenterX(0)
         ]
-        
+    
         button <- [
             CenterX(0),
             //Top(25).to( container.field2, .bottom),
@@ -197,14 +161,14 @@ class TakeBorrowViewController: UIViewController {
         
         requestButton <- [
             Top(15).to(button, .top),
-            Width(newSizeX),
+            Width((Screen.width - 50)/2),
             Height(50),
             Left(10)
         ]
         
         investorSearchButton <- [
             Top(15).to(button, .top),
-            Width(newSizeX),
+            Width((Screen.width - 50)/2),
             Height(50),
             Right(10)
         ]
@@ -219,11 +183,23 @@ class TakeBorrowViewController: UIViewController {
             Top(15).to(button, .top),
             CenterX(0),
             Height(50),
-            Width(sizeX-10)
+            Width(Screen.width-30)
         ]
-        
     }
 
+}
+
+extension TakeBorrowViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! BorrowTableViewCell
+        cell.backgroundColor = .blueBackground
+        cell.button.tag = indexPath.row
+        return cell
+    }
 }
 
 
