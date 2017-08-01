@@ -13,7 +13,7 @@ class SSNVRule: RegexRule {
     
     static let regex = "[А-я]+"
     
-    convenience init(message : String = "Введите имя заново"){
+    convenience init(message : String = "Попробуйте заполнить поле заново"){
         self.init(regex: SSNVRule.regex, message : message)
     }
     

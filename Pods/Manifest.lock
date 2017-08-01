@@ -39,6 +39,7 @@ PODS:
   - GTMSessionFetcher/Core (1.1.11)
   - IQKeyboardManagerSwift (4.0.10)
   - JVFloatLabeledTextField (1.2.0)
+  - LTHRadioButton (1.1.1)
   - RESideMenu (4.0.7)
   - SwiftValidator (4.0.0)
   - SwipeViewController (0.1.8)
@@ -52,6 +53,7 @@ DEPENDENCIES:
   - Firebase/Database
   - IQKeyboardManagerSwift
   - JVFloatLabeledTextField
+  - LTHRadioButton
   - RESideMenu
   - SwiftValidator (from `https://github.com/jpotts18/SwiftValidator.git`, branch `master`)
   - SwipeViewController
@@ -79,10 +81,11 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 5ad62e8200fa00ed011fe5e08d27fef72c5b1429
   IQKeyboardManagerSwift: 75ba21a23794a1e6b6fe6d9a267ea17f80e06771
   JVFloatLabeledTextField: 96c0c1b6739001801340d25b86aff990d67c4181
+  LTHRadioButton: 6d54db446b2edba0eafcb65b28deedb09dad8a47
   RESideMenu: f24c508404b49c667344c54aba7e590883533958
   SwiftValidator: 25ded5ca1f10c05adf57f6ac82a72d28ac8d91af
   SwipeViewController: 0e396aa7d7756c30f8914ef59aea2a3d7d7798bc
 
-PODFILE CHECKSUM: 90213467c2f9069e31a0792119b9ccf706c8ba87
+PODFILE CHECKSUM: 6d9406844a48a6eea5ac7f716bba580ab395d9d1
 
 COCOAPODS: 1.2.1

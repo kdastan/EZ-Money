@@ -23,6 +23,8 @@
 		18540A4D1F25B8740004CBD4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18540A4C1F25B8740004CBD4 /* LoginViewController.swift */; };
 		18540A531F25C5450004CBD4 /* helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18540A521F25C5450004CBD4 /* helpers.swift */; };
 		18540A551F260C030004CBD4 /* TextFieldWithIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18540A541F260C030004CBD4 /* TextFieldWithIcon.swift */; };
+		187966911F3034FC0001ED8B /* phoneValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187966901F3034FC0001ED8B /* phoneValidation.swift */; };
+		187966941F3051740001ED8B /* documentNumbersValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187966931F3051740001ED8B /* documentNumbersValidation.swift */; };
 		18854C031F2F289500ACEC52 /* paddingTextFieldsForUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18854C021F2F289500ACEC52 /* paddingTextFieldsForUserData.swift */; };
 		18854C051F2FB11B00ACEC52 /* nameValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18854C041F2FB11B00ACEC52 /* nameValidation.swift */; };
 		18ED1D421F2B4BA3001B7A90 /* MenuMyDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ED1D411F2B4BA3001B7A90 /* MenuMyDataViewController.swift */; };
@@ -59,6 +61,8 @@
 		18540A4C1F25B8740004CBD4 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		18540A521F25C5450004CBD4 /* helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = helpers.swift; sourceTree = "<group>"; };
 		18540A541F260C030004CBD4 /* TextFieldWithIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldWithIcon.swift; sourceTree = "<group>"; };
+		187966901F3034FC0001ED8B /* phoneValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = phoneValidation.swift; sourceTree = "<group>"; };
+		187966931F3051740001ED8B /* documentNumbersValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = documentNumbersValidation.swift; sourceTree = "<group>"; };
 		18854C021F2F289500ACEC52 /* paddingTextFieldsForUserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = paddingTextFieldsForUserData.swift; sourceTree = "<group>"; };
 		18854C041F2FB11B00ACEC52 /* nameValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = nameValidation.swift; sourceTree = "<group>"; };
 		18ED1D411F2B4BA3001B7A90 /* MenuMyDataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuMyDataViewController.swift; sourceTree = "<group>"; };
@@ -159,7 +163,7 @@
 				18109F7B1F27B75C00DDA339 /* BarrowTableViewContainer.swift */,
 				18ED8E231F28E3CB00848ACD /* MenuSideTableViewCell.swift */,
 				184256B51F29AA5800ECEDE3 /* MenuHeaderView.swift */,
-				18854C041F2FB11B00ACEC52 /* nameValidation.swift */,
+				187966921F30351C0001ED8B /* Validation */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -185,6 +189,16 @@
 				18540A521F25C5450004CBD4 /* helpers.swift */,
 			);
 			name = Tints;
+			sourceTree = "<group>";
+		};
+		187966921F30351C0001ED8B /* Validation */ = {
+			isa = PBXGroup;
+			children = (
+				18854C041F2FB11B00ACEC52 /* nameValidation.swift */,
+				187966901F3034FC0001ED8B /* phoneValidation.swift */,
+				187966931F3051740001ED8B /* documentNumbersValidation.swift */,
+			);
+			name = Validation;
 			sourceTree = "<group>";
 		};
 		18F07DF21F2765200095F3A0 /* Extensions */ = {
@@ -328,6 +342,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				187966941F3051740001ED8B /* documentNumbersValidation.swift in Sources */,
 				18F07DEF1F273E700095F3A0 /* BorrowContainer.swift in Sources */,
 				18854C051F2FB11B00ACEC52 /* nameValidation.swift in Sources */,
 				18F07DE51F26524A0095F3A0 /* SignUpViewController.swift in Sources */,
@@ -348,6 +363,7 @@
 				18540A3B1F25B5660004CBD4 /* AppDelegate.swift in Sources */,
 				18540A531F25C5450004CBD4 /* helpers.swift in Sources */,
 				182A9EF41F288B700039BFB8 /* MenuViewController.swift in Sources */,
+				187966911F3034FC0001ED8B /* phoneValidation.swift in Sources */,
 				18ED1D421F2B4BA3001B7A90 /* MenuMyDataViewController.swift in Sources */,
 				18109F7C1F27B75C00DDA339 /* BarrowTableViewContainer.swift in Sources */,
 				18109F781F27A72700DDA339 /* Container.swift in Sources */,

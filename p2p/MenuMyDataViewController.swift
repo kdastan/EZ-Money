@@ -13,6 +13,10 @@ import JVFloatLabeledTextField
 
 class MenuMyDataViewController: UIViewController {
     
+    var firstStep = false
+    var secondStep = false
+    var thirdStep = false
+    
     lazy var scroll: UIScrollView = {
         let scroll = UIScrollView()
         scroll.isScrollEnabled = true
@@ -23,7 +27,8 @@ class MenuMyDataViewController: UIViewController {
     
     lazy var button: UIButton = {
         let button = UIButton()
-        button.setTitle("Back", for: .normal)
+        button.setTitle("Submit", for: .normal)
+        button.backgroundColor = .orange
         button.addTarget(self, action: #selector(press), for: .touchUpInside)
         return button
     }()
@@ -83,32 +88,54 @@ class MenuMyDataViewController: UIViewController {
     //MARK: User phone information
     lazy var mobilePhone: PaddingTextFieldForUserData = {
         let text = PaddingTextFieldForUserData()
-        text.placeholder = "Моб. телефон: 8(xxx)xxx-xx-xx"
+        text.placeholder = "Моб. телефон: без 8 или +7"
         text.backgroundColor = .white
         text.layer.cornerRadius = 10
         text.floatingLabelXPadding = 5
         text.keyboardType = .numberPad
+        text.isHidden = true
         return text
     }()
     
     lazy var homePhone: PaddingTextFieldForUserData = {
         let text = PaddingTextFieldForUserData()
-        text.placeholder = "Раб. телефон: 8(xxxx)xx-xx-xx"
+        text.placeholder = "Раб. телефон: без 8 или +7"
         text.backgroundColor = .white
         text.layer.cornerRadius = 10
         text.floatingLabelXPadding = 5
         text.keyboardType = .numberPad
+        text.isHidden = true
         return text
     }()
     
+    //MARK: User phone error labels
+    lazy var labelMobilePhoneError: UILabel = {
+        let label = UILabel()
+        label.text = ""
+        label.font = UIFont(name: "Helvetica", size: 12)
+        return label
+    }()
+    
+    lazy var labelHomePhoneError: UILabel = {
+        let label = UILabel()
+        label.text = ""
+        label.font = UIFont(name: "Helvetica", size: 12)
+        return label
+    }()
+    
     //MARK: User date information
-    lazy var birthDate: PaddingTextFieldForUserData = {
-        let text = PaddingTextFieldForUserData()
-        text.placeholder = "Год рождения"
-        text.backgroundColor = .white
-        text.layer.cornerRadius = 10
-        text.floatingLabelXPadding = 5
-        return text
+    lazy var bDay: UILabel = {
+        let date = UILabel()
+        date.text = "День рождения"
+        date.isHidden = true
+        return date
+    }()
+    
+    lazy var birthDate: UIDatePicker = {
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .date
+        datePicker.isHidden = true
+        return datePicker
     }()
     
     lazy var birthPlace: PaddingTextFieldForUserData = {
@@ -117,7 +144,16 @@ class MenuMyDataViewController: UIViewController {
         text.backgroundColor = .white
         text.layer.cornerRadius = 10
         text.floatingLabelXPadding = 5
+        text.isHidden = true
         return text
+    }()
+    
+    //MARK: User birth error label
+    lazy var labelBirthPlaceError: UILabel = {
+        let label = UILabel()
+        label.text = ""
+        label.font = UIFont(name: "Helvetica", size: 12)
+        return label
     }()
     
     //MARK: User document information
@@ -127,6 +163,8 @@ class MenuMyDataViewController: UIViewController {
         text.backgroundColor = .white
         text.layer.cornerRadius = 10
         text.floatingLabelXPadding = 5
+        text.keyboardType = .numberPad
+        text.isHidden = true
         return text
     }()
     
@@ -136,6 +174,8 @@ class MenuMyDataViewController: UIViewController {
         text.backgroundColor = .white
         text.layer.cornerRadius = 10
         text.floatingLabelXPadding = 5
+        text.keyboardType = .numberPad
+        text.isHidden = true
         return text
     }()
     
@@ -145,25 +185,65 @@ class MenuMyDataViewController: UIViewController {
         text.backgroundColor = .white
         text.layer.cornerRadius = 10
         text.floatingLabelXPadding = 5
+        text.isHidden = true
         return text
     }()
     
-    lazy var dateOfIssue: PaddingTextFieldForUserData = {
-        let text = PaddingTextFieldForUserData()
-        text.placeholder = "Дата выдачи"
-        text.backgroundColor = .white
-        text.layer.cornerRadius = 10
-        text.floatingLabelXPadding = 5
-        return text
+    lazy var dateOfIssue: UIDatePicker = {
+        let date = UIDatePicker()
+        date.datePickerMode = .date
+        date.isHidden = true
+        return date
     }()
     
-    lazy var validatyDate: PaddingTextFieldForUserData = {
-        let text = PaddingTextFieldForUserData()
-        text.placeholder = "Дата истечения"
-        text.backgroundColor = .white
-        text.layer.cornerRadius = 10
-        text.floatingLabelXPadding = 5
-        return text
+    lazy var validatyDate: UIDatePicker = {
+        let date = UIDatePicker()
+        date.datePickerMode = .date
+        date.isHidden = true
+        return date
+    }()
+    
+    lazy var labelDateOfIssue: UILabel = {
+        let label = UILabel()
+        label.text = "Дата выпуска документа"
+        
+        label.isHidden = true
+        return label
+    }()
+    
+    lazy var labelValidatyDate: UILabel = {
+        let label = UILabel()
+        label.text = "Срок истечения документа"
+        
+        label.isHidden = true
+        return label
+    }()
+    
+    //MARK: User documents error label
+    lazy var labelIdNumberError: UILabel = {
+        let label = UILabel()
+        label.text = ""
+        label.font = UIFont(name: "Helvetica", size: 12)
+        
+        return label
+    }()
+    
+    lazy var labeliinNumberError: UILabel = {
+        let label = UILabel()
+        label.text = ""
+        label.font = UIFont(name: "Helvetica", size: 12)
+        
+        return label
+    }()
+    
+    
+    
+    lazy var labelissuingAuthorityError: UILabel = {
+        let label = UILabel()
+        label.text = ""
+        label.font = UIFont(name: "Helvetica", size: 12)
+        
+        return label
     }()
 
     override func viewDidLoad() {
@@ -196,8 +276,10 @@ class MenuMyDataViewController: UIViewController {
        
         
         validator.registerField(userName, errorLabel: labelUserNameError, rules: [SSNVRule()])
-        validator.registerField(userSurname, errorLabel: labelUserSurnameError, rules: [FullNameRule()])
-        validator.registerField(userPatronymic, errorLabel: labelUserPatronymicError, rules: [FullNameRule()])
+        validator.registerField(userSurname, errorLabel: labelUserSurnameError, rules: [SSNVRule()])
+        validator.registerField(userPatronymic, errorLabel: labelUserPatronymicError, rules: [SSNVRule()])
+        
+        
         //validator.registerField(emailTextField, errorLabel: label, rules: [RequiredRule(), EmailRule(message: "Invalid email")])
         //validator.registerField(emailConfirmTextField, errorLabel: label2, rules: [ConfirmationRule(confirmField: emailTextField)])
         
@@ -212,24 +294,12 @@ class MenuMyDataViewController: UIViewController {
     
     func setupViews() {
         view.addSubview(scroll)
-        scroll.addSubview(button)
         
-        scroll.addSubview(userName)
-        scroll.addSubview(userSurname)
-        scroll.addSubview(userPatronymic)
-        scroll.addSubview(mobilePhone)
-        scroll.addSubview(homePhone)
-        scroll.addSubview(birthDate)
-        scroll.addSubview(birthPlace)
-        scroll.addSubview(idNumber)
-        scroll.addSubview(iinNumber)
-        scroll.addSubview(dateOfIssue)
-        scroll.addSubview(issuingAuthority)
-        scroll.addSubview(validatyDate)
+        [userName, userSurname, userPatronymic, mobilePhone, homePhone, birthDate, birthPlace, idNumber, iinNumber, dateOfIssue, issuingAuthority, validatyDate, labelUserNameError, labelUserSurnameError, labelUserPatronymicError, labelMobilePhoneError, labelHomePhoneError, bDay, birthDate, labelBirthPlaceError, birthPlace, labelIdNumberError, labeliinNumberError, labelDateOfIssue, labelissuingAuthorityError, labelValidatyDate].forEach{
+            scroll.addSubview($0)
+        }
         
-        scroll.addSubview(labelUserNameError)
-        scroll.addSubview(labelUserSurnameError)
-        scroll.addSubview(labelUserPatronymicError)
+        view.addSubview(button)
     }
     
     func setupConstraints() {
@@ -242,7 +312,7 @@ class MenuMyDataViewController: UIViewController {
         ]
         
         labelUserNameError <- [
-            Height(10),
+            Height(14),
             Left(18),
             Top(40)
         ]
@@ -255,7 +325,7 @@ class MenuMyDataViewController: UIViewController {
         ]
         
         labelUserSurnameError <- [
-            Height(10),
+            Height(14),
             Left(18),
             Top(10).to(userName, .bottom)
         ]
@@ -268,7 +338,7 @@ class MenuMyDataViewController: UIViewController {
         ]
         
         labelUserPatronymicError <- [
-            Height(10),
+            Height(14),
             Left(18),
             Top(10).to(userSurname, .bottom)
         ]
@@ -280,72 +350,144 @@ class MenuMyDataViewController: UIViewController {
             Top(6).to(labelUserPatronymicError, .bottom)
         ]
         
+        labelMobilePhoneError <- [
+            Height(14),
+            Left(18),
+            Top(40)
+        ]
+        
         mobilePhone <- [
             Height(50),
             Width(300),
-            Left(0).to(userPatronymic, .left),
-            Top(10).to(userPatronymic, .bottom)
+            Top(6).to(labelMobilePhoneError, .bottom),
+            Left(8)
+        ]
+        
+        labelHomePhoneError <- [
+            Height(14),
+            Left(18),
+            Top(10).to(mobilePhone, .bottom)
         ]
         
         homePhone <- [
             Height(50),
             Width(300),
-            Left(0).to(mobilePhone, .left),
-            Top(10).to(mobilePhone, .bottom)
+            Left(8),
+            Top(6).to(labelHomePhoneError, .bottom)
+        ]
+        
+        
+        
+        bDay <- [
+            Height(16),
+            Left(18),
+            Top(40)
         ]
         
         birthDate <- [
-            Height(50),
-            Width(200),
+            Height(200),
+            Width(UIScreen.main.bounds.width),
             Left(0).to(homePhone, .left),
-            Top(10).to(homePhone, .bottom)
+            Top(10).to(bDay, .bottom)
+        ]
+        
+        labelBirthPlaceError <- [
+            Height(14),
+            Left(18),
+            Top(10).to(birthDate, .bottom)
         ]
         
         birthPlace <- [
             Height(50),
-            Width(200),
+            Width(300),
             Left(0).to(birthDate, .left),
-            Top(10).to(birthDate, .bottom)
+            Top(10).to(labelBirthPlaceError, .bottom)
+        ]
+        
+        
+        
+        
+        
+        
+        labelIdNumberError <- [
+            Height(14),
+            Left(18),
+            Top(40)
         ]
         
         idNumber <- [
             Height(50),
-            Width(200),
-            Left(0).to(birthPlace, .left),
-            Top(10).to(birthPlace, .bottom)
+            Width(300),
+            Top(6).to(labelIdNumberError, .bottom),
+            Left(8)
+        ]
+        
+        labeliinNumberError <- [
+            Height(14),
+            Left(18),
+            Top(10).to(idNumber, .bottom)
         ]
         
         iinNumber <- [
             Height(50),
-            Width(200),
-            Left(0).to(idNumber, .left),
-            Top(10).to(idNumber, .bottom)
+            Width(300),
+            Top(6).to(labeliinNumberError, .bottom),
+            Left(8)
         ]
         
-        dateOfIssue <- [
-            Height(50),
-            Width(200),
-            Left(0).to(iinNumber, .left),
+        labelDateOfIssue <- [
+            Height(14),
+            Left(18),
             Top(10).to(iinNumber, .bottom)
         ]
         
-        validatyDate <- [
-            Height(50),
-            Width(200),
-            Left(0).to(dateOfIssue, .left),
+        dateOfIssue <- [
+            Height(200),
+            Width(UIScreen.main.bounds.width),
+            Top(6).to(labelDateOfIssue, .bottom),
+            Left(8)
+        ]
+        
+        labelValidatyDate <- [
+            Height(16),
+            Left(18),
             Top(10).to(dateOfIssue, .bottom)
+        ]
+        
+        validatyDate <- [
+            Height(200),
+            Width(UIScreen.main.bounds.width),
+            Top(6).to(labelValidatyDate, .bottom),
+            Left(8)
+        ]
+        
+        labelissuingAuthorityError <- [
+            Height(16),
+            Left(18),
+            Top(10).to(validatyDate, .bottom)
         ]
         
         issuingAuthority <- [
             Height(50),
-            Width(200),
-            Left(0).to(validatyDate, .left),
-            Top(10).to(validatyDate, .bottom)
+            Width(300),
+            Top(6).to(labelissuingAuthorityError, .bottom),
+            Left(8)
         ]
         
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         button <- [
-            Size(48),
-            Top(10).to(issuingAuthority, .bottom),
+            Width(UIScreen.main.bounds.width),
+            Height(48),
+            Bottom(0),
             CenterX(0)
         ]
        
@@ -355,7 +497,54 @@ class MenuMyDataViewController: UIViewController {
 
 extension MenuMyDataViewController: ValidationDelegate {
     func validationSuccessful() {
-        print("Good")
+        if firstStep != true {
+            firstStep = true
+            mobilePhone.isHidden = false
+            homePhone.isHidden = false
+            
+            userName.isHidden = true
+            userSurname.isHidden = true
+            userPatronymic.isHidden = true
+            
+            validator.registerField(mobilePhone, errorLabel: labelMobilePhoneError, rules: [phoneValidation()])
+            validator.registerField(homePhone, errorLabel: labelHomePhoneError, rules: [phoneValidation()])
+            
+        } else if secondStep != true {
+        
+            secondStep = true
+            mobilePhone.isHidden = true
+            homePhone.isHidden = true
+            
+            birthDate.isHidden = false
+            birthPlace.isHidden = false
+            bDay.isHidden = false
+            
+            validator.registerField(birthPlace, errorLabel: labelBirthPlaceError, rules: [SSNVRule()])
+
+        } else if thirdStep != true {
+            
+            thirdStep = true
+        
+            birthDate.isHidden = true
+            birthPlace.isHidden = true
+            bDay.isHidden = true
+            
+            idNumber.isHidden = false
+            iinNumber.isHidden = false
+            issuingAuthority.isHidden = false
+            dateOfIssue.isHidden = false
+            validatyDate.isHidden = false
+            labelDateOfIssue.isHidden = false
+            labelValidatyDate.isHidden = false
+            
+            validator.registerField(idNumber, errorLabel: labelIdNumberError, rules: [documentNumbersValidation()])
+            validator.registerField(iinNumber, errorLabel: labeliinNumberError, rules: [documentNumbersValidation()])
+            validator.registerField(issuingAuthority, errorLabel: labelissuingAuthorityError, rules: [SSNVRule()])
+            //validator.registerField(dateOfIssue, errorLabel: labelDateOfIssueError, rules: [SSNVRule()])
+            //validator.registerField(validatyDate, errorLabel: labelValidatyDateError, rules: [SSNVRule()])
+        } else {
+            self.dismiss(animated: true, completion: nil)
+        }
         
         
         
