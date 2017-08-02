@@ -127,7 +127,7 @@ class TakeBorrowViewController: UIViewController {
             let isData = value?["userDatam"] as? Bool ?? false
         
             if !isData {
-                //self.present(MenuMyDataViewController(), animated: true, completion: nil)
+                self.present(MenuMyDataViewController(), animated: true, completion: nil)
             }
         }) {(error) in
             print(error.localizedDescription)

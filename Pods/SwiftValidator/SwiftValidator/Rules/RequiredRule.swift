@@ -21,7 +21,7 @@ open class RequiredRule: Rule {
      - parameter message: String of error message.
      - returns: An initialized `RequiredRule` object, or nil if an object could not be created for some reason that would not result in an exception.
      */
-    public init(message : String = "This field is required"){
+    public init(message : String = "Обязательное поле"){
         self.message = message
     }
     

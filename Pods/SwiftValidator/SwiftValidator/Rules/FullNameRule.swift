@@ -20,7 +20,7 @@ public class FullNameRule : Rule {
      - parameter message: String of error message.
      - returns: An initialized `FullNameRule` object, or nil if an object could not be created for some reason that would not result in an exception.
      */
-    public init(message : String = "Please provide a first & last name"){
+    public init(message : String = "Попробуйте заполнить поле заново"){
         self.message = message
     }
     

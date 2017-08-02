@@ -10,7 +10,6 @@ import UIKit
 
 class Constants {
     
-    
 }
 
 class Screen {

@@ -29,6 +29,7 @@
 		187966991F3084200001ED8B /* MenuFieldContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187966981F3084200001ED8B /* MenuFieldContainer.swift */; };
 		1879669C1F30F1E00001ED8B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1879669B1F30F1E00001ED8B /* Constants.swift */; };
 		1879669E1F30FF330001ED8B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1879669D1F30FF330001ED8B /* User.swift */; };
+		187966A01F310BB70001ED8B /* DataTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1879669F1F310BB70001ED8B /* DataTableViewCell.swift */; };
 		18854C031F2F289500ACEC52 /* paddingTextFieldsForUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18854C021F2F289500ACEC52 /* paddingTextFieldsForUserData.swift */; };
 		18854C051F2FB11B00ACEC52 /* nameValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18854C041F2FB11B00ACEC52 /* nameValidation.swift */; };
 		18ED1D421F2B4BA3001B7A90 /* MenuMyDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ED1D411F2B4BA3001B7A90 /* MenuMyDataViewController.swift */; };
@@ -71,6 +72,7 @@
 		187966981F3084200001ED8B /* MenuFieldContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuFieldContainer.swift; sourceTree = "<group>"; };
 		1879669B1F30F1E00001ED8B /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		1879669D1F30FF330001ED8B /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		1879669F1F310BB70001ED8B /* DataTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataTableViewCell.swift; sourceTree = "<group>"; };
 		18854C021F2F289500ACEC52 /* paddingTextFieldsForUserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = paddingTextFieldsForUserData.swift; sourceTree = "<group>"; };
 		18854C041F2FB11B00ACEC52 /* nameValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = nameValidation.swift; sourceTree = "<group>"; };
 		18ED1D411F2B4BA3001B7A90 /* MenuMyDataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuMyDataViewController.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				187966951F3067780001ED8B /* RadioButton */,
 				187966921F30351C0001ED8B /* Validation */,
 				187966981F3084200001ED8B /* MenuFieldContainer.swift */,
+				1879669F1F310BB70001ED8B /* DataTableViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -389,6 +392,7 @@
 				18F07DEB1F272E630095F3A0 /* TakeBorrowViewController.swift in Sources */,
 				184256B61F29AA5800ECEDE3 /* MenuHeaderView.swift in Sources */,
 				18F07DED1F272E790095F3A0 /* RequestListViewController.swift in Sources */,
+				187966A01F310BB70001ED8B /* DataTableViewCell.swift in Sources */,
 				18ED1D441F2B78BF001B7A90 /* userDataModel.swift in Sources */,
 				18F07DF41F2765370095F3A0 /* Extensions.swift in Sources */,
 				18540A3B1F25B5660004CBD4 /* AppDelegate.swift in Sources */,
