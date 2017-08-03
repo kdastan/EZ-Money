@@ -25,6 +25,7 @@ func createTextField(_ isMail: Bool) -> TextFieldWithIcon {
         else{
             textfield.attributedPlaceholder = NSAttributedString(string: "Пароль", attributes: [NSForegroundColorAttributeName: UIColor.white])
             textfield.textColor = .white
+            textfield.isSecureTextEntry = true
             textfield.imageView.image = UIImage(named: "password")
             
         }

@@ -45,6 +45,14 @@ class MenuMyDataViewController: UIViewController {
         return button
     }()
     
+    lazy var cancelButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Отмена", for: .normal)
+        button.backgroundColor = .blue
+        button.addTarget(self, action: #selector(cancelPressed), for: .touchUpInside)
+        return button
+    }()
+    
     lazy var userName: MenuFieldContainer = {
         let userNameField = MenuFieldContainer()
         userNameField.textField.placeholder = "Имя"
@@ -148,7 +156,7 @@ class MenuMyDataViewController: UIViewController {
     }
     
     func setupViews() {
-        [scroll, button].forEach{ view.addSubview($0) }
+        [scroll, button, cancelButton].forEach{ view.addSubview($0) }
         [label, userName, userSurname, userPatronymic, userMobilePhone, userPhone, userBirthDate, userBirthPlace, userIdNumber, userIINnumber, userDateOfIssue, userDateOfValidaty, userIssuingAuthority].forEach{ scroll.addSubview($0) }
         textFieldValidation()
         edgesForExtendedLayout = []
@@ -262,10 +270,17 @@ class MenuMyDataViewController: UIViewController {
             Top(10).to(userDateOfValidaty, .bottom)
         ]
         
-        button <- [
-            Width(UIScreen.main.bounds.width),
+        cancelButton <- [
+            Width(Screen.width / 2),
             Height(44),
-            CenterX(0),
+            Left(0),
+            Bottom(0)
+        ]
+        
+        button <- [
+            Width(Screen.width / 2),
+            Height(44),
+            Right(0),
             Bottom(0)
         ]
     }
@@ -307,6 +322,10 @@ class MenuMyDataViewController: UIViewController {
     
     func validatorButton() {
         validator.validate(self)
+    }
+    
+    func cancelPressed() {
+        self.dismiss(animated: true, completion: nil)
     }
 
     func dateValueChanged(sender: UIDatePicker) {

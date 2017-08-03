@@ -9,11 +9,24 @@
 import UIKit
 import EasyPeasy
 import Firebase
+import FirebaseDatabase
+
+struct Requests {
+    let amount: String!
+    let date: String!
+    let id: String!
+    let investorId: String!
+    let rate: String!
+    let time: String!
+}
 
 class TakeBorrowViewController: UIViewController {
     
     var a = Container()
     var arr: [BorrowTableViewCell] = []
+    
+    var rqsts = [Requests]()
+    var names: [String] = []
     
     lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -87,35 +100,18 @@ class TakeBorrowViewController: UIViewController {
         super.viewDidLoad()
         setupView()
         setupConstraints()
-        fetchFromFirebase()
-    }
-    
-    func fetchFromFirebase() {
-        let ref = Database.database().reference()
-        let userID = Auth.auth().currentUser?.uid
-    
-        ref.child("users").child(userID!).observeSingleEvent(of: .value, with: { (snapshot) in
-            let value = snapshot.value as? NSDictionary
-            
-            let balance = value?["balance"] as? Int
-            let email = value?["email"] as? String
-            let investor = value?["isInvestor"] as? Bool
-            let password = value?["password"] as?  String
-            let token = value?["token"] as? String
-            let userData = value?["userData"] as? Bool
-     
-        }){ (error) in
-            print(error.localizedDescription)
-        }
+        //fetchFromFirebase()
     }
     
     func investorSearch() {
         searchBar.isHidden = false
         requestButton.isHidden = true
         investorSearchButton.isHidden = true
+        print(rqsts.count)
     }
     
     func pressed() {
+        
         button.isHidden = true
         requestButton.isHidden = false
         investorSearchButton.isHidden = false
@@ -134,8 +130,21 @@ class TakeBorrowViewController: UIViewController {
             print(error.localizedDescription)
         }
         
-        print(self.a.container.field.textField.text)
-        print(self.a.container.field2.textField.text)
+        let newRef = Database.database().reference()
+        newRef.child("investorRequests").queryOrderedByKey().observe(.childAdded, with: { snapshot in
+            
+            let value = snapshot.value as? [String: String]
+            
+            let amount = value?["amount"]
+            let date = value?["date"]
+            let id = value?["id"]
+            let investorId = value?["investorId"]
+            let rate = value?["rate"]
+            let time = value?["time"]
+            
+            self.rqsts.insert(Requests(amount: amount, date: date, id: id, investorId: investorId, rate: rate, time: time), at: 0)
+            self.tableView.reloadData()
+        })
     }
     
     func setupView() {
@@ -194,12 +203,23 @@ class TakeBorrowViewController: UIViewController {
 
 extension TakeBorrowViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arr.count
+        return rqsts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! BorrowTableViewCell
         cell.backgroundColor = .blueBackground
+        //cell.container.firstField.labelName.text = names[indexPath.row]
+        
+        User.fetchUserName(uid: self.rqsts[indexPath.row].investorId, completion: { name, surname in
+            guard let name = name, let surname = surname else {return}
+            
+            cell.container.firstField.labelName.text = "\(surname) \(name)"
+            
+        })
+        
+        cell.container.secondField.labelName.text = rqsts[indexPath.row].time
+        cell.container.thirdField.labelName.text = rqsts[indexPath.row].rate
         cell.button.tag = indexPath.row
         return cell
     }

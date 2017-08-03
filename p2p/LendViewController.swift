@@ -8,6 +8,7 @@
 
 import UIKit
 import EasyPeasy
+import Firebase
 
 class LendViewController: UIViewController {
 
@@ -55,7 +56,34 @@ class LendViewController: UIViewController {
     }
     
     func pressed() {
-        print("invest")
+        
+        let ref = Database.database().reference()
+        //let uid = Auth.auth().currentUser?.uid
+        
+        let newRef = ref.child("investorRequests").childByAutoId()
+        
+        guard let money = container.container.investmentField.textField.text, let percent = container.container.percentField.textField.text, let period = container.container.periodField.textField.text, let uid = Auth.auth().currentUser?.uid else { return }
+        
+        let post: [String: Any] = [
+            "amount": money,
+            "date": currentDate(),
+            "id": newRef.key,
+            "investorId": uid,
+            "rate": percent,
+            "time": period
+        ]
+        
+        newRef.setValue(post)
+        
+    }
+    
+    func currentDate() -> String {
+        let data = Date()
+        let formatter = DateFormatter()
+        
+        formatter.dateFormat = "dd/MM/YYYY"
+        let result = formatter.string(from: data)
+        return result
     }
     
 }
