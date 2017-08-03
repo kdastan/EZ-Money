@@ -21,6 +21,7 @@ class ContainerContent: UIView {
     
     lazy var label: UILabel = {
         let label = UILabel()
+        label.numberOfLines = 0
         //label.backgroundColor = .white
         return label
     }()
@@ -61,7 +62,7 @@ class ContainerContent: UIView {
         
         label <- [
             Width(sizeX),
-            Height(25),
+            Height(50),
             CenterY(0),
             Left(16).to(imageView, .right)
         ]

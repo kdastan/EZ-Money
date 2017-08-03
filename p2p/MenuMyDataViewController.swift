@@ -14,11 +14,14 @@ import LTHRadioButton
 import Firebase
 import FirebaseDatabase
 import FirebaseAuth
+import SVProgressHUD
 
 class MenuMyDataViewController: UIViewController {
     
     let dateFormatter = DateFormatter()
     let validator = Validator()
+    
+    let uid = Auth.auth().currentUser?.uid
     
     lazy var label: UILabel = {
         let label = UILabel()
@@ -81,6 +84,7 @@ class MenuMyDataViewController: UIViewController {
     lazy var datePicker: UIDatePicker = {
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .date
+        datePicker.maximumDate = Calendar.current.date(byAdding: .year, value: -21, to: Date())
         datePicker.addTarget(self, action: #selector(dateValueChanged(sender:)), for: .valueChanged)
         return datePicker
     }()
@@ -153,6 +157,10 @@ class MenuMyDataViewController: UIViewController {
         userBirthDate.textField.inputView = datePicker
         userDateOfIssue.textField.inputView = datePickerDateOfIssue
         userDateOfValidaty.textField.inputView = datePickerDateOfValidaty
+        
+        updateUserData(uid: uid!) { success in
+            SVProgressHUD.dismiss()
+        }
     }
     
     func setupConstraints() {
@@ -312,6 +320,47 @@ class MenuMyDataViewController: UIViewController {
     func dateValidatyChanged(sender: UIDatePicker) {
         userDateOfValidaty.textField.text = dateFormatter.string(from: sender.date)
     }
+    
+    func updateUserData(uid: String, completionHandler: @escaping ((_ exist : Bool) -> Void)) {
+        
+        
+        SVProgressHUD.show()
+        
+        let ref = Database.database().reference()
+        
+        ref.child("users").child("\(uid)").observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            let userData = value?["userData"] as? Bool
+            if userData! {
+                
+                    ref.child("userData").child("\(uid)").observeSingleEvent(of: .value, with: { (snapshot) in
+                        let valueUserData = snapshot.value as? NSDictionary
+                        
+                        self.userName.textField.text = valueUserData?["name"] as? String
+                        self.userSurname.textField.text = valueUserData?["surname"] as? String
+                        self.userPatronymic.textField.text = valueUserData?["patronymic"] as? String
+                        self.userMobilePhone.textField.text = valueUserData?["mobilePhone"] as? String
+                        self.userPhone.textField.text = valueUserData?["homePhone"] as? String
+                        self.userBirthDate.textField.text = valueUserData?["birthDate"] as? String
+                        self.userBirthPlace.textField.text = valueUserData?["birthPlace"] as? String
+                        self.userIdNumber.textField.text = valueUserData?["idNumber"] as? String
+                        self.userIINnumber.textField.text = valueUserData?["iinNumber"] as? String
+                        self.userDateOfIssue.textField.text = valueUserData?["dateOfIssue"] as? String
+                        self.userDateOfValidaty.textField.text = valueUserData?["validatyDate"] as? String
+                        self.userIssuingAuthority.textField.text = valueUserData?["issuingAuthority"] as? String
+                        
+                        self.button.setTitle("Обновить", for: .normal)
+                    }) {(error) in
+                        print(error.localizedDescription)
+                }
+             completionHandler(true)   
+            } else {
+            SVProgressHUD.dismiss()
+            }
+        }) {(error) in
+            print(error.localizedDescription)
+        }
+    }
 }
 
 extension MenuMyDataViewController: ValidationDelegate {
@@ -337,6 +386,9 @@ extension MenuMyDataViewController: ValidationDelegate {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         let ref = Database.database().reference()
         ref.child("userData").child("\(uid)").setValue(post)
+        ref.child("users").child("\(uid)").child("userData").setValue(true)
+        
+        self.dismiss(animated: true, completion: nil)
         
     }
     

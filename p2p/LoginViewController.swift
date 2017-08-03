@@ -9,6 +9,7 @@
 import UIKit
 import EasyPeasy
 import Firebase
+import SVProgressHUD
 
 class LoginViewController: RegistrationView {
     
@@ -99,8 +100,26 @@ class LoginViewController: RegistrationView {
             } else {
                 guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
                 appDelegate.isLogged = true
-                appDelegate.cordinateAppFlow()
+                //appDelegate.cordinateAppFlow()
             }
+        }
+        
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        let ref = Database.database().reference()
+        
+        SVProgressHUD.show()
+        
+        ref.child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            
+            let isInvestor = value?["isInvestor"] as? Bool ?? false
+            
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+            appDelegate.isInvestor = isInvestor
+            appDelegate.cordinateAppFlow()
+            
+        }){(error) in
+            print(error.localizedDescription)
         }
     }
     

@@ -41,6 +41,7 @@ PODS:
   - JVFloatLabeledTextField (1.2.0)
   - LTHRadioButton (1.1.1)
   - RESideMenu (4.0.7)
+  - SVProgressHUD (2.1.2)
   - SwiftValidator (4.0.0)
   - SwipeViewController (0.1.8)
 
@@ -55,6 +56,7 @@ DEPENDENCIES:
   - JVFloatLabeledTextField
   - LTHRadioButton
   - RESideMenu
+  - SVProgressHUD
   - SwiftValidator (from `https://github.com/jpotts18/SwiftValidator.git`, branch `master`)
   - SwipeViewController
 
@@ -83,9 +85,10 @@ SPEC CHECKSUMS:
   JVFloatLabeledTextField: 96c0c1b6739001801340d25b86aff990d67c4181
   LTHRadioButton: 6d54db446b2edba0eafcb65b28deedb09dad8a47
   RESideMenu: f24c508404b49c667344c54aba7e590883533958
+  SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   SwiftValidator: 25ded5ca1f10c05adf57f6ac82a72d28ac8d91af
   SwipeViewController: 0e396aa7d7756c30f8914ef59aea2a3d7d7798bc
 
-PODFILE CHECKSUM: 6d9406844a48a6eea5ac7f716bba580ab395d9d1
+PODFILE CHECKSUM: ddd80e1b43d0b8c8857b4b01b11b461866fed262
 
 COCOAPODS: 1.2.1

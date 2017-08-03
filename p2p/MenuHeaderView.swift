@@ -48,7 +48,7 @@ class MenuHeaderView: UIView {
         
         ref.child("users").child(currentID!).observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
-            self.email.text = (value?["email"] as? String)!
+            self.email.text = value?["email"] as? String ?? "no email"
         }) { (error) in
             print(error.localizedDescription)
         }

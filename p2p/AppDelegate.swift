@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var isLogged = false
+    var isInvestor = false
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -31,16 +32,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func cordinateAppFlow() {
         window = UIWindow(frame: UIScreen.main.bounds)
         
-        let pageController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-        let navigationController = BorrowViewController(rootViewController: pageController)
-        
-        
-        let a = UINavigationController(rootViewController: MenuViewController())
-        
-        let sideMenu = RESideMenu(contentViewController: navigationController, leftMenuViewController: a, rightMenuViewController: nil)
-        sideMenu?.backgroundImage = UIImage(named: "sample")
-        
         if isLogged {
+            let pageController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+            let navigationController = BorrowViewController(rootViewController: pageController)
+            
+            let a = UINavigationController(rootViewController: MenuViewController())
+            
+            let sideMenu = RESideMenu(contentViewController: navigationController, leftMenuViewController: a, rightMenuViewController: nil)
+            sideMenu?.backgroundImage = UIImage(named: "sample")
+            
             window?.rootViewController = sideMenu
         } else {
             let loginController = UINavigationController(rootViewController: LoginViewController())

@@ -9,12 +9,15 @@
 import UIKit
 import SwipeViewController
 import RESideMenu
+import Firebase
+import SVProgressHUD
 
 class BorrowViewController: SwipeViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        
         setupNavbar()
         configureSwiper()
     }
@@ -25,13 +28,31 @@ class BorrowViewController: SwipeViewController {
     }
     
     private func configureSwiper() {
+        
+        SVProgressHUD.dismiss()
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+        let app = appDelegate.isInvestor
+        
         let VC1 = TakeBorrowViewController()
         VC1.title = "Получить займ"
         
         let VC2 = RequestListViewController()
         VC2.title = "Список запросов"
         
-        setViewControllerArray([VC1, VC2])
+        let VC3 = LendViewController()
+        VC3.title = "Инвестировать"
+        
+        if app {
+            setViewControllerArray([VC3, VC2])
+            
+            print("First")
+        } else {
+            setViewControllerArray([VC1, VC2])
+            print("second")
+        }
+        //setViewControllerArray([VC3, VC2])
+        print("asd")
         
         if Screen.width == 320 {
             setButtonsWithSelectedColor(UIFont.systemFont(ofSize: 15), color: UIColor.black, selectedColor: UIColor(red: 0.23, green: 0.55, blue: 0.92, alpha: 1.0))

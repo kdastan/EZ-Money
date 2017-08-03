@@ -18,5 +18,6 @@ target 'p2p' do
   pod 'SwiftValidator', :git => 'https://github.com/jpotts18/SwiftValidator.git', :branch => 'master'
   pod 'JVFloatLabeledTextField'
   pod 'LTHRadioButton'
+  pod 'SVProgressHUD'
 
 end

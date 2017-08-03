@@ -13,6 +13,7 @@ import Firebase
 class TakeBorrowViewController: UIViewController {
     
     var a = Container()
+    var arr: [BorrowTableViewCell] = []
     
     lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -124,7 +125,7 @@ class TakeBorrowViewController: UIViewController {
         let auth = Auth.auth().currentUser?.uid
         ref.child("users").child(auth!).observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
-            let isData = value?["userDatam"] as? Bool ?? false
+            let isData = value?["userData"] as? Bool ?? false
         
             if !isData {
                 self.present(MenuMyDataViewController(), animated: true, completion: nil)
@@ -133,6 +134,8 @@ class TakeBorrowViewController: UIViewController {
             print(error.localizedDescription)
         }
         
+        print(self.a.container.field.textField.text)
+        print(self.a.container.field2.textField.text)
     }
     
     func setupView() {
@@ -191,7 +194,7 @@ class TakeBorrowViewController: UIViewController {
 
 extension TakeBorrowViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return arr.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

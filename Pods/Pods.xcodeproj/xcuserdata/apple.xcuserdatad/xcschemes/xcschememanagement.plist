@@ -49,6 +49,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SVProgressHUD.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SwiftValidator.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -62,7 +67,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>09AF0AEEBF95955B72F99B8CDB183B08</key>
+		<key>008713836D7CD40794371325518B9426</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -77,12 +82,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3423BB5C48FD651F3CD8C9B88ACA041B</key>
+		<key>737BDDD621BFA8BF1AD9C5A9C059E2BB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>34473B2E4C1A361A7F0DABF59F19633C</key>
+		<key>82D9CA85F20453533C8E964D7AD37561</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>ACEF0811F433D1E188063A5927DE3571</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -107,12 +117,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F1AA0B3E4CB1E2C6D1250F87A134F925</key>
+		<key>D6999C402766BEEF2F490409C38D492E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F6F38A096378AE59DE1E1D81909314AA</key>
+		<key>F1AA0B3E4CB1E2C6D1250F87A134F925</key>
 		<dict>
 			<key>primary</key>
 			<true/>
