@@ -8,11 +8,12 @@
 
 import UIKit
 import EasyPeasy
+import Firebase
 
 class BorrowTableViewCell: UITableViewCell {
     
     let sizeX = UIScreen.main.bounds.width - 20
-
+    
     lazy var container: BarrowContainer = {
         let container = BarrowContainer()
         container.backgroundColor = .white
@@ -27,14 +28,14 @@ class BorrowTableViewCell: UITableViewCell {
         button.layer.cornerRadius = 4
         button.layer.borderWidth = 1
         button.backgroundColor = .blueBackground
-        button.addTarget(self, action: #selector(pressd(sender: )), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(pressd(sender: )), for: .touchUpInside)
         return button
     }()
     
-    func pressd(sender: UIButton) {
-        let buttonRow = sender.tag
-        print(buttonRow)
-    }
+//    func pressd(sender: UIButton) {
+//        let buttonRow = sender.tag
+//        print(buttonRow)
+//    }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

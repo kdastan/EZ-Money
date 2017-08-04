@@ -45,7 +45,7 @@ class BarrowTableViewContainer: UIView {
         ]
         
         labelName <- [
-            Width(250),
+            Width(330),
             CenterY(0),
             Left(16).to(image, .right)
         ]

@@ -11,17 +11,54 @@ import Firebase
 import FirebaseDatabase
 import FirebaseAuth
 
-class User {
+struct Allrequests {
+    let bigId: String!
+    let borrowerAmount: String!
+    let borrowerId: String!
+    let requestId: String!
+    let status: Int!
+}
 
-    static func fetchUserName(uid: String, completion: @escaping (String?, String?) -> Void) {
+class User {
+    
+    var userNameAndSurname = ""
+
+    static func fetchUserName(uid: String, completion: @escaping (String?, String?, String?) -> Void) {
         let refUsers = Database.database().reference().child("userData")
         refUsers.child("\(uid)").observeSingleEvent(of: .value, with: { snapshot in
             guard let dict = snapshot.value as? [String: Any] else {
-                completion(nil, nil)
+                completion(nil, nil, nil)
                 return
             }
-            completion(dict["name"] as? String, dict["surname"] as? String)
+            completion(dict["name"] as? String, dict["surname"] as? String, dict["patronymic"] as? String)
+        })
+    }
+   
+    static func fetchRequestId(requestId: String, completion: @escaping (String?, String?, String?) -> Void) {
+        let ref = Database.database().reference().child("investorRequests")
+        ref.child("\(requestId)").observeSingleEvent(of: .value, with: { (snapshot) in
+            guard let value = snapshot.value as? [String: Any] else {
+                completion(nil, nil, nil)
+                return
+            }
+            completion(value["investorId"] as? String, value["rate"] as? String, value["time"] as? String)
         })
     }
     
+    static func fetchInvestor(request: String, compleation: @escaping (String?, String?, String?, String?, String?, String?) -> Void) {
+        let newRef = Database.database().reference()
+        newRef.child("\(request)").queryOrderedByKey().observe(.childAdded, with: { snapshot in
+    
+        let value = snapshot.value as? [String: String]
+        let amount = value?["amount"]
+        let date = value?["date"]
+        let id = value?["id"]
+        let investorId = value?["investorId"]
+        let rate = value?["rate"]
+        let time = value?["time"]
+    
+        compleation(amount, date, id, investorId, rate, time)
+        })
+    }
+
 }

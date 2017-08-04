@@ -9,18 +9,7 @@
 import UIKit
 import SwiftValidator
 
-extension RequestListViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reusableCell", for: indexPath) as! BorrowTableViewCell
-        cell.backgroundColor = .blueBackground
-        cell.button.tag = indexPath.row
-        return cell
-    }
-}
+
 
 extension MenuViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -56,29 +45,3 @@ extension MenuViewController: UITableViewDelegate {
         }
     }
 }
-
-extension TakeBorrowViewController: UISearchBarDelegate {
-    
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        searchBar.showsCancelButton = true
-    }
-    
-    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
-        searchBar.showsCancelButton = false
-        return true
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.text = ""
-        searchBar.showsCancelButton = false
-        searchBar.endEditing(true)
-        searchBar.isHidden = true
-        
-        requestButton.isHidden = false
-        investorSearchButton.isHidden = false
-    }
-    
-}
-
-
-
