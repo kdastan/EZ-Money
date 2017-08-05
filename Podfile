@@ -19,5 +19,8 @@ target 'p2p' do
   pod 'JVFloatLabeledTextField'
   pod 'LTHRadioButton'
   pod 'SVProgressHUD'
+  pod 'NotificationBannerSwift'
+  pod 'DGElasticPullToRefresh'
+  pod 'SCLAlertView'
 
 end

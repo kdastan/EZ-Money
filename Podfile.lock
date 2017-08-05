@@ -1,5 +1,6 @@
 PODS:
   - BEMCheckBox (1.4.1)
+  - DGElasticPullToRefresh (1.1)
   - EasyPeasy (1.4.2)
   - Firebase (4.0.3):
     - Firebase/Core (= 4.0.3)
@@ -40,13 +41,20 @@ PODS:
   - IQKeyboardManagerSwift (4.0.10)
   - JVFloatLabeledTextField (1.2.0)
   - LTHRadioButton (1.1.1)
+  - MarqueeLabel/Swift (3.1.0)
+  - NotificationBannerSwift (1.4.0):
+    - MarqueeLabel/Swift
+    - SnapKit (~> 3.2)
   - RESideMenu (4.0.7)
+  - SCLAlertView (0.7.0)
+  - SnapKit (3.2.0)
   - SVProgressHUD (2.1.2)
   - SwiftValidator (4.0.0)
   - SwipeViewController (0.1.8)
 
 DEPENDENCIES:
   - BEMCheckBox
+  - DGElasticPullToRefresh
   - EasyPeasy
   - Firebase
   - Firebase/Auth
@@ -55,7 +63,9 @@ DEPENDENCIES:
   - IQKeyboardManagerSwift
   - JVFloatLabeledTextField
   - LTHRadioButton
+  - NotificationBannerSwift
   - RESideMenu
+  - SCLAlertView
   - SVProgressHUD
   - SwiftValidator (from `https://github.com/jpotts18/SwiftValidator.git`, branch `master`)
   - SwipeViewController
@@ -72,6 +82,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   BEMCheckBox: 5ba6e37ade3d3657b36caecc35c8b75c6c2b1a4e
+  DGElasticPullToRefresh: 28f11a6026302a90f8ffebbc6e24748e584dddd3
   EasyPeasy: 50e7130b61f495ce105796e438d4136e2c8d2cc0
   Firebase: 9e33fdfbca37cab635c693883caa90a4475b842b
   FirebaseAnalytics: ad41720e3e67fc63fbe3d2948d3e26932a8de311
@@ -84,11 +95,15 @@ SPEC CHECKSUMS:
   IQKeyboardManagerSwift: 75ba21a23794a1e6b6fe6d9a267ea17f80e06771
   JVFloatLabeledTextField: 96c0c1b6739001801340d25b86aff990d67c4181
   LTHRadioButton: 6d54db446b2edba0eafcb65b28deedb09dad8a47
+  MarqueeLabel: 061d04687ee5485ac035b45c8e292274a87afe01
+  NotificationBannerSwift: b2a81c9f0f816851686ca2e802058afd65676adc
   RESideMenu: f24c508404b49c667344c54aba7e590883533958
+  SCLAlertView: 8a14ffc40590c619e183eed2298b854385f30be1
+  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   SwiftValidator: 25ded5ca1f10c05adf57f6ac82a72d28ac8d91af
   SwipeViewController: 0e396aa7d7756c30f8914ef59aea2a3d7d7798bc
 
-PODFILE CHECKSUM: ddd80e1b43d0b8c8857b4b01b11b461866fed262
+PODFILE CHECKSUM: 276867eb2b98b7cc287b7ef914f27c7563fbdf7c
 
 COCOAPODS: 1.2.1

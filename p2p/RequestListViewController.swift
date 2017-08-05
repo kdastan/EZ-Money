@@ -9,19 +9,25 @@
 import UIKit
 import EasyPeasy
 import Firebase
+import DGElasticPullToRefresh
 
-struct RequestList {
+struct RequestsLists {
     let bigId: String!
     let borrowerAmount: String!
     let borrowerId: String!
     let requestId: String!
     let status: Int!
+    let investorId: String!
+    let rate: String!
+    let time: String!
+    let name: String!
+    let surname: String!
+    let patronymic: String!
 }
 
 class RequestListViewController: UIViewController {
     
-    var inId = ""
-    var arr = [RequestList]()
+    var requestList = [RequestsLists]()
     
     lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -34,44 +40,47 @@ class RequestListViewController: UIViewController {
         return tableView
     }()
 
+    lazy var button: UIButton = {
+        let button = UIButton()
+        button.setTitle("Update", for: .normal)
+        button.addTarget(self, action: #selector(update), for: .touchUpInside)
+        return button
+    }()
+    
+    func update() {
+        self.requestList.removeAll()
+        self.fetchRequestList()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         setupConstraints()
-        fetchRequests()
+        fetchRequestList()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.tableView.reloadData()
-        
-    }
-    
-    func fetchRequests(){
-        
-        let ref = Database.database().reference()
-        let uid = Auth.auth().currentUser?.uid
-        
-        ref.child("allRequests").queryOrdered(byChild: "borrowerId").queryEqual(toValue: uid).observe(.childAdded, with: { (snapshot) in
-            
-            let value = snapshot.value as? NSDictionary
-            
-            let bigId = value?["bigId"] as? String
-            let borrowerAmount = value?["borrowerAmount"] as? String
-            let borrowerId = value?["borrowerId"] as? String
-            let requestId = value?["requestId"] as? String
-            let status = value?["status"] as? Int
-            
-            self.arr.insert(RequestList(bigId: bigId, borrowerAmount: borrowerAmount, borrowerId: borrowerId, requestId: requestId, status: status), at: 0)
-            
-            self.tableView.reloadData()
-        })
-        
-    }
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        self.tableView.reloadData()
+//    }
     
     func setupView() {
+//        let loadingView = DGElasticPullToRefreshLoadingViewCircle()
+//        loadingView.tintColor = UIColor(red: 78/255.0, green: 221/255.0, blue: 200/255.0, alpha: 1.0)
+//        tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
+//            self?.requestList.removeAll()
+//            //self?.fetchRequestList()
+//            //self?.tableView.reloadData()
+//            self?.fetchRequestList()
+//            self?.tableView.dg_stopLoading()
+//            
+//            }, loadingView: loadingView)
+//        tableView.dg_setPullToRefreshFillColor(UIColor(red: 57/255.0, green: 67/255.0, blue: 89/255.0, alpha: 1.0))
+//        tableView.dg_setPullToRefreshBackgroundColor(tableView.backgroundColor!)
+//
         view.backgroundColor = .blueBackground
         view.addSubview(tableView)
+        view.addSubview(button)
     }
     
     func setupConstraints() {
@@ -82,35 +91,47 @@ class RequestListViewController: UIViewController {
             Top(0),
             CenterX(0)
         ]
+        
+        button <- [
+            Width(Screen.width),
+            Height(44),
+            Bottom(0),
+            CenterX(0)
+        ]
     }
-
+    
+    func fetchRequestList(){
+        self.tableView.reloadData()
+        User.fetchRequests(fetchChild: "allRequests") { (bigId, borrowerAmount, borrowerId, requestId, status) in
+            User.fetchRequestId(requestId: requestId!, completion: { (investorId, rate, time) in
+                User.fetchUserName(uid: investorId!, completion: { (name, surname, patronymic) in
+                    self.requestList.insert(RequestsLists(bigId: bigId, borrowerAmount: borrowerAmount, borrowerId: borrowerId, requestId: requestId, status: status, investorId: investorId, rate: rate, time: time, name: name, surname: surname, patronymic: patronymic), at: 0)
+                    self.tableView.reloadData()
+                })
+            })
+        }
+    }
     
 }
 
 extension RequestListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arr.count
+        return requestList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reusableCell", for: indexPath) as! BorrowTableViewCell
         cell.backgroundColor = .blueBackground
-    
         
-        User.fetchRequestId(requestId: arr[indexPath.row].requestId) { (name, rate, time) in
-            
-            
-            User.fetchUserName(uid: name as! String, completion: { (name, surname, id) in
-                cell.container.firstField.labelName.text = "\(name!) \(surname!)"
-            })
-            
-            
-            cell.container.secondField.labelName.text = "\(rate!) месяцев"
-            cell.container.thirdField.labelName.text = "\(time!)"
+        cell.container.firstField.labelName.text = requestList[indexPath.row].name
+        cell.container.secondField.labelName.text = requestList[indexPath.row].time
+        cell.container.thirdField.labelName.text = requestList[indexPath.row].rate
+        
+        if requestList[indexPath.row].status == 0 {
+            cell.button.setTitle("В ожидании", for: .normal)
+        } else if requestList[indexPath.row].status == 1 {
+            cell.button.setTitle("Оформить", for: .normal)
         }
-        
-
-    
         cell.button.tag = indexPath.row
         return cell
     }

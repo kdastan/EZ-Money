@@ -11,6 +11,7 @@ import SwipeViewController
 import RESideMenu
 import Firebase
 import SVProgressHUD
+import NotificationBannerSwift
 
 class BorrowViewController: SwipeViewController {
     
@@ -20,6 +21,10 @@ class BorrowViewController: SwipeViewController {
         
         setupNavbar()
         configureSwiper()
+//        let banner = NotificationBanner(title: "asd", subtitle: "asd", style: .success)
+//        banner.show()
+//        banner.dismiss()
+
     }
     
     private func setupNavbar() {
@@ -45,14 +50,9 @@ class BorrowViewController: SwipeViewController {
         
         if app {
             setViewControllerArray([VC3, VC2])
-            
-            print("First")
         } else {
             setViewControllerArray([VC1, VC2])
-            print("second")
         }
-        //setViewControllerArray([VC3, VC2])
-        print("asd")
         
         if Screen.width == 320 {
             setButtonsWithSelectedColor(UIFont.systemFont(ofSize: 15), color: UIColor.black, selectedColor: UIColor(red: 0.23, green: 0.55, blue: 0.92, alpha: 1.0))

@@ -10,6 +10,9 @@ import UIKit
 import EasyPeasy
 import Firebase
 import FirebaseDatabase
+import NotificationBannerSwift
+import SwipeViewController
+import SCLAlertView
 
 struct Requests {
     let amount: String!
@@ -40,6 +43,8 @@ struct Investors {
 }
 
 class TakeBorrowViewController: UIViewController {
+    
+    let banner = NotificationBanner(title: "Запрос успешно отправлен", subtitle: "", style: .success)
     
     var a = Container()
     var arr: [BorrowTableViewCell] = []
@@ -100,7 +105,7 @@ class TakeBorrowViewController: UIViewController {
     
     lazy var label: UILabel = {
         let label = UILabel()
-        label.text = "10 подходящих вариантов"
+        label.text = "Все варианты"
         label.isHidden = true
         label.textColor = .white
         label.font = UIFont(name: "Helvetica", size: 20)
@@ -124,6 +129,8 @@ class TakeBorrowViewController: UIViewController {
         super.viewDidLoad()
         setupView()
         setupConstraints()
+        
+        
     }
     
     func investorSearch() {
@@ -138,6 +145,9 @@ class TakeBorrowViewController: UIViewController {
         requestButton.isHidden = false
         investorSearchButton.isHidden = false
         label.isHidden = false
+        
+       
+        
         
         let ref = Database.database().reference()
         let auth = Auth.auth().currentUser?.uid
@@ -156,8 +166,7 @@ class TakeBorrowViewController: UIViewController {
         User.fetchInvestor(request: "investorRequests") { (amount, date, id, investorId, rate, time) in
             guard let investorId = investorId else {return}
             User.fetchUserName(uid: investorId, completion: { (name, surname, patronymic) in
-                let nameForSearch = "\(name) \(surname) \(patronymic)"
-                self.investorsList.insert(Investors(amount: amount, date: date, id: id, investorId: investorId, rate: rate, time: time, name: name, surname: surname, patronymic: patronymic, nameForSearch: nameForSearch), at: 0)
+                self.investorsList.insert(Investors(amount: amount, date: date, id: id, investorId: investorId, rate: rate, time: time, name: name, surname: surname, patronymic: patronymic, nameForSearch: "\(name) \(surname) \(patronymic)"), at: 0)
                 self.filteredInvestorsList = self.investorsList
                 self.tableView.reloadData()
             })
@@ -171,18 +180,31 @@ class TakeBorrowViewController: UIViewController {
             print("fill data")
             return
         }
-        let reference = Database.database().reference()
         
-        let newRef = reference.child("allRequests").childByAutoId()
-        let post: [String: Any] = [
-            "bigId": newRef.key,
-            "borrowerAmount": amount,
-            "borrowerId": uid,
-            "requestId": filteredInvestorsList[sender.tag].id,
-            "status": 0
-        ]
-
-        print(post)
+        let appearance = SCLAlertView.SCLAppearance(
+            kTitleFont: UIFont(name: "HelveticaNeue", size: 14)!
+            
+        )
+        let alertView = SCLAlertView(appearance: appearance)
+        
+        alertView.addButton("Подтверждаю", backgroundColor: .blue, textColor: .white, showDurationStatus: true) {
+            
+            let reference = Database.database().reference()
+            let newRef = reference.child("allRequests").childByAutoId()
+            let post: [String: Any] = [
+                "bigId": newRef.key,
+                "borrowerAmount": amount,
+                "borrowerId": uid,
+                "requestId": self.filteredInvestorsList[sender.tag].id,
+                "status": 0
+            ]
+            self.banner.duration = 2
+            self.banner.show()
+            newRef.setValue(post)
+        }
+        alertView.showWarning("Отправить запрос?", subTitle: "\((filteredInvestorsList[sender.tag].name)!) на \((self.a.container.field.textField.text)!) Тенге,  \n на \((filteredInvestorsList[sender.tag].time)!) месяцев под \((filteredInvestorsList[sender.tag].rate)!) % годовых", closeButtonTitle: "Отменить", colorStyle: 0x4BA2D3, colorTextButton: 0xE3F2FC)
+        
+        //
     }
     
     func setupView() {
@@ -190,6 +212,7 @@ class TakeBorrowViewController: UIViewController {
         view.backgroundColor = .blueBackground
         view.addSubview(tableView)
         [button, requestButton, investorSearchButton, label, searchBar].forEach {a.addSubview($0)}
+        
     }
     
     func setupConstraints() {
@@ -275,6 +298,7 @@ extension TakeBorrowViewController: UISearchBarDelegate {
 
 extension TakeBorrowViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        self.label.text = "Найдено \(filteredInvestorsList.count) инвесторов"
         return filteredInvestorsList.count
     }
     
@@ -294,7 +318,7 @@ extension TakeBorrowViewController: UITableViewDataSource {
         //print(investorsList[indexPath.row].time)
         
         cell.button.tag = indexPath.row
-        cell.button.addTarget(self, action: #selector(buttonPressed(sender: )), for: .touchUpInside)
+        cell.button.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
         
         return cell
     }

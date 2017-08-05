@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>DGElasticPullToRefresh.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>EasyPeasy.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -39,6 +44,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>MarqueeLabel.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>NotificationBannerSwift.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-p2p.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -49,7 +64,17 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SCLAlertView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SVProgressHUD.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SnapKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -67,7 +92,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>008713836D7CD40794371325518B9426</key>
+		<key>0066843A1DDF848C8F977A432912D3C3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -77,22 +102,42 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>1A6D8AB19470706056195ECBE167BCAB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>2A4448146C785C426971111F117D773C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>737BDDD621BFA8BF1AD9C5A9C059E2BB</key>
+		<key>320AD47B0C6BA014D301395D3BFC8FB6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>82D9CA85F20453533C8E964D7AD37561</key>
+		<key>47D07B436D82BB983C8429FF84F919A3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>ACEF0811F433D1E188063A5927DE3571</key>
+		<key>4D51731FE6DA7D0653CC0CD60B7870E9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7CDD0A1AB6D7C75F9CA8373CC0AE0E8F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7E14E7E2BCF8D9924A74804EE800FF2A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A64D2EE3A1D27F99939FA62EA521C76E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -117,7 +162,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D6999C402766BEEF2F490409C38D492E</key>
+		<key>C7E22BEB205BF5EDC7D383150E23BC40</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EAA88C5A4B6AEAC54C2772A9995B99C2</key>
 		<dict>
 			<key>primary</key>
 			<true/>

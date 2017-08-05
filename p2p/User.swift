@@ -60,5 +60,18 @@ class User {
         compleation(amount, date, id, investorId, rate, time)
         })
     }
+    
+    static func fetchRequests(fetchChild: String, compleation: @escaping (String?, String?, String?, String?, Int?) -> Void) {
+        let ref = Database.database().reference().child("\(fetchChild)")
+        let uid = Auth.auth().currentUser?.uid
+        
+        ref.queryOrdered(byChild: "borrowerId").queryEqual(toValue: uid).observe(.childAdded, with: { (snapshot) in
+            let value = snapshot.value as? [String: Any]
+            compleation(value?["bigId"] as? String, value?["borrowerAmount"] as? String, value?["borrowerId"] as? String, value?["requestId"] as? String, value?["status"] as? Int)
+        })
+    }
+    
+    
+    
 
 }

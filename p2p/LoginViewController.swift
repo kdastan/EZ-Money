@@ -10,6 +10,7 @@ import UIKit
 import EasyPeasy
 import Firebase
 import SVProgressHUD
+import NotificationBannerSwift
 
 class LoginViewController: RegistrationView {
     
@@ -37,7 +38,7 @@ class LoginViewController: RegistrationView {
         super.viewDidLoad()
         setupView()
         setupConstraints()
-    }
+            }
     
     //MARK:  Configurations
     
