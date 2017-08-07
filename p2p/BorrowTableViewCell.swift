@@ -24,11 +24,31 @@ class BorrowTableViewCell: UITableViewCell {
     lazy var button: UIButton = {
         let button = UIButton()
         button.setTitleColor(.black, for: .normal)
-        button.setTitle("Запросить", for: .normal)
+        button.setTitle("Запрос", for: .normal)
         button.layer.cornerRadius = 4
         button.layer.borderWidth = 1
         button.backgroundColor = .blueBackground
 //        button.addTarget(self, action: #selector(pressd(sender: )), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var investorButtonAccept: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(.black, for: .normal)
+        button.setTitle("Принять", for: .normal)
+        button.layer.cornerRadius = 4
+        button.layer.borderWidth = 1
+        button.backgroundColor = .cyan
+        return button
+    }()
+    
+    lazy var investorButtonDecline: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(.black, for: .normal)
+        button.setTitle("Отклонить", for: .normal)
+        button.layer.cornerRadius = 4
+        button.layer.borderWidth = 1
+        button.backgroundColor = .cyan
         return button
     }()
     
@@ -50,6 +70,8 @@ class BorrowTableViewCell: UITableViewCell {
     func setupViews() {
         self.addSubview(container)
         container.addSubview(button)
+        container.addSubview(investorButtonAccept)
+        container.addSubview(investorButtonDecline)
     }
     
     func setupConstraints() {
@@ -60,6 +82,20 @@ class BorrowTableViewCell: UITableViewCell {
         ]
         
         button <- [
+            Right(10),
+            Bottom(0).to(container.thirdField.image, .bottom),
+            Height(30),
+            Width(130)
+        ]
+        
+        investorButtonAccept <- [
+            Right(10).to(button, .left),
+            Bottom(0).to(container.thirdField.image, .bottom),
+            Height(30),
+            Width(130)
+        ]
+        
+        investorButtonDecline <- [
             Right(10),
             Bottom(0).to(container.thirdField.image, .bottom),
             Height(30),

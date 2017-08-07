@@ -183,11 +183,10 @@ class TakeBorrowViewController: UIViewController {
         
         let appearance = SCLAlertView.SCLAppearance(
             kTitleFont: UIFont(name: "HelveticaNeue", size: 14)!
-            
         )
         let alertView = SCLAlertView(appearance: appearance)
         
-        alertView.addButton("Подтверждаю", backgroundColor: .blue, textColor: .white, showDurationStatus: true) {
+        alertView.addButton("Подтверждаю") {
             
             let reference = Database.database().reference()
             let newRef = reference.child("allRequests").childByAutoId()
@@ -305,6 +304,9 @@ extension TakeBorrowViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! BorrowTableViewCell
         cell.backgroundColor = .blueBackground
+        
+        cell.investorButtonAccept.isHidden = true
+        cell.investorButtonDecline.isHidden = true
         
         let name = filteredInvestorsList[indexPath.row].name
         let surname = filteredInvestorsList[indexPath.row].surname

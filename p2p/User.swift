@@ -71,7 +71,25 @@ class User {
         })
     }
     
+    static func fetchRequestID(fetchChild: String, completion: @escaping (String?, String?, String?) -> Void){
+        let ref = Database.database().reference().child("\(fetchChild)")
+        let uid = Auth.auth().currentUser?.uid
+        
+        ref.queryOrdered(byChild: "investorId").queryEqual(toValue: uid).observe(.childAdded, with: { (snapshot) in
+            let value = snapshot.value as? [String: Any]
+            completion(value?["id"] as? String, value?["rate"] as? String, value?["time"] as? String)
+        })
+    }
     
-    
+    static func fetchAllRequests(fetchChild: String, completion: @escaping (String?, Int?) -> Void) {
+        let ref = Database.database().reference().child("allRequests")
+        
+        ref.queryOrdered(byChild: "requestId").queryEqual(toValue: fetchChild).observe(.childAdded, with: { (snapshot) in
+            let value = snapshot.value as? [String: Any]
+            completion(value?["borrowerId"] as? String, value?["status"] as? Int)
+            
+        })
+        
+    }
 
 }
