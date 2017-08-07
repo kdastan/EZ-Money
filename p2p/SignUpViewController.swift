@@ -120,20 +120,23 @@ class SignUpViewController: RegistrationView {
         ]
         
         Auth.auth().createUser(withEmail: email, password: password){ (user, error) in
-            if let error = error {
+            if let error = error{
                 print(error.localizedDescription)
+                return
             } else {
-                guard let uid = Auth.auth().currentUser?.uid else {return}
-                let ref = Database.database().reference()
-                ref.child("users").child("\(uid)").setValue(post)
-                if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                    appDelegate.isLogged = true
-                    appDelegate.cordinateAppFlow()
-                }
+            guard let uid = Auth.auth().currentUser?.uid else {return}
+            
+            user?.sendEmailVerification(completion: nil)
+                
+            let ref = Database.database().reference()
+            ref.child("users").child("\(uid)").setValue(post)
+//            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+//                appDelegate.isLogged = true
+//                appDelegate.cordinateAppFlow()
+//            }
             }
         }
     }
-
 }
 
 extension SignUpViewController: BEMCheckBoxDelegate {

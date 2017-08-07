@@ -11,8 +11,12 @@ import EasyPeasy
 import Firebase
 import SVProgressHUD
 import NotificationBannerSwift
+import NotificationBannerSwift
 
 class LoginViewController: RegistrationView {
+    
+    let banner = NotificationBanner(title: "Необходимо подтверждение", subtitle: "Проверьте свою почту", style: .success)
+    
     
     lazy var textField = createTextField(true)
     lazy var textFieldPassword = createTextField(false)
@@ -91,37 +95,40 @@ class LoginViewController: RegistrationView {
     }
     
     func submitButtonPressed() {
-        guard let text = textField.text, let text2 = textFieldPassword.text else {
-            return
-        }
+        
+        SVProgressHUD.show()
+        guard let text = textField.text, let text2 = textFieldPassword.text else { return }
         
         Auth.auth().signIn(withEmail: text, password: text2) { (user, error) in
             if let error = error {
                 print(error.localizedDescription)
-            } else {
-                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+                return
+            } 
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+            
+            guard let uid = Auth.auth().currentUser?.uid else { return }
+            let ref = Database.database().reference()
+            
+            if (user?.isEmailVerified)! {
                 appDelegate.isLogged = true
-                //appDelegate.cordinateAppFlow()
+                
+                ref.child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+                    let value = snapshot.value as? NSDictionary
+                    
+                    let isInvestor = value?["isInvestor"] as? Bool ?? false
+                    
+                    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+                    appDelegate.isInvestor = isInvestor
+                    appDelegate.cordinateAppFlow()
+                    SVProgressHUD.dismiss()
+                }){(error) in
+                    print(error.localizedDescription)
+                }
+                
+            } else {
+                self.banner.show()
+                SVProgressHUD.dismiss()
             }
         }
-        
-        guard let uid = Auth.auth().currentUser?.uid else {return}
-        let ref = Database.database().reference()
-        
-        SVProgressHUD.show()
-        
-        ref.child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
-            let value = snapshot.value as? NSDictionary
-            
-            let isInvestor = value?["isInvestor"] as? Bool ?? false
-            
-            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
-            appDelegate.isInvestor = isInvestor
-            appDelegate.cordinateAppFlow()
-            
-        }){(error) in
-            print(error.localizedDescription)
-        }
     }
-    
 }
