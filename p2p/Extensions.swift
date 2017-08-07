@@ -45,3 +45,36 @@ extension MenuViewController: UITableViewDelegate {
         }
     }
 }
+
+extension TakeBorrowViewController: UISearchBarDelegate {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = true
+    }
+    
+    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+        searchBar.showsCancelButton = false
+        return true
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        searchBar.showsCancelButton = false
+        searchBar.endEditing(true)
+        searchBar.isHidden = true
+        
+        requestButton.isHidden = false
+        investorSearchButton.isHidden = false
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text == "" {
+            filteredInvestorsList = investorsList
+        } else {
+            filteredInvestorsList = investorsList.filter {$0.nameForSearch.lowercased().contains((searchBar.text?.lowercased())!)}
+        }
+        self.tableView.reloadData()
+    }
+}
+
+
+

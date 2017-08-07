@@ -38,4 +38,7 @@ extension UIColor {
     static let blueBackground = UIColor(colorLiteralRed: 227/255, green: 242/255, blue: 253/255, alpha: 1)
     static let textFieldBackground = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0.1)
     static let placeholderColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0.2)
+    static let declineColor = UIColor(colorLiteralRed: 188/255, green: 75/255, blue: 75/255, alpha: 1)
+    static let issuedColor = UIColor(colorLiteralRed: 75/255, green: 171/255, blue: 188/255, alpha: 1)
+    static let accepteColor = UIColor(colorLiteralRed: 75/255, green: 188/255, blue: 131/255, alpha: 1)
 }

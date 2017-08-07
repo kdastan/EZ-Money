@@ -175,7 +175,7 @@ class TakeBorrowViewController: UIViewController {
     }
     
     func buttonPressed(sender: UIButton) {
-        
+        print("asdadsasdad")
         guard let amount = a.container.field.textField.text, a.container.field.textField.text != "", let uid = Auth.auth().currentUser?.uid else {
             print("fill data")
             return
@@ -259,42 +259,6 @@ class TakeBorrowViewController: UIViewController {
 
 }
 
-extension TakeBorrowViewController: UISearchBarDelegate {
-    
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        searchBar.showsCancelButton = true
-    }
-    
-    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
-        searchBar.showsCancelButton = false
-        return true
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.text = ""
-        searchBar.showsCancelButton = false
-        searchBar.endEditing(true)
-        searchBar.isHidden = true
-        
-        print(self.names)
-        
-        requestButton.isHidden = false
-        investorSearchButton.isHidden = false
-    }
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
-        if searchBar.text == "" {
-            filteredInvestorsList = investorsList
-        } else {
-            filteredInvestorsList = investorsList.filter {$0.nameForSearch.lowercased().contains((searchBar.text?.lowercased())!)}
-        }
-        self.tableView.reloadData()
-    }
-    
-}
-
-
 extension TakeBorrowViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         self.label.text = "Найдено \(filteredInvestorsList.count) инвесторов"
@@ -305,9 +269,11 @@ extension TakeBorrowViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! BorrowTableViewCell
         cell.backgroundColor = .blueBackground
         
+        cell.label.isHidden = true
         cell.investorButtonAccept.isHidden = true
         cell.investorButtonDecline.isHidden = true
-        
+        cell.investorIssue.isHidden = true
+       
         let name = filteredInvestorsList[indexPath.row].name
         let surname = filteredInvestorsList[indexPath.row].surname
         let patronymic = filteredInvestorsList[indexPath.row].patronymic
@@ -316,8 +282,6 @@ extension TakeBorrowViewController: UITableViewDataSource {
         cell.container.firstField.labelName.text = "\(surname!) \(name!) \(patronymic!)"
         cell.container.secondField.labelName.text = "\(time!) месяцев"
         cell.container.thirdField.labelName.text = filteredInvestorsList[indexPath.row].rate
-        
-        //print(investorsList[indexPath.row].time)
         
         cell.button.tag = indexPath.row
         cell.button.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)

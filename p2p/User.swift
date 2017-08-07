@@ -61,11 +61,15 @@ class User {
         })
     }
     
+    static var observerId: UInt?
+    
     static func fetchRequests(fetchChild: String, compleation: @escaping (String?, String?, String?, String?, Int?) -> Void) {
         let ref = Database.database().reference().child("\(fetchChild)")
         let uid = Auth.auth().currentUser?.uid
-        
-        ref.queryOrdered(byChild: "borrowerId").queryEqual(toValue: uid).observe(.childAdded, with: { (snapshot) in
+        if let id = observerId {
+            ref.queryOrdered(byChild: "borrowerId").queryEqual(toValue: uid).removeObserver(withHandle: id)
+        }
+        observerId = ref.queryOrdered(byChild: "borrowerId").queryEqual(toValue: uid).observe(.childAdded, with: { (snapshot) in
             let value = snapshot.value as? [String: Any]
             compleation(value?["bigId"] as? String, value?["borrowerAmount"] as? String, value?["borrowerId"] as? String, value?["requestId"] as? String, value?["status"] as? Int)
         })
@@ -81,15 +85,19 @@ class User {
         })
     }
     
-    static func fetchAllRequests(fetchChild: String, completion: @escaping (String?, Int?) -> Void) {
+    static func fetchAllRequests(fetchChild: String, completion: @escaping (String?, Int?, String?) -> Void) {
         let ref = Database.database().reference().child("allRequests")
         
         ref.queryOrdered(byChild: "requestId").queryEqual(toValue: fetchChild).observe(.childAdded, with: { (snapshot) in
             let value = snapshot.value as? [String: Any]
-            completion(value?["borrowerId"] as? String, value?["status"] as? Int)
+            completion(value?["borrowerId"] as? String, value?["status"] as? Int, value?["bigId"] as? String)
             
         })
-        
+    }
+    
+    static func setRequestStatus(requestId: String, status: Int, compleation: @escaping (Bool?) -> Void) {
+        let ref = Database.database().reference().child("allRequests").child("\(requestId)").child("status")
+        ref.setValue(status)
     }
 
 }

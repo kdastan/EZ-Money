@@ -28,8 +28,15 @@ class BorrowTableViewCell: UITableViewCell {
         button.layer.cornerRadius = 4
         button.layer.borderWidth = 1
         button.backgroundColor = .blueBackground
-//        button.addTarget(self, action: #selector(pressd(sender: )), for: .touchUpInside)
         return button
+    }()
+    
+    lazy var label: UILabel = {
+        let label = UILabel()
+        label.layer.cornerRadius = 4
+        label.layer.borderWidth = 1
+        label.textAlignment = .center
+        return label
     }()
     
     lazy var investorButtonAccept: UIButton = {
@@ -52,10 +59,15 @@ class BorrowTableViewCell: UITableViewCell {
         return button
     }()
     
-//    func pressd(sender: UIButton) {
-//        let buttonRow = sender.tag
-//        print(buttonRow)
-//    }
+    lazy var investorIssue: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(.black, for: .normal)
+        button.setTitle("Оформить", for: .normal)
+        button.layer.cornerRadius = 4
+        button.layer.borderWidth = 1
+        button.backgroundColor = .cyan
+        return button
+    }()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -70,8 +82,10 @@ class BorrowTableViewCell: UITableViewCell {
     func setupViews() {
         self.addSubview(container)
         container.addSubview(button)
+        container.addSubview(label)
         container.addSubview(investorButtonAccept)
         container.addSubview(investorButtonDecline)
+        container.addSubview(investorIssue)
     }
     
     func setupConstraints() {
@@ -88,14 +102,28 @@ class BorrowTableViewCell: UITableViewCell {
             Width(130)
         ]
         
-        investorButtonAccept <- [
-            Right(10).to(button, .left),
+        label <- [
+            Right(10),
             Bottom(0).to(container.thirdField.image, .bottom),
             Height(30),
             Width(130)
         ]
         
         investorButtonDecline <- [
+            Right(10),
+            Bottom(0).to(container.thirdField.image, .bottom),
+            Height(30),
+            Width(130)
+        ]
+        
+        investorButtonAccept <- [
+            Right(10).to(investorButtonDecline, .left),
+            Bottom(0).to(container.thirdField.image, .bottom),
+            Height(30),
+            Width(130)
+        ]
+        
+        investorIssue <- [
             Right(10),
             Bottom(0).to(container.thirdField.image, .bottom),
             Height(30),
