@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		180B03D71F39B071009EAB1B /* NumbersValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180B03D61F39B071009EAB1B /* NumbersValidation.swift */; };
 		180B47751F2A48C6004F8F5A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 180B47741F2A48C6004F8F5A /* GoogleService-Info.plist */; };
 		18109F781F27A72700DDA339 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18109F771F27A72700DDA339 /* Container.swift */; };
 		18109F7A1F27B20C00DDA339 /* BorrowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18109F791F27B20C00DDA339 /* BorrowTableViewCell.swift */; };
@@ -51,6 +52,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		180B03D61F39B071009EAB1B /* NumbersValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumbersValidation.swift; sourceTree = "<group>"; };
 		180B47741F2A48C6004F8F5A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		18109F771F27A72700DDA339 /* Container.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
 		18109F791F27B20C00DDA339 /* BorrowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorrowTableViewCell.swift; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 				18854C041F2FB11B00ACEC52 /* nameValidation.swift */,
 				187966901F3034FC0001ED8B /* phoneValidation.swift */,
 				187966931F3051740001ED8B /* documentNumbersValidation.swift */,
+				180B03D61F39B071009EAB1B /* NumbersValidation.swift */,
 			);
 			name = Validation;
 			sourceTree = "<group>";
@@ -390,6 +393,7 @@
 				18ED1D461F2B7C3B001B7A90 /* userModel.swift in Sources */,
 				18540A4D1F25B8740004CBD4 /* LoginViewController.swift in Sources */,
 				18ED8E241F28E3CB00848ACD /* MenuSideTableViewCell.swift in Sources */,
+				180B03D71F39B071009EAB1B /* NumbersValidation.swift in Sources */,
 				18109F7E1F27C86200DDA339 /* BarrowContainerTable.swift in Sources */,
 				18540A551F260C030004CBD4 /* TextFieldWithIcon.swift in Sources */,
 				1879669C1F30F1E00001ED8B /* Constants.swift in Sources */,

@@ -27,7 +27,6 @@ func createTextField(_ isMail: Bool) -> TextFieldWithIcon {
             textfield.textColor = .white
             textfield.isSecureTextEntry = true
             textfield.imageView.image = UIImage(named: "password")
-            
         }
         return textfield
     }()

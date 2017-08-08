@@ -20,14 +20,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+        application.registerUserNotificationSettings(settings)
+        application.registerForRemoteNotifications()
+        
         FirebaseApp.configure()
         cordinateAppFlow()
         IQKeyboardManager.sharedManager().enable = true
         
-        
-        
         return true
     }
+    
+//    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> ()) {
+//        
+//        let dict = userInfo["aps"] as! NSDictionary
+//        let message = dict["alert"]
+//        print(message)
+//        
+//        
+//        print("Message ID \(userInfo["gcm.message_id"]!)")
+//        print(userInfo)
+//    }
     
     func cordinateAppFlow() {
         window = UIWindow(frame: UIScreen.main.bounds)
@@ -70,7 +83,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
+    
+    
 
 }
 

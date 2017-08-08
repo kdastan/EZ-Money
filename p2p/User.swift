@@ -25,6 +25,7 @@ class User {
 
     static func fetchUserName(uid: String, completion: @escaping (String?, String?, String?) -> Void) {
         let refUsers = Database.database().reference().child("userData")
+        
         refUsers.child("\(uid)").observeSingleEvent(of: .value, with: { snapshot in
             guard let dict = snapshot.value as? [String: Any] else {
                 completion(nil, nil, nil)
@@ -36,6 +37,7 @@ class User {
    
     static func fetchRequestId(requestId: String, completion: @escaping (String?, String?, String?) -> Void) {
         let ref = Database.database().reference().child("investorRequests")
+ 
         ref.child("\(requestId)").observeSingleEvent(of: .value, with: { (snapshot) in
             guard let value = snapshot.value as? [String: Any] else {
                 completion(nil, nil, nil)
@@ -45,19 +47,17 @@ class User {
         })
     }
     
+    static var investorObserverId: UInt?
+    
     static func fetchInvestor(request: String, compleation: @escaping (String?, String?, String?, String?, String?, String?) -> Void) {
         let newRef = Database.database().reference()
-        newRef.child("\(request)").queryOrderedByKey().observe(.childAdded, with: { snapshot in
-    
+        
+        if let id = investorObserverId {
+            newRef.child("\(request)").queryOrderedByKey().removeObserver(withHandle: id)
+        }
+        investorObserverId = newRef.child("\(request)").queryOrderedByKey().observe(.childAdded, with: { snapshot in
         let value = snapshot.value as? [String: String]
-        let amount = value?["amount"]
-        let date = value?["date"]
-        let id = value?["id"]
-        let investorId = value?["investorId"]
-        let rate = value?["rate"]
-        let time = value?["time"]
-    
-        compleation(amount, date, id, investorId, rate, time)
+        compleation(value?["amount"], value?["date"], value?["id"], value?["investorId"], value?["rate"], value?["time"])
         })
     }
     
@@ -75,23 +75,34 @@ class User {
         })
     }
     
+    static var requestObserverId: UInt?
+    
     static func fetchRequestID(fetchChild: String, completion: @escaping (String?, String?, String?) -> Void){
         let ref = Database.database().reference().child("\(fetchChild)")
         let uid = Auth.auth().currentUser?.uid
         
-        ref.queryOrdered(byChild: "investorId").queryEqual(toValue: uid).observe(.childAdded, with: { (snapshot) in
+        if let id = requestObserverId {
+            ref.queryOrdered(byChild: "investorId").queryEqual(toValue: uid).removeObserver(withHandle: id)
+        }
+        
+        requestObserverId = ref.queryOrdered(byChild: "investorId").queryEqual(toValue: uid).observe(.childAdded, with: { (snapshot) in
             let value = snapshot.value as? [String: Any]
             completion(value?["id"] as? String, value?["rate"] as? String, value?["time"] as? String)
         })
     }
     
+    static var allRequestObserverId: UInt?
+    
     static func fetchAllRequests(fetchChild: String, completion: @escaping (String?, Int?, String?) -> Void) {
         let ref = Database.database().reference().child("allRequests")
         
-        ref.queryOrdered(byChild: "requestId").queryEqual(toValue: fetchChild).observe(.childAdded, with: { (snapshot) in
+        if let id = allRequestObserverId {
+            ref.queryOrdered(byChild: "requestId").queryEqual(toValue: fetchChild).removeObserver(withHandle: id)
+        }
+        
+        allRequestObserverId = ref.queryOrdered(byChild: "requestId").queryEqual(toValue: fetchChild).observe(.childAdded, with: { (snapshot) in
             let value = snapshot.value as? [String: Any]
             completion(value?["borrowerId"] as? String, value?["status"] as? Int, value?["bigId"] as? String)
-            
         })
     }
     

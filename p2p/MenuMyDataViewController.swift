@@ -15,8 +15,11 @@ import Firebase
 import FirebaseDatabase
 import FirebaseAuth
 import SVProgressHUD
+import NotificationBannerSwift
 
 class MenuMyDataViewController: UIViewController {
+    
+    let banner = NotificationBanner(title: "Ошибка регистрации", subtitle: "Проверьте правильность заполнения полей", style: .info)
     
     let dateFormatter = DateFormatter()
     let validator = Validator()
@@ -126,6 +129,7 @@ class MenuMyDataViewController: UIViewController {
     lazy var datePickerDateOfIssue: UIDatePicker = {
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .date
+        datePicker.maximumDate = Calendar.current.date(byAdding: .year, value: 0, to: Date())
         datePicker.addTarget(self, action: #selector(dateIssueChanged(sender:)), for: .valueChanged)
         return datePicker
     }()
@@ -139,6 +143,7 @@ class MenuMyDataViewController: UIViewController {
     lazy var datePickerDateOfValidaty: UIDatePicker = {
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .date
+        datePicker.minimumDate = Calendar.current.date(byAdding: .year, value: 0, to: Date())
         datePicker.addTarget(self, action: #selector(dateValidatyChanged(sender:)), for: .valueChanged)
         return datePicker
     }()
@@ -287,7 +292,7 @@ class MenuMyDataViewController: UIViewController {
     
     func textFieldValidation() {
         validator.styleTransformers(success:{ (validationRule) -> Void in
-            print("here")
+//            print("here")
             // clear error label
             validationRule.errorLabel?.isHidden = true
             validationRule.errorLabel?.text = ""
@@ -341,7 +346,6 @@ class MenuMyDataViewController: UIViewController {
     }
     
     func updateUserData(uid: String, completionHandler: @escaping ((_ exist : Bool) -> Void)) {
-        
         
         SVProgressHUD.show()
         
@@ -413,7 +417,7 @@ extension MenuMyDataViewController: ValidationDelegate {
     
     func validationFailed(_ errors:[(Validatable ,ValidationError)]) {
         // turn the fields to red
-        print("Not Good")
+        banner.show()
         for (field, error) in errors {
             if let field = field as? UITextField {
                 field.layer.borderColor = UIColor.red.cgColor

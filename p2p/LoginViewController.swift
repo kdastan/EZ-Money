@@ -11,7 +11,7 @@ import EasyPeasy
 import Firebase
 import SVProgressHUD
 import NotificationBannerSwift
-import NotificationBannerSwift
+
 
 class LoginViewController: RegistrationView {
     

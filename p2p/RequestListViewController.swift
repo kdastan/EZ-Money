@@ -111,6 +111,7 @@ class RequestListViewController: UIViewController {
     
     func fetchForInvestorList(){
         SVProgressHUD.show()
+        self.tableView.reloadData()
         User.fetchRequestID(fetchChild: "investorRequests") { (id, rate, time) in
             User.fetchAllRequests(fetchChild: id!, completion: { (borrowerId, status, requestId) in
                 User.fetchUserName(uid: borrowerId!, completion: { (name, surname, patronymic) in
