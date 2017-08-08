@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		180B03D71F39B071009EAB1B /* NumbersValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180B03D61F39B071009EAB1B /* NumbersValidation.swift */; };
-		180B47751F2A48C6004F8F5A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 180B47741F2A48C6004F8F5A /* GoogleService-Info.plist */; };
+		180B03D91F3A005F009EAB1B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 180B03D81F3A005F009EAB1B /* GoogleService-Info.plist */; };
 		18109F781F27A72700DDA339 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18109F771F27A72700DDA339 /* Container.swift */; };
 		18109F7A1F27B20C00DDA339 /* BorrowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18109F791F27B20C00DDA339 /* BorrowTableViewCell.swift */; };
 		18109F7C1F27B75C00DDA339 /* BarrowTableViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18109F7B1F27B75C00DDA339 /* BarrowTableViewContainer.swift */; };
@@ -53,7 +53,8 @@
 
 /* Begin PBXFileReference section */
 		180B03D61F39B071009EAB1B /* NumbersValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumbersValidation.swift; sourceTree = "<group>"; };
-		180B47741F2A48C6004F8F5A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		180B03D81F3A005F009EAB1B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		180B03DA1F3A0139009EAB1B /* p2p.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = p2p.entitlements; sourceTree = "<group>"; };
 		18109F771F27A72700DDA339 /* Container.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
 		18109F791F27B20C00DDA339 /* BorrowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorrowTableViewCell.swift; sourceTree = "<group>"; };
 		18109F7B1F27B75C00DDA339 /* BarrowTableViewContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarrowTableViewContainer.swift; sourceTree = "<group>"; };
@@ -154,7 +155,8 @@
 				18540A411F25B5660004CBD4 /* Assets.xcassets */,
 				18540A431F25B5660004CBD4 /* LaunchScreen.storyboard */,
 				18540A461F25B5660004CBD4 /* Info.plist */,
-				180B47741F2A48C6004F8F5A /* GoogleService-Info.plist */,
+				180B03D81F3A005F009EAB1B /* GoogleService-Info.plist */,
+				180B03DA1F3A0139009EAB1B /* p2p.entitlements */,
 			);
 			path = p2p;
 			sourceTree = "<group>";
@@ -295,8 +297,13 @@
 				TargetAttributes = {
 					18540A361F25B5660004CBD4 = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = 59XSW437S5;
+						DevelopmentTeam = AVV373JF5Z;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -324,7 +331,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18540A451F25B5660004CBD4 /* LaunchScreen.storyboard in Resources */,
-				180B47751F2A48C6004F8F5A /* GoogleService-Info.plist in Resources */,
+				180B03D91F3A005F009EAB1B /* GoogleService-Info.plist in Resources */,
 				18540A421F25B5660004CBD4 /* Assets.xcassets in Resources */,
 				18540A401F25B5660004CBD4 /* Main.storyboard in Resources */,
 			);
@@ -545,10 +552,11 @@
 			baseConfigurationReference = D0AF5F208D91E9370492736A /* Pods-p2p.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 59XSW437S5;
+				CODE_SIGN_ENTITLEMENTS = p2p/p2p.entitlements;
+				DEVELOPMENT_TEAM = AVV373JF5Z;
 				INFOPLIST_FILE = p2p/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kumardastan.p2p;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kumardastan.p2pAIFC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -559,10 +567,11 @@
 			baseConfigurationReference = 43C6A4945C93D41544EBDEFD /* Pods-p2p.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 59XSW437S5;
+				CODE_SIGN_ENTITLEMENTS = p2p/p2p.entitlements;
+				DEVELOPMENT_TEAM = AVV373JF5Z;
 				INFOPLIST_FILE = p2p/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kumardastan.p2p;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kumardastan.p2pAIFC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

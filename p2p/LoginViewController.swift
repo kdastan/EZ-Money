@@ -119,6 +119,10 @@ class LoginViewController: RegistrationView {
                     
                     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
                     appDelegate.isInvestor = isInvestor
+                    
+                    let token = Messaging.messaging().fcmToken
+                    ref.child("users").child("\(uid)").child("token").setValue(token)
+  
                     appDelegate.cordinateAppFlow()
                     SVProgressHUD.dismiss()
                 }){(error) in

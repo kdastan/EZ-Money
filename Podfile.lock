@@ -1,4 +1,5 @@
 PODS:
+  - Alamofire (4.5.0)
   - BEMCheckBox (1.4.1)
   - DGElasticPullToRefresh (1.1)
   - EasyPeasy (1.4.2)
@@ -13,6 +14,9 @@ PODS:
   - Firebase/Database (4.0.3):
     - Firebase/Core
     - FirebaseDatabase (= 4.0.0)
+  - Firebase/Messaging (4.0.3):
+    - Firebase/Core
+    - FirebaseMessaging (= 2.0.0)
   - FirebaseAnalytics (4.0.2):
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
@@ -27,9 +31,17 @@ PODS:
     - FirebaseAnalytics (~> 4.0)
   - FirebaseInstanceID (2.0.0):
     - FirebaseCore (~> 4.0)
+  - FirebaseMessaging (2.0.0):
+    - FirebaseAnalytics (~> 4.0)
+    - FirebaseCore (~> 4.0)
+    - FirebaseInstanceID (~> 2.0)
+    - GoogleToolboxForMac/Logger (~> 2.1)
+    - Protobuf (~> 3.1)
   - GoogleToolboxForMac/DebugUtils (2.1.1):
     - GoogleToolboxForMac/Defines (= 2.1.1)
   - GoogleToolboxForMac/Defines (2.1.1)
+  - GoogleToolboxForMac/Logger (2.1.1):
+    - GoogleToolboxForMac/Defines (= 2.1.1)
   - GoogleToolboxForMac/NSData+zlib (2.1.1):
     - GoogleToolboxForMac/Defines (= 2.1.1)
   - GoogleToolboxForMac/NSDictionary+URLArguments (2.1.1):
@@ -45,6 +57,7 @@ PODS:
   - NotificationBannerSwift (1.4.0):
     - MarqueeLabel/Swift
     - SnapKit (~> 3.2)
+  - Protobuf (3.3.0)
   - RESideMenu (4.0.7)
   - SCLAlertView (0.7.0)
   - SnapKit (3.2.0)
@@ -53,6 +66,7 @@ PODS:
   - SwipeViewController (0.1.8)
 
 DEPENDENCIES:
+  - Alamofire
   - BEMCheckBox
   - DGElasticPullToRefresh
   - EasyPeasy
@@ -60,6 +74,7 @@ DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
+  - Firebase/Messaging
   - IQKeyboardManagerSwift
   - JVFloatLabeledTextField
   - LTHRadioButton
@@ -81,6 +96,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/jpotts18/SwiftValidator.git
 
 SPEC CHECKSUMS:
+  Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
   BEMCheckBox: 5ba6e37ade3d3657b36caecc35c8b75c6c2b1a4e
   DGElasticPullToRefresh: 28f11a6026302a90f8ffebbc6e24748e584dddd3
   EasyPeasy: 50e7130b61f495ce105796e438d4136e2c8d2cc0
@@ -90,6 +106,7 @@ SPEC CHECKSUMS:
   FirebaseCore: c709067051de07bdaffdc4e735cd7299a23c463a
   FirebaseDatabase: d829b3a8c3e2ac7a16773c5df226966b0805dfc2
   FirebaseInstanceID: 9fbf536668f4d3f0880e7438456dabd1376e294b
+  FirebaseMessaging: 227406c05b0dc9290702d2e9f18ab5528f0c2cf2
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 5ad62e8200fa00ed011fe5e08d27fef72c5b1429
   IQKeyboardManagerSwift: 75ba21a23794a1e6b6fe6d9a267ea17f80e06771
@@ -97,6 +114,7 @@ SPEC CHECKSUMS:
   LTHRadioButton: 6d54db446b2edba0eafcb65b28deedb09dad8a47
   MarqueeLabel: 061d04687ee5485ac035b45c8e292274a87afe01
   NotificationBannerSwift: b2a81c9f0f816851686ca2e802058afd65676adc
+  Protobuf: d582fecf68201eac3d79ed61369ef45734394b9c
   RESideMenu: f24c508404b49c667344c54aba7e590883533958
   SCLAlertView: 8a14ffc40590c619e183eed2298b854385f30be1
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
@@ -104,6 +122,6 @@ SPEC CHECKSUMS:
   SwiftValidator: 25ded5ca1f10c05adf57f6ac82a72d28ac8d91af
   SwipeViewController: 0e396aa7d7756c30f8914ef59aea2a3d7d7798bc
 
-PODFILE CHECKSUM: 276867eb2b98b7cc287b7ef914f27c7563fbdf7c
+PODFILE CHECKSUM: 9189d6b1701c65fd73a169fe4c5c56d1dad05086
 
 COCOAPODS: 1.2.1

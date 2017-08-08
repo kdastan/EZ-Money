@@ -110,5 +110,15 @@ class User {
         let ref = Database.database().reference().child("allRequests").child("\(requestId)").child("status")
         ref.setValue(status)
     }
+    
+    static func fetchUserEmail(uid: String, compleation: @escaping (String?, String?) -> Void){
+        let ref = Database.database().reference().child("users")
+        ref.child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            compleation(value?["email"] as? String, value?["token"] as? String)
+        }) {(error) in
+            print(error.localizedDescription)
+        }
+    }
 
 }

@@ -14,6 +14,7 @@ target 'p2p' do
   pod 'Firebase/Core'
   pod 'Firebase'
   pod 'Firebase/Database'
+  pod 'Firebase/Messaging'
   pod 'Firebase/Auth'
   pod 'SwiftValidator', :git => 'https://github.com/jpotts18/SwiftValidator.git', :branch => 'master'
   pod 'JVFloatLabeledTextField'
@@ -22,5 +23,6 @@ target 'p2p' do
   pod 'NotificationBannerSwift'
   pod 'DGElasticPullToRefresh'
   pod 'SCLAlertView'
+  pod 'Alamofire'
 
 end

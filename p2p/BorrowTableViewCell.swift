@@ -36,6 +36,7 @@ class BorrowTableViewCell: UITableViewCell {
         label.layer.cornerRadius = 4
         label.layer.borderWidth = 1
         label.textAlignment = .center
+        label.numberOfLines = 0
         return label
     }()
     
@@ -105,8 +106,8 @@ class BorrowTableViewCell: UITableViewCell {
         label <- [
             Right(10),
             Bottom(0).to(container.thirdField.image, .bottom),
-            Height(30),
-            Width(130)
+            Height(55),
+            Width(110)
         ]
         
         investorButtonDecline <- [

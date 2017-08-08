@@ -13,6 +13,7 @@ import FirebaseDatabase
 import NotificationBannerSwift
 import SwipeViewController
 import SCLAlertView
+import Alamofire
 
 struct Requests {
     let amount: String!
@@ -40,6 +41,7 @@ struct Investors {
     let surname: String!
     let patronymic: String!
     let nameForSearch: String!
+    let token: String!
 }
 
 class TakeBorrowViewController: UIViewController {
@@ -54,6 +56,7 @@ class TakeBorrowViewController: UIViewController {
     
     var investorsList: [Investors] = []
     var filteredInvestorsList: [Investors] = []
+    var queryMessage = ""
     
     var names: [[String]] = []
     
@@ -86,6 +89,7 @@ class TakeBorrowViewController: UIViewController {
         button.setTitle("Запросить всех", for: .normal)
         button.isHidden = true
         button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: #selector(notificationToUser(sender:)), for: .touchUpInside)
         button.layer.cornerRadius = 15
         return button
     }()
@@ -133,6 +137,34 @@ class TakeBorrowViewController: UIViewController {
         
     }
     
+    func notificationSender(investorToken: String) {
+//        let ref = Database.database().reference()
+        let notificationUrl = "https://fcm.googleapis.com/fcm/send"
+        let serverKey = "AAAAiyp0u8w:APA91bEuiQ--qrKwl_ahYWvr0qbs30gN55XT-U5XNq2ptO_pznUyjSaYXwEFz1SK1pKyxcBIE7Y9ALxLj5gXjNCioqzre7jSNA8gG0Xu_YskTsX5HS1s6I527FXcc8lFz6dgF892jhr8"
+        
+        let token = investorToken
+        
+        var header: HTTPHeaders? = HTTPHeaders()
+        header = [
+            "Content-Type":"application/json",
+            "Authorization":"key=\(serverKey)"
+        ]
+        var notificationParameters: Parameters? = [
+            "notification": [
+                "title": "Запрос на деньги",
+                "body": self.queryMessage
+            ],
+            "to" : "\(token)"
+        ]
+        
+        Alamofire.request(notificationUrl as URLConvertible, method: .post as HTTPMethod, parameters: notificationParameters, encoding: JSONEncoding.default, headers: header!).responseJSON { (resp) in
+            print(resp)
+        }
+    }
+    
+    func notificationToUser(sender: UIButton) {
+    }
+    
     func investorSearch() {
         searchBar.isHidden = false
         requestButton.isHidden = true
@@ -141,13 +173,15 @@ class TakeBorrowViewController: UIViewController {
     }
     
     func pressed() {
+        
+        guard let moneyAmount = a.container.field.textField.text, a.container.field.textField.text != "", let time = a.container.field2.textField.text, a.container.field2.textField.text != "" else {
+            return
+        }
+        
         button.isHidden = true
         requestButton.isHidden = false
         investorSearchButton.isHidden = false
         label.isHidden = false
-        
-       
-        
         
         let ref = Database.database().reference()
         let auth = Auth.auth().currentUser?.uid
@@ -166,9 +200,11 @@ class TakeBorrowViewController: UIViewController {
         User.fetchInvestor(request: "investorRequests") { (amount, date, id, investorId, rate, time) in
             guard let investorId = investorId else {return}
             User.fetchUserName(uid: investorId, completion: { (name, surname, patronymic) in
-                self.investorsList.insert(Investors(amount: amount, date: date, id: id, investorId: investorId, rate: rate, time: time, name: name, surname: surname, patronymic: patronymic, nameForSearch: "\(name) \(surname) \(patronymic)"), at: 0)
-                self.filteredInvestorsList = self.investorsList
-                self.tableView.reloadData()
+                User.fetchUserEmail(uid: investorId, compleation: { (email, token) in
+                    self.investorsList.insert(Investors(amount: amount, date: date, id: id, investorId: investorId, rate: rate, time: time, name: name, surname: surname, patronymic: patronymic, nameForSearch: "\(name) \(surname) \(patronymic)", token: token), at: 0)
+                    self.filteredInvestorsList = self.investorsList
+                    self.tableView.reloadData()
+                })
             })
         }
     
@@ -190,6 +226,8 @@ class TakeBorrowViewController: UIViewController {
             
             let reference = Database.database().reference()
             let newRef = reference.child("allRequests").childByAutoId()
+            let notificationRecord = reference.child("notifications").childByAutoId()
+            
             let post: [String: Any] = [
                 "bigId": newRef.key,
                 "borrowerAmount": amount,
@@ -200,10 +238,28 @@ class TakeBorrowViewController: UIViewController {
             self.banner.duration = 2
             self.banner.show()
             newRef.setValue(post)
+            
+            let investorId = self.filteredInvestorsList[sender.tag].id
+            let investorToken = self.filteredInvestorsList[sender.tag].token
+            
+            
+            User.fetchUserEmail(uid: uid, compleation: { (email, token) in
+                self.queryMessage = "\(email!) запрашивает у вас деньги"
+                var post = [
+                    "from":uid,
+                    "message": self.queryMessage,
+                    "to":investorId!
+                ]
+                
+                notificationRecord.setValue(post)
+                
+            })
+            
+            self.notificationSender(investorToken: investorToken!)
+            
         }
         alertView.showWarning("Отправить запрос?", subTitle: "\((filteredInvestorsList[sender.tag].name)!) на \((self.a.container.field.textField.text)!) Тенге,  \n на \((filteredInvestorsList[sender.tag].time)!) месяцев под \((filteredInvestorsList[sender.tag].rate)!) % годовых", closeButtonTitle: "Отменить", colorStyle: 0x4BA2D3, colorTextButton: 0xE3F2FC)
         
-        //
     }
     
     func setupView() {

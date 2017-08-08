@@ -10,10 +10,14 @@ import UIKit
 import IQKeyboardManagerSwift
 import RESideMenu
 import Firebase
+import UserNotifications
+import Firebase
+import FirebaseInstanceID
+import FirebaseMessaging
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
+    
     var window: UIWindow?
     var isLogged = false
     var isInvestor = false
@@ -24,23 +28,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerUserNotificationSettings(settings)
         application.registerForRemoteNotifications()
         
+        if #available(iOS 10.0, *) {
+            // For iOS 10 display notification (sent via APNS)
+            UNUserNotificationCenter.current().delegate = self
+            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+            UNUserNotificationCenter.current().requestAuthorization(
+                options: authOptions,
+                completionHandler: {_, _ in })
+            // For iOS 10 data message (sent via FCM
+            Messaging.messaging().remoteMessageDelegate = self
+        } else {
+            let settings: UIUserNotificationSettings =
+                UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            application.registerUserNotificationSettings(settings)
+        }
+        
+        application.registerForRemoteNotifications()
+        
         FirebaseApp.configure()
         cordinateAppFlow()
         IQKeyboardManager.sharedManager().enable = true
         
+        print(InstanceID.instanceID().token())
+        let token = Messaging.messaging().fcmToken
+        
+        print("token - \(token)")
+        
         return true
     }
     
-//    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> ()) {
-//        
-//        let dict = userInfo["aps"] as! NSDictionary
-//        let message = dict["alert"]
-//        print(message)
-//        
-//        
-//        print("Message ID \(userInfo["gcm.message_id"]!)")
-//        print(userInfo)
-//    }
+    func application(received remoteMessage: MessagingRemoteMessage) {
+        print(remoteMessage.appData)
+    }
+    
+    /// This method will be called whenever FCM receives a new, default FCM token for your
+    /// Firebase project's Sender ID.
+    /// You can send this token to your application server to send notifications to this device.
+    func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
+        let ref = Database.database().reference()
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        
+        ref.child("users").child("\(uid)").child("token").setValue(fcmToken)
+    }
     
     func cordinateAppFlow() {
         window = UIWindow(frame: UIScreen.main.bounds)
