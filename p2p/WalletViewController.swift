@@ -129,24 +129,24 @@ class WalletViewController: UIViewController {
     }
     
     func submitButtonPressed(sender: UIButton) {
-        
         guard let amount = self.userRefillView.refillAmountTextField.text, self.userRefillView.refillAmountTextField.text != "" else { return }
-        
         let alert = SCLAlertView()
         alert.addButton("Подтверждаю") {
             SVProgressHUD.show()
             guard let uid = Auth.auth().currentUser?.uid else { return }
-                User.setInvestorFinance(uid: uid, amount: amount, compleation: { (isCorrect) in
+            User.fetchUsers(uid: uid, compleation: { (balance, email, isInvestor, token, userData) in
+                let newAmount = Int(amount)! + balance!
+                User.setInvestorFinance(uid: uid, amount: newAmount, compleation: { (isCorrect) in
                     self.fetchUserInfo()
                     guard let isCorrect = isCorrect else { return }
                     if isCorrect {
                         self.successBanner.show()
                     } else {
-                        print("as")
+                        self.errorBanner.show()
                     }
                 })
+            })
         }
         alert.showInfo("One more step", subTitle: "Подтвердите перевод")
-        
     }
 }

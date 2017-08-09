@@ -122,10 +122,9 @@ class User {
         }
     }
     
-    static func setInvestorFinance(uid: String, amount: String, compleation: @escaping (Bool?) -> Void) {
-        let newAmount = Int(amount)
+    static func setInvestorFinance(uid: String, amount: Int, compleation: @escaping (Bool?) -> Void) {
         let ref = Database.database().reference().child("users").child("\(uid)").child("balance")
-        ref.setValue(newAmount)
+        ref.setValue(amount)
         compleation(true)
     }
     
