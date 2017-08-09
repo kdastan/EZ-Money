@@ -109,6 +109,7 @@ class User {
     static func setRequestStatus(requestId: String, status: Int, compleation: @escaping (Bool?) -> Void) {
         let ref = Database.database().reference().child("allRequests").child("\(requestId)").child("status")
         ref.setValue(status)
+        compleation(true)
     }
     
     static func fetchUserEmail(uid: String, compleation: @escaping (String?, String?) -> Void){
@@ -120,5 +121,19 @@ class User {
             print(error.localizedDescription)
         }
     }
-
+    
+    static func setInvestorFinance(uid: String, amount: String, compleation: @escaping (Bool?) -> Void) {
+        let newAmount = Int(amount)
+        let ref = Database.database().reference().child("users").child("\(uid)").child("balance")
+        ref.setValue(newAmount)
+        compleation(true)
+    }
+    
+    static func fetchUsers(uid: String, compleation: @escaping (Int?, String?, Bool?, String?, Bool?) -> Void){
+        let ref = Database.database().reference().child("users")
+        ref.child("\(uid)").observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? [String: Any]
+            compleation(value?["balance"] as? Int, value?["email"] as? String, value?["isInvestor"] as? Bool, value?["token"] as? String, value?["userData"] as? Bool)
+        })
+    }
 }

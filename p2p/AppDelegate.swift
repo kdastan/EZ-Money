@@ -78,9 +78,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             let pageController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
             let navigationController = BorrowViewController(rootViewController: pageController)
             
-            let a = UINavigationController(rootViewController: MenuViewController())
+            //let a = UINavigationController(rootViewController: MenuViewController())
             
-            let sideMenu = RESideMenu(contentViewController: navigationController, leftMenuViewController: a, rightMenuViewController: nil)
+            let sideMenu = RESideMenu(contentViewController: navigationController, leftMenuViewController: MenuViewController(), rightMenuViewController: nil)
             sideMenu?.backgroundImage = UIImage(named: "sample")
             
             window?.rootViewController = sideMenu

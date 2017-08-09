@@ -31,11 +31,11 @@ extension MenuViewController: UITableViewDelegate {
         case 0:
             
             self.present(MenuMyDataViewController(), animated: true, completion: nil)
-            
         case 1:
             print("1")
+            self.present(WalletViewController(), animated: true, completion: nil)
         case 2:
-            print("2")
+            print("3")
         case 3:
             print("3")
         case 4:

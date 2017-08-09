@@ -106,7 +106,7 @@ class BorrowTableViewCell: UITableViewCell {
         label <- [
             Right(10),
             Bottom(0).to(container.thirdField.image, .bottom),
-            Height(55),
+            Height(30),
             Width(110)
         ]
         

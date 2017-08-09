@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		180B03D71F39B071009EAB1B /* NumbersValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180B03D61F39B071009EAB1B /* NumbersValidation.swift */; };
 		180B03D91F3A005F009EAB1B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 180B03D81F3A005F009EAB1B /* GoogleService-Info.plist */; };
+		180B03DC1F3AD3EC009EAB1B /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180B03DB1F3AD3EC009EAB1B /* WalletViewController.swift */; };
+		180B03DE1F3AD5A8009EAB1B /* WalletAcountInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180B03DD1F3AD5A8009EAB1B /* WalletAcountInfo.swift */; };
+		180B03E01F3ADBBA009EAB1B /* WalletRefill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180B03DF1F3ADBBA009EAB1B /* WalletRefill.swift */; };
 		18109F781F27A72700DDA339 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18109F771F27A72700DDA339 /* Container.swift */; };
 		18109F7A1F27B20C00DDA339 /* BorrowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18109F791F27B20C00DDA339 /* BorrowTableViewCell.swift */; };
 		18109F7C1F27B75C00DDA339 /* BarrowTableViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18109F7B1F27B75C00DDA339 /* BarrowTableViewContainer.swift */; };
@@ -55,6 +58,9 @@
 		180B03D61F39B071009EAB1B /* NumbersValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumbersValidation.swift; sourceTree = "<group>"; };
 		180B03D81F3A005F009EAB1B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		180B03DA1F3A0139009EAB1B /* p2p.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = p2p.entitlements; sourceTree = "<group>"; };
+		180B03DB1F3AD3EC009EAB1B /* WalletViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletViewController.swift; sourceTree = "<group>"; };
+		180B03DD1F3AD5A8009EAB1B /* WalletAcountInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletAcountInfo.swift; sourceTree = "<group>"; };
+		180B03DF1F3ADBBA009EAB1B /* WalletRefill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletRefill.swift; sourceTree = "<group>"; };
 		18109F771F27A72700DDA339 /* Container.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
 		18109F791F27B20C00DDA339 /* BorrowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorrowTableViewCell.swift; sourceTree = "<group>"; };
 		18109F7B1F27B75C00DDA339 /* BarrowTableViewContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarrowTableViewContainer.swift; sourceTree = "<group>"; };
@@ -191,6 +197,8 @@
 				187966921F30351C0001ED8B /* Validation */,
 				187966981F3084200001ED8B /* MenuFieldContainer.swift */,
 				1879669F1F310BB70001ED8B /* DataTableViewCell.swift */,
+				180B03DD1F3AD5A8009EAB1B /* WalletAcountInfo.swift */,
+				180B03DF1F3ADBBA009EAB1B /* WalletRefill.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -207,6 +215,7 @@
 				18F07DEC1F272E790095F3A0 /* RequestListViewController.swift */,
 				182A9EF31F288B700039BFB8 /* MenuViewController.swift */,
 				18ED1D411F2B4BA3001B7A90 /* MenuMyDataViewController.swift */,
+				180B03DB1F3AD3EC009EAB1B /* WalletViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -396,7 +405,9 @@
 				18F07DEF1F273E700095F3A0 /* BorrowContainer.swift in Sources */,
 				18854C051F2FB11B00ACEC52 /* nameValidation.swift in Sources */,
 				18F07DE51F26524A0095F3A0 /* SignUpViewController.swift in Sources */,
+				180B03E01F3ADBBA009EAB1B /* WalletRefill.swift in Sources */,
 				1879669E1F30FF330001ED8B /* User.swift in Sources */,
+				180B03DC1F3AD3EC009EAB1B /* WalletViewController.swift in Sources */,
 				18ED1D461F2B7C3B001B7A90 /* userModel.swift in Sources */,
 				18540A4D1F25B8740004CBD4 /* LoginViewController.swift in Sources */,
 				18ED8E241F28E3CB00848ACD /* MenuSideTableViewCell.swift in Sources */,
@@ -404,6 +415,7 @@
 				18109F7E1F27C86200DDA339 /* BarrowContainerTable.swift in Sources */,
 				18540A551F260C030004CBD4 /* TextFieldWithIcon.swift in Sources */,
 				1879669C1F30F1E00001ED8B /* Constants.swift in Sources */,
+				180B03DE1F3AD5A8009EAB1B /* WalletAcountInfo.swift in Sources */,
 				18109F7A1F27B20C00DDA339 /* BorrowTableViewCell.swift in Sources */,
 				181632061F323568004DA934 /* LendContainer.swift in Sources */,
 				18F07DE71F2653000095F3A0 /* RegistrationView.swift in Sources */,
