@@ -61,6 +61,7 @@ open class SwipeViewController: UINavigationController, UIPageViewControllerDele
     override open func viewDidLoad() {
         super.viewDidLoad()
         
+        
     }
     
     override open func viewWillAppear(_ animated: Bool) {
@@ -93,6 +94,7 @@ open class SwipeViewController: UINavigationController, UIPageViewControllerDele
         //Select button of initial view controller - change to selected image
         buttons[currentPageIndex - 1].isSelected = true
         
+
     }
     
     
