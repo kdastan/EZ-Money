@@ -1,3 +1,4 @@
+
 //
 //  WalletViewController.swift
 //  p2p
@@ -14,25 +15,27 @@ import SCLAlertView
 import NotificationBannerSwift
 import SwiftValidator
 
-class WalletViewController: UIViewController {
+class BorrowerWalletViewController: UIViewController {
     
-    let successBanner = NotificationBanner(title: "Кошелек успешно пополнен", subtitle: "", style: .success)
+    let successBanner = NotificationBanner(title: "Успещное снятие", subtitle: "", style: .success)
     let errorBanner = NotificationBanner(title: "Возникла ошибка", subtitle: "Попробуйте повторить позже", style: .warning)
     let inputErrorBanner = NotificationBanner(title: "Ошибка ввода", subtitle: "Пожалуйста заполните все поля", style: .warning)
+    let incorrectAmount = NotificationBanner(title: "Отмена", subtitle: "У вас не достаточно средств", style: .warning)
     
     let validator = Validator()
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Пополнение кошелька"
+        label.text = "Снятие с кошелька"
         label.textAlignment = .center
         label.font = UIFont(name: "Helvetica", size: 24)
         return label
     }()
-
+    
     lazy var userInfoLabel: WalletAcountInfo = {
         let label = WalletAcountInfo()
-        label.nameTextField.text = "Инвестор: "
+        //label.nameLabel.adjustsFontSizeToFitWidth = true
+        label.nameTextField.text = "Пользователь: "
         label.emailTextField.text = "Email: "
         label.balanceTextField.text = "Текущий баланс: "
         return label
@@ -40,6 +43,7 @@ class WalletViewController: UIViewController {
     
     lazy var userRefillView: WalletRefill = {
         let refillView = WalletRefill()
+        refillView.refillAmountTextField.placeholder = "Сумма снятия"
         return refillView
     }()
     
@@ -55,7 +59,7 @@ class WalletViewController: UIViewController {
     lazy var submitButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = UIColor(colorLiteralRed: 70/255, green: 161/255, blue: 213/255, alpha: 1)
-        button.setTitle("Пополнить", for: .normal)
+        button.setTitle("Снять", for: .normal)
         button.layer.cornerRadius = 4
         button.addTarget(self, action: #selector(submitButtonPressed(sender:)), for: .touchUpInside)
         return button
@@ -117,7 +121,7 @@ class WalletViewController: UIViewController {
     
     
     func inputValidation() {
-    
+        
         validator.styleTransformers(success:{ (validationRule) -> Void in
             validationRule.errorLabel?.isHidden = true
             validationRule.errorLabel?.text = ""
@@ -169,7 +173,7 @@ class WalletViewController: UIViewController {
     }
 }
 
-extension WalletViewController: ValidationDelegate {
+extension BorrowerWalletViewController: ValidationDelegate {
     
     func validationSuccessful() {
         
@@ -180,7 +184,12 @@ extension WalletViewController: ValidationDelegate {
             SVProgressHUD.show()
             guard let uid = Auth.auth().currentUser?.uid else { return }
             User.fetchUsers(uid: uid, compleation: { (balance, email, isInvestor, token, userData, password) in
-                let newAmount = Int(amount)! + balance!
+                //Сумма снятия больше чем осн сумма
+                if balance! < Int(amount)! {
+                    SVProgressHUD.dismiss()
+                    self.incorrectAmount.show()
+                } else {
+                let newAmount = balance! - Int(amount)!
                 User.setInvestorFinance(uid: uid, amount: newAmount, compleation: { (isCorrect) in
                     self.fetchUserInfo()
                     guard let isCorrect = isCorrect else { return }
@@ -190,9 +199,10 @@ extension WalletViewController: ValidationDelegate {
                         self.errorBanner.show()
                     }
                 })
+                }
             })
         }
-        alert.showInfo("One more step", subTitle: "Подтвердите перевод")
+        alert.showInfo("One more step", subTitle: "Подтвердите снятие")
         
     }
     

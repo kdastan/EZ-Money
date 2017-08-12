@@ -128,11 +128,18 @@ class User {
         compleation(true)
     }
     
-    static func fetchUsers(uid: String, compleation: @escaping (Int?, String?, Bool?, String?, Bool?) -> Void){
+    static func setUserPassword(uid: String, password: String, compleation: @escaping (Bool?) -> Void) {
+        let ref = Database.database().reference().child("users").child("\(uid)").child("password")
+        ref.setValue(password)
+        compleation(true)
+    }
+    
+    static func fetchUsers(uid: String, compleation: @escaping (Int?, String?, Bool?, String?, Bool?, String?) -> Void){
         let ref = Database.database().reference().child("users")
         ref.child("\(uid)").observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? [String: Any]
-            compleation(value?["balance"] as? Int, value?["email"] as? String, value?["isInvestor"] as? Bool, value?["token"] as? String, value?["userData"] as? Bool)
+            compleation(value?["balance"] as? Int, value?["email"] as? String, value?["isInvestor"] as? Bool, value?["token"] as? String, value?["userData"] as? Bool, value?["password"] as? String)
         })
     }
+    
 }

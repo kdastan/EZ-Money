@@ -12,6 +12,11 @@
 		180B03DC1F3AD3EC009EAB1B /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180B03DB1F3AD3EC009EAB1B /* WalletViewController.swift */; };
 		180B03DE1F3AD5A8009EAB1B /* WalletAcountInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180B03DD1F3AD5A8009EAB1B /* WalletAcountInfo.swift */; };
 		180B03E01F3ADBBA009EAB1B /* WalletRefill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180B03DF1F3ADBBA009EAB1B /* WalletRefill.swift */; };
+		180B03E21F3C0E25009EAB1B /* userCardValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180B03E11F3C0E25009EAB1B /* userCardValidation.swift */; };
+		180B03E41F3C23A7009EAB1B /* BorrowerWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180B03E31F3C23A7009EAB1B /* BorrowerWalletViewController.swift */; };
+		180B03E61F3C2BC9009EAB1B /* UserSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180B03E51F3C2BC8009EAB1B /* UserSettingsViewController.swift */; };
+		180B03E81F3C35DD009EAB1B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180B03E71F3C35DD009EAB1B /* SettingsView.swift */; };
+		180B03EA1F3D5671009EAB1B /* ArchiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180B03E91F3D5671009EAB1B /* ArchiveViewController.swift */; };
 		18109F781F27A72700DDA339 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18109F771F27A72700DDA339 /* Container.swift */; };
 		18109F7A1F27B20C00DDA339 /* BorrowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18109F791F27B20C00DDA339 /* BorrowTableViewCell.swift */; };
 		18109F7C1F27B75C00DDA339 /* BarrowTableViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18109F7B1F27B75C00DDA339 /* BarrowTableViewContainer.swift */; };
@@ -61,6 +66,11 @@
 		180B03DB1F3AD3EC009EAB1B /* WalletViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletViewController.swift; sourceTree = "<group>"; };
 		180B03DD1F3AD5A8009EAB1B /* WalletAcountInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletAcountInfo.swift; sourceTree = "<group>"; };
 		180B03DF1F3ADBBA009EAB1B /* WalletRefill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletRefill.swift; sourceTree = "<group>"; };
+		180B03E11F3C0E25009EAB1B /* userCardValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = userCardValidation.swift; sourceTree = "<group>"; };
+		180B03E31F3C23A7009EAB1B /* BorrowerWalletViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorrowerWalletViewController.swift; sourceTree = "<group>"; };
+		180B03E51F3C2BC8009EAB1B /* UserSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettingsViewController.swift; sourceTree = "<group>"; };
+		180B03E71F3C35DD009EAB1B /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		180B03E91F3D5671009EAB1B /* ArchiveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveViewController.swift; sourceTree = "<group>"; };
 		18109F771F27A72700DDA339 /* Container.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
 		18109F791F27B20C00DDA339 /* BorrowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorrowTableViewCell.swift; sourceTree = "<group>"; };
 		18109F7B1F27B75C00DDA339 /* BarrowTableViewContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarrowTableViewContainer.swift; sourceTree = "<group>"; };
@@ -199,6 +209,7 @@
 				1879669F1F310BB70001ED8B /* DataTableViewCell.swift */,
 				180B03DD1F3AD5A8009EAB1B /* WalletAcountInfo.swift */,
 				180B03DF1F3ADBBA009EAB1B /* WalletRefill.swift */,
+				180B03E71F3C35DD009EAB1B /* SettingsView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -216,6 +227,9 @@
 				182A9EF31F288B700039BFB8 /* MenuViewController.swift */,
 				18ED1D411F2B4BA3001B7A90 /* MenuMyDataViewController.swift */,
 				180B03DB1F3AD3EC009EAB1B /* WalletViewController.swift */,
+				180B03E31F3C23A7009EAB1B /* BorrowerWalletViewController.swift */,
+				180B03E51F3C2BC8009EAB1B /* UserSettingsViewController.swift */,
+				180B03E91F3D5671009EAB1B /* ArchiveViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -235,6 +249,7 @@
 				187966901F3034FC0001ED8B /* phoneValidation.swift */,
 				187966931F3051740001ED8B /* documentNumbersValidation.swift */,
 				180B03D61F39B071009EAB1B /* NumbersValidation.swift */,
+				180B03E11F3C0E25009EAB1B /* userCardValidation.swift */,
 			);
 			name = Validation;
 			sourceTree = "<group>";
@@ -422,21 +437,26 @@
 				181632041F3234DC004DA934 /* LendViewController.swift in Sources */,
 				18540A3D1F25B5660004CBD4 /* ViewController.swift in Sources */,
 				184256B41F29A72500ECEDE3 /* PaddingTextField.swift in Sources */,
+				180B03E81F3C35DD009EAB1B /* SettingsView.swift in Sources */,
 				187966991F3084200001ED8B /* MenuFieldContainer.swift in Sources */,
 				18F07DEB1F272E630095F3A0 /* TakeBorrowViewController.swift in Sources */,
 				184256B61F29AA5800ECEDE3 /* MenuHeaderView.swift in Sources */,
 				18F07DED1F272E790095F3A0 /* RequestListViewController.swift in Sources */,
 				187966A01F310BB70001ED8B /* DataTableViewCell.swift in Sources */,
+				180B03E21F3C0E25009EAB1B /* userCardValidation.swift in Sources */,
+				180B03EA1F3D5671009EAB1B /* ArchiveViewController.swift in Sources */,
 				18ED1D441F2B78BF001B7A90 /* userDataModel.swift in Sources */,
 				18F07DF41F2765370095F3A0 /* Extensions.swift in Sources */,
 				181632081F32396D004DA934 /* Container2.swift in Sources */,
 				18540A3B1F25B5660004CBD4 /* AppDelegate.swift in Sources */,
+				180B03E41F3C23A7009EAB1B /* BorrowerWalletViewController.swift in Sources */,
 				187966971F3067C50001ED8B /* RadioButton.swift in Sources */,
 				18540A531F25C5450004CBD4 /* helpers.swift in Sources */,
 				182A9EF41F288B700039BFB8 /* MenuViewController.swift in Sources */,
 				187966911F3034FC0001ED8B /* phoneValidation.swift in Sources */,
 				18ED1D421F2B4BA3001B7A90 /* MenuMyDataViewController.swift in Sources */,
 				18109F7C1F27B75C00DDA339 /* BarrowTableViewContainer.swift in Sources */,
+				180B03E61F3C2BC9009EAB1B /* UserSettingsViewController.swift in Sources */,
 				18109F781F27A72700DDA339 /* Container.swift in Sources */,
 				18F07DE91F272BD00095F3A0 /* BorrowViewController.swift in Sources */,
 				18854C031F2F289500ACEC52 /* paddingTextFieldsForUserData.swift in Sources */,

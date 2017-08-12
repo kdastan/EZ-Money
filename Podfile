@@ -24,5 +24,6 @@ target 'p2p' do
   pod 'DGElasticPullToRefresh'
   pod 'SCLAlertView'
   pod 'Alamofire'
+  pod 'HMSegmentedControl'
 
 end

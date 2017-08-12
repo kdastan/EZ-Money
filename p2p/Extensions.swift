@@ -29,20 +29,27 @@ extension MenuViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
-            
             self.present(MenuMyDataViewController(), animated: true, completion: nil)
         case 1:
             print("1")
-            self.present(WalletViewController(), animated: true, completion: nil)
+            if isInvestor! {
+                self.present(WalletViewController(), animated: true, completion: nil)
+            } else {
+                self.present(BorrowerWalletViewController(), animated: true, completion: nil)
+            }
         case 2:
             print("3")
+            self.present(ArchiveViewController(), animated: true, completion: nil)
         case 3:
-            print("3")
+            print("4")
+            self.present(UserSettingsViewController(), animated: true, completion: nil)
         case 4:
             self.signOut()
         default:
             print("Nothing")
         }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
@@ -75,6 +82,3 @@ extension TakeBorrowViewController: UISearchBarDelegate {
         self.tableView.reloadData()
     }
 }
-
-
-

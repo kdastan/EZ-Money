@@ -21,45 +21,28 @@ class MenuHeaderView: UIView {
     
     lazy var nameInfoLabel: UILabel = {
         let label = UILabel()
-        label.text = "Камилла Н."
+        label.text = ""
         label.numberOfLines = 0
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
     lazy var email: UILabel = {
         let label = UILabel()
-        label.text = "@email.com"
+        label.text = ""
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        fetchFromDB()
-        
         setupView()
         setupConstraints()
     }
     
-    func fetchFromDB() {
-        
-        let ref = Database.database().reference()
-        let currentID = Auth.auth().currentUser?.uid
-        
-        ref.child("users").child(currentID!).observeSingleEvent(of: .value, with: { (snapshot) in
-            let value = snapshot.value as? NSDictionary
-            self.email.text = value?["email"] as? String ?? "no email"
-        }) { (error) in
-            print(error.localizedDescription)
-        }
-        
-        ref.child("userData").child(currentID!).observeSingleEvent(of: .value, with: { (snapshot) in
-            let value = snapshot.value as? NSDictionary
-            self.nameInfoLabel.text = value?["name"] as? String ?? "Name Surname"
-        }) {(error) in
-            print(error.localizedDescription)
-        }
-    }
+    
+    
+    
     
     func setupView() {
         addSubview(avatar)
@@ -83,7 +66,8 @@ class MenuHeaderView: UIView {
         email <- [
             Bottom(0).to(avatar, .bottom),
             Left(10).to(avatar, .right),
-            Height(20)
+            Height(20),
+            Width(Screen.width / 2)
         ]
     }
     

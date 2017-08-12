@@ -43,7 +43,7 @@ class MenuMyDataViewController: UIViewController {
     lazy var button: UIButton = {
         let button = UIButton()
         button.setTitle("Подтвердить", for: .normal)
-        button.backgroundColor = .orange
+        button.backgroundColor = UIColor(colorLiteralRed: 70/255, green: 161/255, blue: 213/255, alpha: 1)
         button.addTarget(self, action: #selector(validatorButton), for: .touchUpInside)
         return button
     }()
@@ -51,7 +51,7 @@ class MenuMyDataViewController: UIViewController {
     lazy var cancelButton: UIButton = {
         let button = UIButton()
         button.setTitle("Отмена", for: .normal)
-        button.backgroundColor = .blue
+        button.backgroundColor = UIColor(colorLiteralRed: 213/255, green: 70/255, blue: 70/255, alpha: 1)
         button.addTarget(self, action: #selector(cancelPressed), for: .touchUpInside)
         return button
     }()
@@ -410,6 +410,8 @@ extension MenuMyDataViewController: ValidationDelegate {
         let ref = Database.database().reference()
         ref.child("userData").child("\(uid)").setValue(post)
         ref.child("users").child("\(uid)").child("userData").setValue(true)
+        
+        
         
         self.dismiss(animated: true, completion: nil)
         

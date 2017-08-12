@@ -11,41 +11,31 @@ import EasyPeasy
 
 class WalletAcountInfo: UIView {
     
-    lazy var nameLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont(name: "Helvetica", size: 16)
-        return label
-    }()
-    
-    lazy var name: UILabel = {
-        let label = UILabel()
-        label.font = UIFont(name: "Helvetica", size: 16)
-        label.numberOfLines = 0
-        return label
+    lazy var nameTextField: PaddingTextFieldForUserData = {
+        let textField = PaddingTextFieldForUserData()
+        textField.layer.cornerRadius = 4
+        textField.placeholder = "Пользователь"
+        textField.isEnabled = false
+        textField.backgroundColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0.1)
+        return textField
     }()
 
-    lazy var emailLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont(name: "Helvetica", size: 16)
-        return label
+    lazy var emailTextField: PaddingTextFieldForUserData = {
+        let textField = PaddingTextFieldForUserData()
+        textField.layer.cornerRadius = 4
+        textField.placeholder = "Электронная почта"
+        textField.isEnabled = false
+        textField.backgroundColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0.1)
+        return textField
     }()
     
-    lazy var email: UILabel = {
-        let label = UILabel()
-        label.font = UIFont(name: "Helvetica", size: 16)
-        return label
-    }()
-    
-    lazy var balanceLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont(name: "Helvetica", size: 16)
-        return label
-    }()
-    
-    lazy var balance: UILabel = {
-        let label = UILabel()
-        label.font = UIFont(name: "Helvetica", size: 16)
-        return label
+    lazy var balanceTextField: PaddingTextFieldForUserData = {
+        let textField = PaddingTextFieldForUserData()
+        textField.layer.cornerRadius = 4
+        textField.placeholder = "Текущий баланс"
+        textField.isEnabled = false
+        textField.backgroundColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0.1)
+        return textField
     }()
     
     override init(frame: CGRect) {
@@ -56,49 +46,28 @@ class WalletAcountInfo: UIView {
     }
     
     func setupViews() {
-        addSubview(nameLabel)
-        addSubview(name)
-        addSubview(emailLabel)
-        addSubview(email)
-        addSubview(balanceLabel)
-        addSubview(balance)
+        addSubview(nameTextField)
+        addSubview(emailTextField)
+        addSubview(balanceTextField)
     }
     
     func setupConstraints() {
-        nameLabel <- [
+        nameTextField <- [
             Top(0),
+            CenterX(0),
+            Width(Screen.width - 40)
+        ]
+        
+        emailTextField <- [
+            Top(10).to(nameTextField, .bottom),
             Left(0),
-            Width(80)
+            Width(Screen.width - 40)
         ]
         
-        name <- [
-            Top(0).to(nameLabel, .top),
-            Left(10).to(nameLabel, .right),
-            Width(Screen.width - 120)
-        ]
-        
-        emailLabel <- [
-            Top(15).to(nameLabel, .bottom),
+        balanceTextField <- [
+            Top(10).to(emailTextField, .bottom),
             Left(0),
-            Width(45)
-        ]
-        
-        email <- [
-            Top(0).to(emailLabel, .top),
-            Left(10).to(emailLabel, .right),
-            Width(Screen.width - 80)
-        ]
-        
-        balanceLabel <- [
-            Top(15).to(emailLabel, .bottom),
-            Left(0),
-            Width(130)
-        ]
-        
-        balance <- [
-            Top(0).to(balanceLabel, .top),
-            Left(10).to(balanceLabel, .right),
-            Width(Screen.width - 80)
+            Width(Screen.width - 40)
         ]
     }
     

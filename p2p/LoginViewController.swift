@@ -99,6 +99,7 @@ class LoginViewController: RegistrationView {
         SVProgressHUD.show()
         guard let text = textField.text, let text2 = textFieldPassword.text else { return }
         
+        
         Auth.auth().signIn(withEmail: text, password: text2) { (user, error) in
             if let error = error {
                 print(error.localizedDescription)
