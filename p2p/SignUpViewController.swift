@@ -12,13 +12,24 @@ import BEMCheckBox
 import Firebase
 import FirebaseDatabase
 import FirebaseAuth
+import NotificationBannerSwift
+import SVProgressHUD
 
 class SignUpViewController: RegistrationView {
 
     var tapped = false
     
+    var errorlabel = ""
+    var banner: NotificationBanner?
+    
     lazy var textField = createTextField(true)
     lazy var textFieldPassword = createTextField(false)
+    
+    enum errorType: String {
+        case email = "Эл. адресс введен некорректно"
+        case takenEmail = "Эл. адресс уже зарегистрирован"
+        case shortPassword = "Пароль - 6 или более символов"
+    }
     
     lazy var button: UIButton = {
         let button = UIButton()
@@ -63,6 +74,7 @@ class SignUpViewController: RegistrationView {
         [imageView, labelName, labelProjectName, textField, textFieldPassword, button, cBox, label].forEach{
             view.addSubview($0)
         }
+        banner?.duration = 1
     }
     
     func setupConstraints() {
@@ -103,6 +115,7 @@ class SignUpViewController: RegistrationView {
     // MARK: User Interactions
     
     func signUpButtonPressed() {
+        SVProgressHUD.show()
         guard let text = textField.text, let text2 = textFieldPassword.text, let token = InstanceID.instanceID().token() else { return }
         let balance = 0
         let email = text
@@ -121,19 +134,28 @@ class SignUpViewController: RegistrationView {
         
         Auth.auth().createUser(withEmail: email, password: password){ (user, error) in
             if let error = error{
+                if error.localizedDescription == "The email address is badly formatted." {
+                    self.errorlabel = errorType.email.rawValue
+                } else if error.localizedDescription == "The email address is already in use by another account." {
+                    self.errorlabel = errorType.takenEmail.rawValue
+                } else if error.localizedDescription == "The password must be 6 characters long or more." {
+                    self.errorlabel = errorType.shortPassword.rawValue
+                }
+                self.banner = NotificationBanner(title: self.errorlabel, subtitle: nil, style: .warning)
+                self.banner?.show()
                 print(error.localizedDescription)
+                SVProgressHUD.dismiss()
                 return
             } else {
-            guard let uid = Auth.auth().currentUser?.uid else {return}
-            
-            user?.sendEmailVerification(completion: nil)
+                guard let uid = Auth.auth().currentUser?.uid else {return}
+                user?.sendEmailVerification(completion: nil)
+                let ref = Database.database().reference()
+                ref.child("users").child("\(uid)").setValue(post)
                 
-            let ref = Database.database().reference()
-            ref.child("users").child("\(uid)").setValue(post)
-//            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-//                appDelegate.isLogged = true
-//                appDelegate.cordinateAppFlow()
-//            }
+                self.banner = NotificationBanner(title: "Письмо отправлено", subtitle: "Проверьте почтовый ящик", style: .success)
+                self.banner?.show()
+                SVProgressHUD.dismiss()
+                self.navigationController?.popViewController(animated: true)
             }
         }
     }

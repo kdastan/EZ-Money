@@ -16,6 +16,7 @@ import NotificationBannerSwift
 class LoginViewController: RegistrationView {
     
     let banner = NotificationBanner(title: "Необходимо подтверждение", subtitle: "Проверьте свою почту", style: .success)
+    let errorBanner = NotificationBanner(title: "Ошибка авторизации", subtitle: nil, style: .warning)
     
     
     lazy var textField = createTextField(true)
@@ -99,10 +100,12 @@ class LoginViewController: RegistrationView {
         SVProgressHUD.show()
         guard let text = textField.text, let text2 = textFieldPassword.text else { return }
         
-        
         Auth.auth().signIn(withEmail: text, password: text2) { (user, error) in
             if let error = error {
+                self.errorBanner.duration = 1
+                self.errorBanner.show()
                 print(error.localizedDescription)
+                SVProgressHUD.dismiss()
                 return
             } 
             guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }

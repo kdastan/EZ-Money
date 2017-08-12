@@ -34,6 +34,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>HMSegmentedControl.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>IQKeyboardManagerSwift.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -112,12 +117,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>32388A3D047B8702AD1DE771ADD95695</key>
+		<key>3FD0B2224CD9D8B03C074A454AA58DA2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>41028B5351BE056285510F7797D09882</key>
+		<key>46481BD544895D7470385C5D14B787FD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -132,17 +137,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>76F12620B14BA9CFB16AB60CF3462040</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>7DF57F1E6FC84F449A65472D4DC652B3</key>
+		<key>7891E2B724C54EF58FB1692B34F1455C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9903EE05D8F85FBEA89EDA18ACF23C2E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9E2513213CBA38892CB198E47102FE68</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B25A22AFB84B71AC2629C029517BCC1B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -172,17 +187,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E300D2DB27426BBFCA0F034E027D7033</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E6FE6584F1D3D5D33100C6ED58C6EDB5</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>EAA88C5A4B6AEAC54C2772A9995B99C2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EEB4C542B00365D54525CBF9E24E2F72</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -192,7 +202,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F23305BE2AABAA65A5D306B744751295</key>
+		<key>F796440AB0D9217F5F72AD09CE4A8709</key>
 		<dict>
 			<key>primary</key>
 			<true/>

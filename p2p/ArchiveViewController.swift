@@ -10,6 +10,7 @@ import UIKit
 import EasyPeasy
 import Firebase
 import SVProgressHUD
+import HMSegmentedControl
 
 struct RequestList {
     let name: String!
@@ -39,6 +40,8 @@ struct InvestorsList {
 
 class ArchiveViewController: UIViewController {
     
+    var counter = 0
+    
     var requestList: [RequestList] = []
     var filteredRequestList: [RequestList] = []
     
@@ -56,7 +59,7 @@ class ArchiveViewController: UIViewController {
         searchBar.tintColor = .white
         searchBar.delegate = self
         searchBar.setValue("Отмена", forKey: "cancelButtonText")
-        searchBar.showsScopeBar = true
+        //searchBar.showsScopeBar = true
         //searchBar.setScopeBarButtonTitleTextAttributes([NSForegroundColorAttributeName: UIColor.orange], for: .selected)
         //searchBar.setScopeBarButtonTitleTextAttributes([NSForegroundColorAttributeName: UIColor.orange], for: .normal)
         searchBar.scopeButtonTitles = ["Все", "Оформлен", "Отклонен"]
@@ -84,12 +87,76 @@ class ArchiveViewController: UIViewController {
         button.addTarget(self, action: #selector(backPressed(sender:)), for: .touchUpInside)
         return button
     }()
+    
+    lazy var segmentControl: HMSegmentedControl = {
+        let segmentControl = HMSegmentedControl()
+        segmentControl.sectionTitles = ["Все", "Оформлен", "Отклонен"]
+        
+        segmentControl.addTarget(self, action: #selector(presentList), for: .valueChanged)
+        return segmentControl
+    }()
+    
+    func presentList() {
+        counter = segmentControl.selectedSegmentIndex
+        filterReq(selectedScope: counter)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         setupConstraints()
         fetch()
+        
+        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(leftSwipe(sender:)))
+        let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(rightSwipe(sender:)))
+        leftSwipe.direction = .left
+        rightSwipe.direction = .right
+        view.addGestureRecognizer(leftSwipe)
+        view.addGestureRecognizer(rightSwipe)
+    }
+    
+    func leftSwipe(sender: UISwipeGestureRecognizer) {
+        counter += 1
+        counter = counter % 3
+        segmentControl.setSelectedSegmentIndex(UInt(counter), animated: true)
+        filterReq(selectedScope: counter)
+    }
+    
+    func rightSwipe(sender: UISwipeGestureRecognizer) {
+        counter -= 1
+        if counter < 0 {
+            counter += 3
+        }
+        counter = counter % 3
+        segmentControl.setSelectedSegmentIndex(UInt(counter), animated: true)
+        filterReq(selectedScope: counter)
+    }
+    
+    func filterReq(selectedScope: Int) {
+        if isInvestor! {
+            switch selectedScope {
+            case 0:
+                filteredRequestList = requestList
+            case 1:
+                filterList(index: 2)
+            case 2:
+                filterList(index: 3)
+            default:
+                print("0")
+            }
+        } else {
+            switch selectedScope {
+            case 0:
+                filteredInvestorsList = investorList
+            case 1:
+                filterInvestor(index: 2)
+            case 2:
+                filterInvestor(index: 3)
+            default:
+                print("0")
+            }
+        }
+        self.tableView.reloadData()
     }
     
     func setupViews() {
@@ -99,6 +166,7 @@ class ArchiveViewController: UIViewController {
         view.addSubview(searchBar)
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
         isInvestor = appDelegate.isInvestor
+        view.addSubview(segmentControl)
     }
     
     func setupConstraints() {
@@ -110,18 +178,25 @@ class ArchiveViewController: UIViewController {
             Height(44)
         ]
         
-        tableView <- [
-            Top(104),
-            CenterX(0),
-            Width(Screen.width - 20),
-            Bottom(44)
-        ]
-        
         searchBar <- [
             Top(20),
             CenterX(0),
-            Height(84),
+            Height(44),
             Width(Screen.width)
+        ]
+        
+        segmentControl <- [
+            Top(0).to(searchBar, .bottom),
+            CenterX(0),
+            Width(Screen.width - 20),
+            Height(50)
+        ]
+        
+        tableView <- [
+            Top(0).to(segmentControl, .bottom),
+            CenterX(0),
+            Width(Screen.width - 20),
+            Bottom(44)
         ]
     }
     
@@ -169,6 +244,8 @@ class ArchiveViewController: UIViewController {
         filteredInvestorsList = investorList
         filteredInvestorsList = filteredInvestorsList.filter {$0.status == index}
     }
+    
+    
 
 }
 extension ArchiveViewController: UITableViewDataSource {
@@ -203,6 +280,10 @@ extension ArchiveViewController: UITableViewDataSource {
                 cell.label.text = "Оформлен"
                 cell.label.backgroundColor = .accepteColor
             
+            } else if filteredRequestList[indexPath.row].status == 0 {
+                cell.label.text = "В ожидании"
+                cell.label.backgroundColor = .issuedColor
+                
             } else if filteredRequestList[indexPath.row].status == 3 {
                 cell.label.text = "Отклонен"
                 cell.label.backgroundColor = .declineColor
@@ -222,6 +303,10 @@ extension ArchiveViewController: UITableViewDataSource {
             } else if filteredInvestorsList[indexPath.row].status == 2 {
                 cell.label.text = "Оформлен"
                 cell.label.backgroundColor = .accepteColor
+                
+            } else if filteredInvestorsList[indexPath.row].status == 0 {
+                cell.label.text = "В ожидании"
+                cell.label.backgroundColor = .issuedColor
                 
             } else if filteredInvestorsList[indexPath.row].status == 3 {
                 cell.label.text = "Отклонен"
@@ -254,30 +339,7 @@ extension ArchiveViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         
-        if isInvestor! {
-            switch selectedScope {
-            case 0:
-                filteredRequestList = requestList
-            case 1:
-                filterList(index: 2)
-            case 2:
-                filterList(index: 3)
-            default:
-                print("0")
-            }
-        } else {
-            switch selectedScope {
-            case 0:
-                filteredInvestorsList = investorList
-            case 1:
-                filterInvestor(index: 2)
-            case 2:
-                filterInvestor(index: 3)
-            default:
-                print("0")
-            }
-        }
-        self.tableView.reloadData()
+        
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

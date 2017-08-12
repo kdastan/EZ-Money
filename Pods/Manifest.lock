@@ -50,6 +50,7 @@ PODS:
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.1)
   - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
   - GTMSessionFetcher/Core (1.1.11)
+  - HMSegmentedControl (1.5.4)
   - IQKeyboardManagerSwift (4.0.10)
   - JVFloatLabeledTextField (1.2.0)
   - LTHRadioButton (1.1.1)
@@ -75,6 +76,7 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Database
   - Firebase/Messaging
+  - HMSegmentedControl
   - IQKeyboardManagerSwift
   - JVFloatLabeledTextField
   - LTHRadioButton
@@ -109,6 +111,7 @@ SPEC CHECKSUMS:
   FirebaseMessaging: 227406c05b0dc9290702d2e9f18ab5528f0c2cf2
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 5ad62e8200fa00ed011fe5e08d27fef72c5b1429
+  HMSegmentedControl: b25bc4ec44766e073d62c473188fb354ee244b76
   IQKeyboardManagerSwift: 75ba21a23794a1e6b6fe6d9a267ea17f80e06771
   JVFloatLabeledTextField: 96c0c1b6739001801340d25b86aff990d67c4181
   LTHRadioButton: 6d54db446b2edba0eafcb65b28deedb09dad8a47
@@ -122,6 +125,6 @@ SPEC CHECKSUMS:
   SwiftValidator: 25ded5ca1f10c05adf57f6ac82a72d28ac8d91af
   SwipeViewController: 0e396aa7d7756c30f8914ef59aea2a3d7d7798bc
 
-PODFILE CHECKSUM: 9189d6b1701c65fd73a169fe4c5c56d1dad05086
+PODFILE CHECKSUM: 361e1c1e185b86664381039f303482674e3c96cf
 
 COCOAPODS: 1.2.1

@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '9903EE05D8F85FBEA89EDA18ACF23C2E'
-               BlueprintName = 'Protobuf'
+               BlueprintIdentifier = '7891E2B724C54EF58FB1692B34F1455C'
+               BlueprintName = 'HMSegmentedControl'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'Protobuf.framework'>
+               BuildableName = 'HMSegmentedControl.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
