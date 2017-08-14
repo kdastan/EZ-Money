@@ -14,6 +14,7 @@ import NotificationBannerSwift
 import SCLAlertView
 import Alamofire
 import SwiftValidator
+import SVProgressHUD
 
 struct Requests {
     let amount: String!
@@ -65,7 +66,7 @@ class TakeBorrowViewController: UIViewController {
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(BorrowTableViewCell.self, forCellReuseIdentifier: "cell")
-        tableView.rowHeight = 150
+        tableView.rowHeight = 180
         tableView.tableHeaderView = self.a
         tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: Int(Screen.width - 20), height: 260)
         tableView.separatorStyle = .none
@@ -88,10 +89,10 @@ class TakeBorrowViewController: UIViewController {
     lazy var requestButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .white
-        button.setTitle("Запросить всех", for: .normal)
+        button.setTitle("Получить займ", for: .normal)
         button.isHidden = true
         button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: #selector(notificationToUser(sender:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(pressed), for: .touchUpInside)
         button.layer.cornerRadius = 15
         return button
     }()
@@ -249,7 +250,7 @@ class TakeBorrowViewController: UIViewController {
                 notificationRecord.setValue(post)
                 
             })
-            
+            print(investorToken)
             self.notificationSender(investorToken: investorToken!)
             
         }
@@ -333,6 +334,7 @@ extension TakeBorrowViewController: UITableViewDataSource {
         cell.container.firstField.labelName.text = "\(surname!) \(name!) \(patronymic!)"
         cell.container.secondField.labelName.text = "\(time!) месяцев"
         cell.container.thirdField.labelName.text = filteredInvestorsList[indexPath.row].rate
+        cell.container.fourthField.labelName.text = filteredInvestorsList[indexPath.row].amount
         
         cell.button.tag = indexPath.row
         cell.button.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
@@ -343,6 +345,9 @@ extension TakeBorrowViewController: UITableViewDataSource {
 
 extension TakeBorrowViewController: ValidationDelegate {
     func validationSuccessful() {
+        SVProgressHUD.show()
+        
+        tableView.reloadData()
         
         guard let moneyAmount = a.container.field.textField.text, a.container.field.textField.text != "", let time = a.container.field2.textField.text, a.container.field2.textField.text != "" else {
             return
@@ -358,20 +363,22 @@ extension TakeBorrowViewController: ValidationDelegate {
         ref.child("users").child(auth!).observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
             let isData = value?["userData"] as? Bool ?? false
-            
+            SVProgressHUD.dismiss()
             if !isData {
                 self.present(MenuMyDataViewController(), animated: true, completion: nil)
             }
         }) {(error) in
+            SVProgressHUD.dismiss()
             print(error.localizedDescription)
         }
-        
-        
+        investorsList.removeAll()
+        SVProgressHUD.show()
         User.fetchInvestor(request: "investorRequests") { (amount, date, id, investorId, rate, time) in
             guard let investorId = investorId else {return}
             User.fetchUserName(uid: investorId, completion: { (name, surname, patronymic) in
                 User.fetchUserEmail(uid: investorId, compleation: { (email, token) in
                     self.investorsList.insert(Investors(amount: amount, date: date, id: id, investorId: investorId, rate: rate, time: time, name: name, surname: surname, patronymic: patronymic, nameForSearch: "\(name) \(surname) \(patronymic)", token: token), at: 0)
+                    SVProgressHUD.dismiss()
                     self.filteredInvestorsList = self.investorsList
                     self.tableView.reloadData()
                 })

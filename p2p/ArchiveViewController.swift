@@ -22,6 +22,7 @@ struct RequestList {
     let time: String!
     let requestId: String!
     let nameForSearch: String!
+    let borroweAmount: String!
 }
 
 struct InvestorsList {
@@ -87,7 +88,7 @@ class ArchiveViewController: UIViewController {
         tableView.backgroundColor = .blueBackground
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
-        tableView.rowHeight = 150
+        tableView.rowHeight = 185
         tableView.dataSource = self
         tableView.register(BorrowTableViewCell.self, forCellReuseIdentifier: "reusableCell")
         return tableView
@@ -224,9 +225,9 @@ class ArchiveViewController: UIViewController {
         
         if isInvestor! {
         User.fetchRequestID(fetchChild: "investorRequests") { (id, rate, time) in
-            User.fetchAllRequests(fetchChild: id!, completion: { (borrowerId, status, requestId) in
+            User.fetchAllRequests(fetchChild: id!, completion: { (borrowerId, status, requestId, borrowerAmount) in
                 User.fetchUserName(uid: borrowerId!, completion: { (name, surname, patronymic) in
-                    self.requestList.insert(RequestList(name: name, surname: surname, patronymic: patronymic, status: status, rate: rate, time: time, requestId: requestId, nameForSearch: "\(name) \(surname) \(patronymic)"), at: 0)
+                    self.requestList.insert(RequestList(name: name, surname: surname, patronymic: patronymic, status: status, rate: rate, time: time, requestId: requestId, nameForSearch: "\(name) \(surname) \(patronymic)", borroweAmount: borrowerAmount), at: 0)
                     self.filteredRequestList = self.requestList
                     self.tableView.reloadData()
                     SVProgressHUD.dismiss()
@@ -306,10 +307,13 @@ extension ArchiveViewController: UITableViewDataSource {
             cell.container.firstField.labelName.text = "\(name!) \(surname!) \(patronymic!)"
             cell.container.secondField.labelName.text = "\(filteredRequestList[indexPath.row].time!) месяца"
             cell.container.thirdField.labelName.text = filteredRequestList[indexPath.row].rate
+            cell.container.fourthField.labelName.text = "\(filteredRequestList[indexPath.row].borroweAmount!) Тенге"
+            
         } else {
             let name = filteredInvestorsList[indexPath.row].name
             let surname = filteredInvestorsList[indexPath.row].surname
             let patronymic = filteredInvestorsList[indexPath.row].patronymic
+            
             
             if filteredInvestorsList[indexPath.row].status == 1 {
                 cell.label.text = "Принят"
@@ -330,6 +334,7 @@ extension ArchiveViewController: UITableViewDataSource {
             cell.container.firstField.labelName.text = "\(name!) \(surname!) \(patronymic!)"
             cell.container.secondField.labelName.text = "\(filteredInvestorsList[indexPath.row].time!) месяца"
             cell.container.thirdField.labelName.text = filteredInvestorsList[indexPath.row].rate
+            cell.container.fourthField.labelName.text = "\(filteredInvestorsList[indexPath.row].borrowerAmount!) Тенге"
         }
         return cell
     }

@@ -31,7 +31,13 @@ class BarrowContainer: UIView {
         field.labelName.text = "2.4 %"
         return field
     }()
-
+    
+    lazy var fourthField: BarrowTableViewContainer = {
+        let field = BarrowTableViewContainer()
+        field.image.image = UIImage(named: "coins")
+        field.labelName.text = "10000 Тенге"
+        return field
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -39,7 +45,7 @@ class BarrowContainer: UIView {
         self.addSubview(firstField)
         self.addSubview(secondField)
         self.addSubview(thirdField)
-        
+        self.addSubview(fourthField)
         setupConstraints()
         
     }
@@ -51,26 +57,35 @@ class BarrowContainer: UIView {
     func setupConstraints() {
     
         firstField <- [
-            Bottom(15).to(secondField, .top),
+            Top(15),
             Left(10),
             Width(300),
             Height(20)
         ]
         
         secondField <- [
-            CenterY(0),
+            Top(15).to(firstField, .bottom),
             Left(10),
             Width(300),
             Height(20)
         ]
         
-        thirdField <- [
+        
+        
+        fourthField <- [
             Top(15).to(secondField, .bottom),
             Left(10),
             Width(300),
             Height(20)
         ]
         
+        
+        thirdField <- [
+            Top(15).to(fourthField, .bottom),
+            Left(10),
+            Width(300),
+            Height(20)
+        ]
     }
     
     

@@ -12,6 +12,7 @@ import Firebase
 import DGElasticPullToRefresh
 import SVProgressHUD
 import NotificationBannerSwift
+import Alamofire
 
 struct RequestsLists {
     let bigId: String!
@@ -35,12 +36,20 @@ struct RequestsInvestor {
     let rate: String!
     let time: String!
     let requestId: String!
+    let borrowerAmount: String!
+    let borrowerId: String!
 }
 
 class RequestListViewController: UIViewController {
     
     var isInvestor: Bool?
     let banner = NotificationBanner(title: "Ваш список запросов пуст", subtitle: nil, style: .warning)
+    let notEnoughMoney = NotificationBanner(title: "Не достаточно средств", subtitle: "Пополните кошелек", style: .warning)
+    let successTransaction = NotificationBanner(title: "Инвестирование прошло успешно", subtitle: nil, style: .success)
+    
+    var investorsMoney: Int?
+    
+    var queryMessage = "Вам поступили деньги от инвестора"
     
     var requestList = [RequestsLists]()
     var investorRequsest = [RequestsInvestor]()
@@ -50,7 +59,7 @@ class RequestListViewController: UIViewController {
         tableView.register(BorrowTableViewCell.self, forCellReuseIdentifier: "reusableCell")
         tableView.backgroundColor = .blueBackground
         tableView.separatorStyle = .none
-        tableView.rowHeight = 150
+        tableView.rowHeight = 185
         tableView.allowsSelection = false
         tableView.dataSource = self
         return tableView
@@ -65,8 +74,21 @@ class RequestListViewController: UIViewController {
         
         if isInvestor! {
             fetchForInvestorList()
+            fetchForInvestorsAmount()
         } else {
             fetchRequestList()
+        }
+        
+        
+    }
+    
+    func fetchForInvestorsAmount() {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            return
+        }
+        User.fetchForInvestorsAmount(uid: uid) { (balance) in
+            self.investorsMoney = balance
+            print("\(self.investorsMoney!) - Investors balance")
         }
     }
     
@@ -114,7 +136,7 @@ class RequestListViewController: UIViewController {
     
     
   
-    
+    //MARK: Fetch for user
     func fetchRequestList(){
         self.tableView.reloadData()
         SVProgressHUD.show()
@@ -144,12 +166,10 @@ class RequestListViewController: UIViewController {
             }
         }
     }
-    
+    //MARK: Fetch for Investor
     func fetchForInvestorList(){
         SVProgressHUD.show()
         self.tableView.reloadData()
-        
-        
         
         User.fetchAllRequestExisting(uid: "asd") { (result) in
             guard let _ = result else {
@@ -157,24 +177,20 @@ class RequestListViewController: UIViewController {
                 self.banner.show()
                 return
             }
-        
-            
-            User.fetchRequestID(fetchChild: "investorRequests") { (id, rate, time) in
-                
-                if id == nil {
-                    SVProgressHUD.dismiss()
-                    self.banner.show()
-                    return
-                }
-                
-                User.fetchAllRequests(fetchChild: id!, completion: { (borrowerId, status, requestId) in
-                    User.fetchUserName(uid: borrowerId!, completion: { (name, surname, patronymic) in
-                        self.investorRequsest.insert(RequestsInvestor(name: name, surname: surname, patronymic: patronymic, status: status, rate: rate, time: time, requestId: requestId), at: 0)
-                        self.tableView.reloadData()
-                        SVProgressHUD.dismiss()
-                    })
-                })
+        User.fetchRequestID(fetchChild: "investorRequests") { (id, rate, time) in
+            if id == nil {
+                SVProgressHUD.dismiss()
+                self.banner.show()
+                return
             }
+            User.fetchAllRequests(fetchChild: id!, completion: { (borrowerId, status, requestId, borrowerAmount) in
+                User.fetchUserName(uid: borrowerId!, completion: { (name, surname, patronymic) in
+                    self.investorRequsest.insert(RequestsInvestor(name: name, surname: surname, patronymic: patronymic, status: status, rate: rate, time: time, requestId: requestId, borrowerAmount: borrowerAmount, borrowerId: borrowerId), at: 0)
+                    self.tableView.reloadData()
+                    SVProgressHUD.dismiss()
+                })
+            })
+        }
         }
     }
     
@@ -194,12 +210,75 @@ class RequestListViewController: UIViewController {
     }
 
     func issueAS(sender: UIButton) {
+        SVProgressHUD.show()
+        guard let uid = Auth.auth().currentUser?.uid else {
+            return
+        }
+        
         let requestID = (investorRequsest[sender.tag].requestId)!
+        let borrowerBalance = Int(investorRequsest[sender.tag].borrowerAmount)
+        let borrowerId = investorRequsest[sender.tag].borrowerId
+        
+        if investorsMoney! < borrowerBalance! {
+            notEnoughMoney.duration = 1
+            notEnoughMoney.show()
+            SVProgressHUD.dismiss()
+            return
+        }
+        
+        investorsMoney = investorsMoney! - borrowerBalance!
+        User.borrowerBalance(uid: borrowerId!) { (borrowerAmount, borrowerToken) in
+            let newBalance = Int(borrowerAmount!) + borrowerBalance!
+            User.successTransactionForBorrower(amount: newBalance, uid: borrowerId!, compleation: { (result) in
+                print(borrowerToken!)
+                SVProgressHUD.dismiss()
+                
+                
+                
+                self.notificationSender(investorToken: borrowerToken!)
+            })
+        }
+        User.successTransactionForInvestor(amount: investorsMoney!, uid: uid) { (result) in
+            self.successTransaction.duration = 1
+            self.successTransaction.show()
+        }
+        
         User.setRequestStatus(requestId: requestID, status: 2) { (finished) in
         }
+        
+        
         self.investorRequsest.removeAll()
         self.fetchForInvestorList()
     }
+    
+    func notificationSender(investorToken: String) {
+        //        let ref = Database.database().reference()
+        let notificationUrl = "https://fcm.googleapis.com/fcm/send"
+        let serverKey = "AAAAiyp0u8w:APA91bEuiQ--qrKwl_ahYWvr0qbs30gN55XT-U5XNq2ptO_pznUyjSaYXwEFz1SK1pKyxcBIE7Y9ALxLj5gXjNCioqzre7jSNA8gG0Xu_YskTsX5HS1s6I527FXcc8lFz6dgF892jhr8"
+        
+        let token = investorToken
+        print(token)
+        print("asdadasdasdsadassada")
+        
+        var header: HTTPHeaders? = HTTPHeaders()
+        header = [
+            "Content-Type":"application/json",
+            "Authorization":"key=\(serverKey)"
+        ]
+        var notificationParameter: Parameters? = [
+            "notification": [
+                "title": "Проверьте кошелек",
+                "body": self.queryMessage
+            ],
+            "to" : "\(token)"
+        ]
+        
+        Alamofire.request(notificationUrl as URLConvertible, method: .post as HTTPMethod, parameters: notificationParameter, encoding: JSONEncoding.default, headers: header!).responseJSON { (resp) in
+            print(resp)
+        }
+    }
+    
+    
 }
 
 extension RequestListViewController: UITableViewDataSource {
@@ -238,6 +317,7 @@ extension RequestListViewController: UITableViewDataSource {
             cell.container.firstField.labelName.text = "\(name!) \(surname!) \(patronymic!)"
             cell.container.secondField.labelName.text = "\(investorRequsest[indexPath.row].time!) месяца"
             cell.container.thirdField.labelName.text = investorRequsest[indexPath.row].rate
+            cell.container.fourthField.labelName.text = "\(investorRequsest[indexPath.row].borrowerAmount!) Тенге"
             
             if investorRequsest[indexPath.row].status == 0 {
                 cell.investorButtonAccept.isHidden = false
@@ -274,6 +354,7 @@ extension RequestListViewController: UITableViewDataSource {
             cell.container.firstField.labelName.text = "\(name!) \(surname!) \(patronymic!)"
             cell.container.secondField.labelName.text = "\(requestList[indexPath.row].time!) месяца"
             cell.container.thirdField.labelName.text = requestList[indexPath.row].rate
+            cell.container.fourthField.labelName.text = "\(requestList[indexPath.row].borrowerAmount!) Тенге"
             
             if requestList[indexPath.row].status == 0 {
                 cell.label.text = "В ожидании"

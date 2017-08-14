@@ -97,7 +97,7 @@ class BorrowTableViewCell: UITableViewCell {
     
     func setupConstraints() {
         container <- [
-            Height(135),
+            Height(155),
             Width(sizeX),
             Center(0)
         ]

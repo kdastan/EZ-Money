@@ -37,7 +37,7 @@ class BorrowViewController: UIViewController {
     
     lazy var control: BetterSegmentedControl = {
         let control = BetterSegmentedControl()
-        control.titles = ["Получить займ", "Список запросов"]
+        
         control.titleFont = UIFont(name: "HelveticaNeue", size: 14.0)!
         control.selectedTitleFont = UIFont(name: "HelveticaNeue-Medium", size: 14.0)!
         control.backgroundColor = .blueBackground
@@ -67,10 +67,12 @@ class BorrowViewController: UIViewController {
             addChildViewController(vc3)
             view.addSubview(vc3.view)
             vc1.didMove(toParentViewController: self)
+            control.titles = ["Инвестировать", "Список запросов"]
         } else {
             addChildViewController(vc1)
             view.addSubview(vc1.view)
             vc1.didMove(toParentViewController: self)
+            control.titles = ["Получить займ", "Список запросов"]
         }
         let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(swipeLeft(sender:)))
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(swipeRight(sender:)))

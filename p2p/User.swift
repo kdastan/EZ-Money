@@ -79,7 +79,6 @@ class User {
             }
             observerId = ref.queryOrdered(byChild: "borrowerId").queryEqual(toValue: uid).observe(.childAdded, with: { (snapshot) in
                 let value = snapshot.value as? [String: Any]
-                print(value)
                 compleation(value?["bigId"] as? String, value?["borrowerAmount"] as? String, value?["borrowerId"] as? String, value?["requestId"] as? String, value?["status"] as? Int)
             })
         })
@@ -113,7 +112,7 @@ class User {
     
     static var allRequestObserverId: UInt?
     
-    static func fetchAllRequests(fetchChild: String, completion: @escaping (String?, Int?, String?) -> Void) {
+    static func fetchAllRequests(fetchChild: String, completion: @escaping (String?, Int?, String?, String?) -> Void) {
         let ref = Database.database().reference().child("allRequests")
         
         if let id = allRequestObserverId {
@@ -122,7 +121,7 @@ class User {
         
         allRequestObserverId = ref.queryOrdered(byChild: "requestId").queryEqual(toValue: fetchChild).observe(.childAdded, with: { (snapshot) in
             let value = snapshot.value as? [String: Any]
-            completion(value?["borrowerId"] as? String, value?["status"] as? Int, value?["bigId"] as? String)
+            completion(value?["borrowerId"] as? String, value?["status"] as? Int, value?["bigId"] as? String, value?["borrowerAmount"] as? String)
         })
     }
     
@@ -184,4 +183,50 @@ class User {
         })
         
     }
+    
+    static func fetchForInvestorsAmount(uid: String, compleation: @escaping (Int?) -> Void) {
+        let ref = Database.database().reference().child("users").child("\(uid)")
+        
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            compleation(value?["balance"] as? Int)
+        })
+    
+    }
+    
+    static func successTransactionForInvestor(amount: Int, uid: String, compleation: @escaping (Bool?) -> Void) {
+        let ref = Database.database().reference().child("users").child("\(uid)").child("balance")
+        ref.setValue(amount)
+        compleation(true)
+    }
+    
+    static func successTransactionForBorrower(amount: Int, uid: String, compleation: @escaping (Bool?) -> Void) {
+        let ref = Database.database().reference().child("users").child("\(uid)").child("balance")
+        ref.setValue(amount)
+        compleation(true)
+    }
+    
+    static func borrowerBalance(uid: String, compleation: @escaping (Int?, String?) -> Void) {
+        let ref = Database.database().reference().child("users").child("\(uid)")
+        
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            compleation(value?["balance"] as? Int, value?["token"] as? String)
+        })
+    
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
