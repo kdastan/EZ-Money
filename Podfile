@@ -9,7 +9,6 @@ target 'p2p' do
   pod "EasyPeasy"
   pod "IQKeyboardManagerSwift"
   pod "BEMCheckBox"
-  pod 'SwipeViewController'
   pod 'RESideMenu'
   pod 'Firebase/Core'
   pod 'Firebase'
@@ -25,5 +24,6 @@ target 'p2p' do
   pod 'SCLAlertView'
   pod 'Alamofire'
   pod 'HMSegmentedControl'
+  pod 'BetterSegmentedControl', '~> 0.8'
 
 end

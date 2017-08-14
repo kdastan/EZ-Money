@@ -11,6 +11,7 @@ import EasyPeasy
 import Firebase
 import DGElasticPullToRefresh
 import SVProgressHUD
+import NotificationBannerSwift
 
 struct RequestsLists {
     let bigId: String!
@@ -39,6 +40,7 @@ struct RequestsInvestor {
 class RequestListViewController: UIViewController {
     
     var isInvestor: Bool?
+    let banner = NotificationBanner(title: "Ваш список запросов пуст", subtitle: nil, style: .warning)
     
     var requestList = [RequestsLists]()
     var investorRequsest = [RequestsInvestor]()
@@ -60,66 +62,119 @@ class RequestListViewController: UIViewController {
         isInvestor = appDelegate.isInvestor
         setupView()
         setupConstraints()
-        fetchRequestList()
-        fetchForInvestorList()
+        
+        if isInvestor! {
+            fetchForInvestorList()
+        } else {
+            fetchRequestList()
+        }
     }
     
     func setupView() {
         let loadingView = DGElasticPullToRefreshLoadingViewCircle()
         loadingView.tintColor = UIColor(red: 78/255.0, green: 221/255.0, blue: 200/255.0, alpha: 1.0)
         tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
-            self?.requestList.removeAll()
-            self?.investorRequsest.removeAll()
-            //self?.fetchRequestList()
-            //self?.tableView.reloadData()
-            self?.fetchForInvestorList()
-            self?.fetchRequestList()
+            
+            if (self?.isInvestor!)! {
+                self?.investorRequsest.removeAll()
+                self?.fetchForInvestorList()
+            } else {
+                self?.requestList.removeAll()
+                self?.fetchRequestList()
+            }
+            
+            
+//            self?.requestList.removeAll()
+//            //self?.investorRequsest.removeAll()
+//            
+//            //self?.fetchForInvestorList()
+//            self?.fetchRequestList()
+            
             self?.tableView.dg_stopLoading()
             
             }, loadingView: loadingView)
-        tableView.dg_setPullToRefreshFillColor(UIColor(red: 57/255.0, green: 67/255.0, blue: 89/255.0, alpha: 1.0))
+        tableView.dg_setPullToRefreshFillColor(UIColor(colorLiteralRed: 70/255, green: 161/255, blue: 213/255, alpha: 1))
         tableView.dg_setPullToRefreshBackgroundColor(tableView.backgroundColor!)
 
         view.backgroundColor = .blueBackground
         view.addSubview(tableView)
+        
+        banner.duration = 1
     }
     
     func setupConstraints() {
         edgesForExtendedLayout = []
         tableView <- [
             Width(Screen.width - 20),
-            Bottom(0),
+            Height(Screen.height - 64),
             Top(0),
             CenterX(0)
         ]
-        
     }
+    
+    
+  
     
     func fetchRequestList(){
         self.tableView.reloadData()
         SVProgressHUD.show()
+        
+        User.fetchInvestorExisting(uid: "asd") { (result) in
+        guard let _ = result else {
+            SVProgressHUD.dismiss()
+            self.banner.show()
+            return
+        }
+            
         User.fetchRequests(fetchChild: "allRequests") { (bigId, borrowerAmount, borrowerId, requestId, status) in
+            
+            if borrowerId == nil {
+                SVProgressHUD.dismiss()
+                self.banner.show()
+                return
+            }
+            
             User.fetchRequestId(requestId: requestId!, completion: { (investorId, rate, time) in
                 User.fetchUserName(uid: investorId!, completion: { (name, surname, patronymic) in
                     self.requestList.insert(RequestsLists(bigId: bigId, borrowerAmount: borrowerAmount, borrowerId: borrowerId, requestId: requestId, status: status, investorId: investorId, rate: rate, time: time, name: name, surname: surname, patronymic: patronymic), at: 0)
                     self.tableView.reloadData()
-                    SVProgressHUD.dismiss()
+                            SVProgressHUD.dismiss()
+                    })
                 })
-            })
+            }
         }
     }
     
     func fetchForInvestorList(){
         SVProgressHUD.show()
         self.tableView.reloadData()
-        User.fetchRequestID(fetchChild: "investorRequests") { (id, rate, time) in
-            User.fetchAllRequests(fetchChild: id!, completion: { (borrowerId, status, requestId) in
-                User.fetchUserName(uid: borrowerId!, completion: { (name, surname, patronymic) in
-                    self.investorRequsest.insert(RequestsInvestor(name: name, surname: surname, patronymic: patronymic, status: status, rate: rate, time: time, requestId: requestId), at: 0)
-                    self.tableView.reloadData()
+        
+        
+        
+        User.fetchAllRequestExisting(uid: "asd") { (result) in
+            guard let _ = result else {
+                SVProgressHUD.dismiss()
+                self.banner.show()
+                return
+            }
+        
+            
+            User.fetchRequestID(fetchChild: "investorRequests") { (id, rate, time) in
+                
+                if id == nil {
                     SVProgressHUD.dismiss()
+                    self.banner.show()
+                    return
+                }
+                
+                User.fetchAllRequests(fetchChild: id!, completion: { (borrowerId, status, requestId) in
+                    User.fetchUserName(uid: borrowerId!, completion: { (name, surname, patronymic) in
+                        self.investorRequsest.insert(RequestsInvestor(name: name, surname: surname, patronymic: patronymic, status: status, rate: rate, time: time, requestId: requestId), at: 0)
+                        self.tableView.reloadData()
+                        SVProgressHUD.dismiss()
+                    })
                 })
-            })
+            }
         }
     }
     

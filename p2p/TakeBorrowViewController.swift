@@ -11,9 +11,9 @@ import EasyPeasy
 import Firebase
 import FirebaseDatabase
 import NotificationBannerSwift
-import SwipeViewController
 import SCLAlertView
 import Alamofire
+import SwiftValidator
 
 struct Requests {
     let amount: String!
@@ -47,6 +47,7 @@ struct Investors {
 class TakeBorrowViewController: UIViewController {
     
     let banner = NotificationBanner(title: "Запрос успешно отправлен", subtitle: "", style: .success)
+    let warningBanner = NotificationBanner(title: "Заполните все поля", subtitle: nil, style: .warning)
     
     var a = Container()
     var arr: [BorrowTableViewCell] = []
@@ -59,6 +60,7 @@ class TakeBorrowViewController: UIViewController {
     var queryMessage = ""
     
     var names: [[String]] = []
+    let validator = Validator()
     
     lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -133,7 +135,7 @@ class TakeBorrowViewController: UIViewController {
         super.viewDidLoad()
         setupView()
         setupConstraints()
-        
+        textFieldValidation()
         
     }
     
@@ -174,41 +176,34 @@ class TakeBorrowViewController: UIViewController {
     
     func pressed() {
         
-        guard let moneyAmount = a.container.field.textField.text, a.container.field.textField.text != "", let time = a.container.field2.textField.text, a.container.field2.textField.text != "" else {
-            return
-        }
-        
-        button.isHidden = true
-        requestButton.isHidden = false
-        investorSearchButton.isHidden = false
-        label.isHidden = false
-        
-        let ref = Database.database().reference()
-        let auth = Auth.auth().currentUser?.uid
-        ref.child("users").child(auth!).observeSingleEvent(of: .value, with: { (snapshot) in
-            let value = snapshot.value as? NSDictionary
-            let isData = value?["userData"] as? Bool ?? false
-        
-            if !isData {
-                self.present(MenuMyDataViewController(), animated: true, completion: nil)
-            }
-        }) {(error) in
-            print(error.localizedDescription)
-        }
-        
-        
-        User.fetchInvestor(request: "investorRequests") { (amount, date, id, investorId, rate, time) in
-            guard let investorId = investorId else {return}
-            User.fetchUserName(uid: investorId, completion: { (name, surname, patronymic) in
-                User.fetchUserEmail(uid: investorId, compleation: { (email, token) in
-                    self.investorsList.insert(Investors(amount: amount, date: date, id: id, investorId: investorId, rate: rate, time: time, name: name, surname: surname, patronymic: patronymic, nameForSearch: "\(name) \(surname) \(patronymic)", token: token), at: 0)
-                    self.filteredInvestorsList = self.investorsList
-                    self.tableView.reloadData()
-                })
-            })
-        }
+        validator.validate(self)
     
     }
+    
+    func textFieldValidation() {
+        validator.styleTransformers(success:{ (validationRule) -> Void in
+            //            print("here")
+            // clear error label
+            validationRule.errorLabel?.isHidden = true
+            validationRule.errorLabel?.text = ""
+            if let textField = validationRule.field as? UITextField {
+                textField.layer.borderColor = UIColor.green.cgColor
+                textField.layer.borderWidth = 0.5
+                
+            }
+        }, error:{ (validationError) -> Void in
+            validationError.errorLabel?.isHidden = false
+            validationError.errorLabel?.text = validationError.errorMessage
+            if let textField = validationError.field as? UITextField {
+                textField.layer.borderColor = UIColor.red.cgColor
+                textField.layer.borderWidth = 1.0
+            }
+        })
+        
+        validator.registerField(a.container.field.textField, errorLabel: nil, rules: [NumbersValidation()])
+        validator.registerField(a.container.field2.textField, errorLabel: nil, rules: [NumbersValidation()])
+    }
+    
     
     func buttonPressed(sender: UIButton) {
         print("asdadsasdad")
@@ -346,4 +341,57 @@ extension TakeBorrowViewController: UITableViewDataSource {
     }
 }
 
-
+extension TakeBorrowViewController: ValidationDelegate {
+    func validationSuccessful() {
+        
+        guard let moneyAmount = a.container.field.textField.text, a.container.field.textField.text != "", let time = a.container.field2.textField.text, a.container.field2.textField.text != "" else {
+            return
+        }
+        
+        button.isHidden = true
+        requestButton.isHidden = false
+        investorSearchButton.isHidden = false
+        label.isHidden = false
+        
+        let ref = Database.database().reference()
+        let auth = Auth.auth().currentUser?.uid
+        ref.child("users").child(auth!).observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            let isData = value?["userData"] as? Bool ?? false
+            
+            if !isData {
+                self.present(MenuMyDataViewController(), animated: true, completion: nil)
+            }
+        }) {(error) in
+            print(error.localizedDescription)
+        }
+        
+        
+        User.fetchInvestor(request: "investorRequests") { (amount, date, id, investorId, rate, time) in
+            guard let investorId = investorId else {return}
+            User.fetchUserName(uid: investorId, completion: { (name, surname, patronymic) in
+                User.fetchUserEmail(uid: investorId, compleation: { (email, token) in
+                    self.investorsList.insert(Investors(amount: amount, date: date, id: id, investorId: investorId, rate: rate, time: time, name: name, surname: surname, patronymic: patronymic, nameForSearch: "\(name) \(surname) \(patronymic)", token: token), at: 0)
+                    self.filteredInvestorsList = self.investorsList
+                    self.tableView.reloadData()
+                })
+            })
+        }
+        
+    }
+    
+    func validationFailed(_ errors:[(Validatable ,ValidationError)]) {
+        // turn the fields to red
+        warningBanner.duration = 1
+        warningBanner.show()
+        for (field, error) in errors {
+            if let field = field as? UITextField {
+                field.layer.borderColor = UIColor.red.cgColor
+                field.layer.borderWidth = 1.0
+            }
+            error.errorLabel?.text = error.errorMessage // works if you added labels
+            error.errorLabel?.isHidden = false
+        }
+    }
+    
+}

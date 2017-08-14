@@ -13,6 +13,7 @@ import Firebase
 class BorrowTableViewCell: UITableViewCell {
     
     let sizeX = UIScreen.main.bounds.width - 20
+    let sizeQuarter = Screen.width / 4
     
     lazy var container: BarrowContainer = {
         let container = BarrowContainer()
@@ -36,17 +37,20 @@ class BorrowTableViewCell: UITableViewCell {
         label.layer.cornerRadius = 4
         label.layer.borderWidth = 1
         label.textAlignment = .center
+        label.adjustsFontSizeToFitWidth = true
         label.numberOfLines = 0
         return label
     }()
     
+    //////////////////////
     lazy var investorButtonAccept: UIButton = {
         let button = UIButton()
         button.setTitleColor(.black, for: .normal)
         button.setTitle("Принять", for: .normal)
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
         button.layer.cornerRadius = 4
         button.layer.borderWidth = 1
-        button.backgroundColor = .cyan
+        button.backgroundColor = .accepteColor
         return button
     }()
     
@@ -54,9 +58,10 @@ class BorrowTableViewCell: UITableViewCell {
         let button = UIButton()
         button.setTitleColor(.black, for: .normal)
         button.setTitle("Отклонить", for: .normal)
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
         button.layer.cornerRadius = 4
         button.layer.borderWidth = 1
-        button.backgroundColor = .cyan
+        button.backgroundColor = .declineColor
         return button
     }()
     
@@ -64,6 +69,7 @@ class BorrowTableViewCell: UITableViewCell {
         let button = UIButton()
         button.setTitleColor(.black, for: .normal)
         button.setTitle("Оформить", for: .normal)
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
         button.layer.cornerRadius = 4
         button.layer.borderWidth = 1
         button.backgroundColor = .cyan
@@ -107,28 +113,28 @@ class BorrowTableViewCell: UITableViewCell {
             Right(10),
             Bottom(0).to(container.thirdField.image, .bottom),
             Height(30),
-            Width(110)
+            Width(sizeQuarter)
         ]
         
         investorButtonDecline <- [
             Right(10),
             Bottom(0).to(container.thirdField.image, .bottom),
             Height(30),
-            Width(130)
+            Width(sizeQuarter)
         ]
         
         investorButtonAccept <- [
             Right(10).to(investorButtonDecline, .left),
             Bottom(0).to(container.thirdField.image, .bottom),
             Height(30),
-            Width(130)
+            Width(sizeQuarter)
         ]
         
         investorIssue <- [
             Right(10),
             Bottom(0).to(container.thirdField.image, .bottom),
             Height(30),
-            Width(130)
+            Width(sizeQuarter)
         ]
     }
 }

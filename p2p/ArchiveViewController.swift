@@ -11,6 +11,7 @@ import EasyPeasy
 import Firebase
 import SVProgressHUD
 import HMSegmentedControl
+import BetterSegmentedControl
 
 struct RequestList {
     let name: String!
@@ -67,8 +68,20 @@ class ArchiveViewController: UIViewController {
         return searchBar
     }()
     
-    
-    
+    lazy var control: BetterSegmentedControl = {
+        let control = BetterSegmentedControl()
+        control.titles = ["Все", "Оформлен", "Отклонен"]
+        control.titleFont = UIFont(name: "HelveticaNeue", size: 14.0)!
+        control.selectedTitleFont = UIFont(name: "HelveticaNeue-Medium", size: 14.0)!
+        control.backgroundColor = .white
+        control.layer.cornerRadius = 4
+        control.cornerRadius = 4
+        control.indicatorViewBackgroundColor = UIColor(colorLiteralRed: 70/255, green: 161/255, blue: 213/255, alpha: 1)
+        control.addTarget(self, action: #selector(presentList), for: .valueChanged)
+        control.bouncesOnChange = true
+        return control
+    }()
+
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .blueBackground
@@ -88,16 +101,8 @@ class ArchiveViewController: UIViewController {
         return button
     }()
     
-    lazy var segmentControl: HMSegmentedControl = {
-        let segmentControl = HMSegmentedControl()
-        segmentControl.sectionTitles = ["Все", "Оформлен", "Отклонен"]
-        
-        segmentControl.addTarget(self, action: #selector(presentList), for: .valueChanged)
-        return segmentControl
-    }()
-    
     func presentList() {
-        counter = segmentControl.selectedSegmentIndex
+        counter = Int(control.index)
         filterReq(selectedScope: counter)
     }
 
@@ -118,7 +123,11 @@ class ArchiveViewController: UIViewController {
     func leftSwipe(sender: UISwipeGestureRecognizer) {
         counter += 1
         counter = counter % 3
-        segmentControl.setSelectedSegmentIndex(UInt(counter), animated: true)
+        do {
+            try control.setIndex(UInt(counter), animated: true)
+        } catch  {
+            
+        }
         filterReq(selectedScope: counter)
     }
     
@@ -128,7 +137,12 @@ class ArchiveViewController: UIViewController {
             counter += 3
         }
         counter = counter % 3
-        segmentControl.setSelectedSegmentIndex(UInt(counter), animated: true)
+//        segmentControl.setSelectedSegmentIndex(UInt(counter), animated: true)
+        do {
+            try control.setIndex(UInt(counter), animated: true)
+        } catch  {
+            
+        }
         filterReq(selectedScope: counter)
     }
     
@@ -166,7 +180,7 @@ class ArchiveViewController: UIViewController {
         view.addSubview(searchBar)
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
         isInvestor = appDelegate.isInvestor
-        view.addSubview(segmentControl)
+        view.addSubview(control)
     }
     
     func setupConstraints() {
@@ -185,15 +199,15 @@ class ArchiveViewController: UIViewController {
             Width(Screen.width)
         ]
         
-        segmentControl <- [
+        control <- [
             Top(0).to(searchBar, .bottom),
             CenterX(0),
             Width(Screen.width - 20),
-            Height(50)
+            Height(26)
         ]
         
         tableView <- [
-            Top(0).to(segmentControl, .bottom),
+            Top(0).to(control, .bottom),
             CenterX(0),
             Width(Screen.width - 20),
             Bottom(44)

@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double SwipeViewControllerVersionNumber;
-FOUNDATION_EXPORT const unsigned char SwipeViewControllerVersionString[];
+FOUNDATION_EXPORT double BetterSegmentedControlVersionNumber;
+FOUNDATION_EXPORT const unsigned char BetterSegmentedControlVersionString[];
 

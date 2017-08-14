@@ -66,12 +66,22 @@ class User {
     static func fetchRequests(fetchChild: String, compleation: @escaping (String?, String?, String?, String?, Int?) -> Void) {
         let ref = Database.database().reference().child("\(fetchChild)")
         let uid = Auth.auth().currentUser?.uid
+        
         if let id = observerId {
             ref.queryOrdered(byChild: "borrowerId").queryEqual(toValue: uid).removeObserver(withHandle: id)
         }
-        observerId = ref.queryOrdered(byChild: "borrowerId").queryEqual(toValue: uid).observe(.childAdded, with: { (snapshot) in
-            let value = snapshot.value as? [String: Any]
-            compleation(value?["bigId"] as? String, value?["borrowerAmount"] as? String, value?["borrowerId"] as? String, value?["requestId"] as? String, value?["status"] as? Int)
+        
+        ref.queryOrdered(byChild: "borrowerId").queryEqual(toValue: uid).observeSingleEvent(of: .value, with: { (snapshot) in
+            guard snapshot.exists() else{
+                print("User doesn't exist")
+                compleation(nil, nil, nil, nil, nil)
+                return
+            }
+            observerId = ref.queryOrdered(byChild: "borrowerId").queryEqual(toValue: uid).observe(.childAdded, with: { (snapshot) in
+                let value = snapshot.value as? [String: Any]
+                print(value)
+                compleation(value?["bigId"] as? String, value?["borrowerAmount"] as? String, value?["borrowerId"] as? String, value?["requestId"] as? String, value?["status"] as? Int)
+            })
         })
     }
     
@@ -80,14 +90,24 @@ class User {
     static func fetchRequestID(fetchChild: String, completion: @escaping (String?, String?, String?) -> Void){
         let ref = Database.database().reference().child("\(fetchChild)")
         let uid = Auth.auth().currentUser?.uid
-        
         if let id = requestObserverId {
             ref.queryOrdered(byChild: "investorId").queryEqual(toValue: uid).removeObserver(withHandle: id)
         }
         
-        requestObserverId = ref.queryOrdered(byChild: "investorId").queryEqual(toValue: uid).observe(.childAdded, with: { (snapshot) in
-            let value = snapshot.value as? [String: Any]
-            completion(value?["id"] as? String, value?["rate"] as? String, value?["time"] as? String)
+        ref.queryOrdered(byChild: "investorId").queryEqual(toValue: uid).observeSingleEvent(of: .value, with: { (snapshot) in
+            guard snapshot.exists() else{
+                print("User doesn't exist")
+                completion(nil, nil, nil)
+                return
+            }
+            
+            requestObserverId = ref.queryOrdered(byChild: "investorId").queryEqual(toValue: uid).observe(.childAdded, with: { (snapshot) in
+                print(snapshot)
+                
+                let value = snapshot.value as? [String: Any]
+                
+                completion(value?["id"] as? String, value?["rate"] as? String, value?["time"] as? String)
+            })
         })
     }
     
@@ -142,4 +162,26 @@ class User {
         })
     }
     
+    static func fetchInvestorExisting(uid: String, compleation: @escaping (String?) -> Void) {
+        let ref = Database.database().reference().child("allRequests")
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            guard snapshot.exists() else{
+                compleation(nil)
+                return
+            }
+            compleation("exist")
+        })
+    }
+    
+    static func fetchAllRequestExisting(uid: String, compleation: @escaping (String?) -> Void) {
+        let ref = Database.database().reference().child("investorRequests")
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            guard snapshot.exists() else{
+                compleation(nil)
+                return
+            }
+            compleation("exist")
+        })
+        
+    }
 }

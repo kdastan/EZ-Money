@@ -75,11 +75,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         window = UIWindow(frame: UIScreen.main.bounds)
         
         if isLogged {
-            let pageController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-            let navigationController = BorrowViewController(rootViewController: pageController)
+//            let pageController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
             
-            //let a = UINavigationController(rootViewController: MenuViewController())
-            
+            let navigationController = UINavigationController(rootViewController: BorrowViewController())
+           
             let sideMenu = RESideMenu(contentViewController: navigationController, leftMenuViewController: MenuViewController(), rightMenuViewController: nil)
             sideMenu?.backgroundImage = UIImage(named: "sample")
             

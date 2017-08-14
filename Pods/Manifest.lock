@@ -1,6 +1,7 @@
 PODS:
   - Alamofire (4.5.0)
   - BEMCheckBox (1.4.1)
+  - BetterSegmentedControl (0.8)
   - DGElasticPullToRefresh (1.1)
   - EasyPeasy (1.4.2)
   - Firebase (4.0.3):
@@ -64,11 +65,11 @@ PODS:
   - SnapKit (3.2.0)
   - SVProgressHUD (2.1.2)
   - SwiftValidator (4.0.0)
-  - SwipeViewController (0.1.8)
 
 DEPENDENCIES:
   - Alamofire
   - BEMCheckBox
+  - BetterSegmentedControl (~> 0.8)
   - DGElasticPullToRefresh
   - EasyPeasy
   - Firebase
@@ -85,7 +86,6 @@ DEPENDENCIES:
   - SCLAlertView
   - SVProgressHUD
   - SwiftValidator (from `https://github.com/jpotts18/SwiftValidator.git`, branch `master`)
-  - SwipeViewController
 
 EXTERNAL SOURCES:
   SwiftValidator:
@@ -100,6 +100,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
   BEMCheckBox: 5ba6e37ade3d3657b36caecc35c8b75c6c2b1a4e
+  BetterSegmentedControl: 9194e20687a02dd498a4e542cf523bdd8620fcb7
   DGElasticPullToRefresh: 28f11a6026302a90f8ffebbc6e24748e584dddd3
   EasyPeasy: 50e7130b61f495ce105796e438d4136e2c8d2cc0
   Firebase: 9e33fdfbca37cab635c693883caa90a4475b842b
@@ -123,8 +124,7 @@ SPEC CHECKSUMS:
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   SwiftValidator: 25ded5ca1f10c05adf57f6ac82a72d28ac8d91af
-  SwipeViewController: 0e396aa7d7756c30f8914ef59aea2a3d7d7798bc
 
-PODFILE CHECKSUM: 361e1c1e185b86664381039f303482674e3c96cf
+PODFILE CHECKSUM: 179b7eddd5f3fec921a664ff7b8c4c3ac824b489
 
 COCOAPODS: 1.2.1

@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>BetterSegmentedControl.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>DGElasticPullToRefresh.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -99,15 +104,20 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>SwipeViewController.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>0C384601CBA17B7E4137491BACADAC91</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>2A4448146C785C426971111F117D773C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2E13B5BED48305DAFCA2C71A8E98913B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -117,17 +127,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3FD0B2224CD9D8B03C074A454AA58DA2</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>46481BD544895D7470385C5D14B787FD</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>47D07B436D82BB983C8429FF84F919A3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4ED70598BF2C635870F83801110DC7B8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6760E483BE7E3A2B5F4B9C876FA251BB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -147,17 +157,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9903EE05D8F85FBEA89EDA18ACF23C2E</key>
+		<key>A06FF602580301CD2ED38AEDF3A20035</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9E2513213CBA38892CB198E47102FE68</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>B25A22AFB84B71AC2629C029517BCC1B</key>
+		<key>AFE9C1F4FF3A4CE93281FE2BF9C18E3D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -192,17 +197,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EEB4C542B00365D54525CBF9E24E2F72</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>F1AA0B3E4CB1E2C6D1250F87A134F925</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F796440AB0D9217F5F72AD09CE4A8709</key>
+		<key>FF310D240B6F28B261779784DD0FBE31</key>
 		<dict>
 			<key>primary</key>
 			<true/>

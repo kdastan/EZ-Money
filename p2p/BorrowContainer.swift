@@ -11,6 +11,7 @@ import EasyPeasy
 
 class BorrowContainer: UIView {
     
+    
     let sizeX = UIScreen.main.bounds.width - 20
 
     lazy var field: ContainerContent = {
