@@ -16,6 +16,7 @@ import SwiftValidator
 
 class WalletViewController: UIViewController {
     
+    //MARK: Properties
     let successBanner = NotificationBanner(title: "Кошелек успешно пополнен", subtitle: "", style: .success)
     let errorBanner = NotificationBanner(title: "Возникла ошибка", subtitle: "Попробуйте повторить позже", style: .warning)
     let inputErrorBanner = NotificationBanner(title: "Ошибка ввода", subtitle: "Пожалуйста заполните все поля", style: .warning)
@@ -69,6 +70,7 @@ class WalletViewController: UIViewController {
         fetchUserInfo()
     }
     
+    //MARK: Views configuration
     func setupViews() {
         view.backgroundColor = .white
         view.addSubview(userInfoLabel)
@@ -78,6 +80,7 @@ class WalletViewController: UIViewController {
         view.addSubview(submitButton)
     }
     
+    //MARK: Constraints configuration
     func setupConstraints() {
         titleLabel <- [
             Top(44),
@@ -114,10 +117,8 @@ class WalletViewController: UIViewController {
         ]
     }
     
-    
-    
+    //MARK: Text fields validation
     func inputValidation() {
-    
         validator.styleTransformers(success:{ (validationRule) -> Void in
             validationRule.errorLabel?.isHidden = true
             validationRule.errorLabel?.text = ""
@@ -142,6 +143,7 @@ class WalletViewController: UIViewController {
         validator.registerField(userRefillView.refillAmountTextField, errorLabel: nil, rules: [NumbersValidation()])
     }
     
+    //MARK: Fetch user info
     func fetchUserInfo() {
         SVProgressHUD.show()
         guard let uid = Auth.auth().currentUser?.uid else { return }
@@ -160,6 +162,7 @@ class WalletViewController: UIViewController {
         }
     }
     
+    //MARK: User interaction
     func backButtonPressed(sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -170,9 +173,7 @@ class WalletViewController: UIViewController {
 }
 
 extension WalletViewController: ValidationDelegate {
-    
     func validationSuccessful() {
-        
         guard let amount = self.userRefillView.refillAmountTextField.text else {return}
         
         let alert = SCLAlertView()

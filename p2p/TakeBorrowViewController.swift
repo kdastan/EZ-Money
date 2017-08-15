@@ -16,21 +16,6 @@ import Alamofire
 import SwiftValidator
 import SVProgressHUD
 
-struct Requests {
-    let amount: String!
-    let date: String!
-    let id: String!
-    let investorId: String!
-    let rate: String!
-    let time: String!
-}
-
-struct Names {
-    let name: String!
-    let surname: String!
-    let uid: String!
-}
-
 struct Investors {
     let amount: String!
     let date: String!
@@ -47,15 +32,13 @@ struct Investors {
 
 class TakeBorrowViewController: UIViewController {
     
+    //MARK: Properties
     let banner = NotificationBanner(title: "Запрос успешно отправлен", subtitle: "", style: .success)
     let warningBanner = NotificationBanner(title: "Заполните все поля", subtitle: nil, style: .warning)
     
     var a = Container()
     var arr: [BorrowTableViewCell] = []
-    
-    var rqsts = [Requests]()
-    var nms = [Names]()
-    
+   
     var investorsList: [Investors] = []
     var filteredInvestorsList: [Investors] = []
     var queryMessage = ""
@@ -136,136 +119,18 @@ class TakeBorrowViewController: UIViewController {
         super.viewDidLoad()
         setupView()
         setupConstraints()
-        textFieldValidation()
-        
     }
     
-    func notificationSender(investorToken: String) {
-//        let ref = Database.database().reference()
-        let notificationUrl = "https://fcm.googleapis.com/fcm/send"
-        let serverKey = "AAAAiyp0u8w:APA91bEuiQ--qrKwl_ahYWvr0qbs30gN55XT-U5XNq2ptO_pznUyjSaYXwEFz1SK1pKyxcBIE7Y9ALxLj5gXjNCioqzre7jSNA8gG0Xu_YskTsX5HS1s6I527FXcc8lFz6dgF892jhr8"
-        
-        let token = investorToken
-        
-        var header: HTTPHeaders? = HTTPHeaders()
-        header = [
-            "Content-Type":"application/json",
-            "Authorization":"key=\(serverKey)"
-        ]
-        var notificationParameters: Parameters? = [
-            "notification": [
-                "title": "Запрос на деньги",
-                "body": self.queryMessage
-            ],
-            "to" : "\(token)"
-        ]
-        
-        Alamofire.request(notificationUrl as URLConvertible, method: .post as HTTPMethod, parameters: notificationParameters, encoding: JSONEncoding.default, headers: header!).responseJSON { (resp) in
-            print(resp)
-        }
-    }
-    
-    func notificationToUser(sender: UIButton) {
-    }
-    
-    func investorSearch() {
-        searchBar.isHidden = false
-        requestButton.isHidden = true
-        investorSearchButton.isHidden = true
-        print(rqsts.count)
-    }
-    
-    func pressed() {
-        
-        validator.validate(self)
-    
-    }
-    
-    func textFieldValidation() {
-        validator.styleTransformers(success:{ (validationRule) -> Void in
-            //            print("here")
-            // clear error label
-            validationRule.errorLabel?.isHidden = true
-            validationRule.errorLabel?.text = ""
-            if let textField = validationRule.field as? UITextField {
-                textField.layer.borderColor = UIColor.green.cgColor
-                textField.layer.borderWidth = 0.5
-                
-            }
-        }, error:{ (validationError) -> Void in
-            validationError.errorLabel?.isHidden = false
-            validationError.errorLabel?.text = validationError.errorMessage
-            if let textField = validationError.field as? UITextField {
-                textField.layer.borderColor = UIColor.red.cgColor
-                textField.layer.borderWidth = 1.0
-            }
-        })
-        
-        validator.registerField(a.container.field.textField, errorLabel: nil, rules: [NumbersValidation()])
-        validator.registerField(a.container.field2.textField, errorLabel: nil, rules: [NumbersValidation()])
-    }
-    
-    
-    func buttonPressed(sender: UIButton) {
-        print("asdadsasdad")
-        guard let amount = a.container.field.textField.text, a.container.field.textField.text != "", let uid = Auth.auth().currentUser?.uid else {
-            print("fill data")
-            return
-        }
-        
-        let appearance = SCLAlertView.SCLAppearance(
-            kTitleFont: UIFont(name: "HelveticaNeue", size: 14)!
-        )
-        let alertView = SCLAlertView(appearance: appearance)
-        
-        alertView.addButton("Подтверждаю") {
-            
-            let reference = Database.database().reference()
-            let newRef = reference.child("allRequests").childByAutoId()
-            let notificationRecord = reference.child("notifications").childByAutoId()
-            
-            let post: [String: Any] = [
-                "bigId": newRef.key,
-                "borrowerAmount": amount,
-                "borrowerId": uid,
-                "requestId": self.filteredInvestorsList[sender.tag].id,
-                "status": 0
-            ]
-            self.banner.duration = 2
-            self.banner.show()
-            newRef.setValue(post)
-            
-            let investorId = self.filteredInvestorsList[sender.tag].id
-            let investorToken = self.filteredInvestorsList[sender.tag].token
-            
-            
-            User.fetchUserEmail(uid: uid, compleation: { (email, token) in
-                self.queryMessage = "\(email!) запрашивает у вас деньги"
-                var post = [
-                    "from":uid,
-                    "message": self.queryMessage,
-                    "to":investorId!
-                ]
-                
-                notificationRecord.setValue(post)
-                
-            })
-            print(investorToken)
-            self.notificationSender(investorToken: investorToken!)
-            
-        }
-        alertView.showWarning("Отправить запрос?", subTitle: "\((filteredInvestorsList[sender.tag].name)!) на \((self.a.container.field.textField.text)!) Тенге,  \n на \((filteredInvestorsList[sender.tag].time)!) месяцев под \((filteredInvestorsList[sender.tag].rate)!) % годовых", closeButtonTitle: "Отменить", colorStyle: 0x4BA2D3, colorTextButton: 0xE3F2FC)
-        
-    }
-    
+    //MARK: Views configuration
     func setupView() {
         edgesForExtendedLayout = []
         view.backgroundColor = .blueBackground
         view.addSubview(tableView)
         [button, requestButton, investorSearchButton, label, searchBar].forEach {a.addSubview($0)}
-        
+        textFieldValidation()
     }
     
+    //MARK: Setup configuration
     func setupConstraints() {
         tableView <- [
             Width(Screen.width - 20),
@@ -273,7 +138,7 @@ class TakeBorrowViewController: UIViewController {
             Top(0),
             CenterX(0)
         ]
-    
+        
         button <- [
             CenterX(0),
             Bottom(30),
@@ -308,9 +173,80 @@ class TakeBorrowViewController: UIViewController {
             Width(Screen.width-30)
         ]
     }
-
+    
+    //MARK: User interaction
+    func investorSearch() {
+        searchBar.isHidden = false
+        requestButton.isHidden = true
+        investorSearchButton.isHidden = true
+    }
+    
+    func pressed() {
+        validator.validate(self)
+    }
+    
+    func buttonPressed(sender: UIButton) {
+        guard let amount = a.container.field.textField.text, a.container.field.textField.text != "", let uid = Auth.auth().currentUser?.uid else {
+            print("fill data")
+            return
+        }
+        
+        let appearance = SCLAlertView.SCLAppearance(
+            kTitleFont: UIFont(name: "HelveticaNeue", size: 14)!
+        )
+        let alertView = SCLAlertView(appearance: appearance)
+        
+        alertView.addButton("Подтверждаю") {
+            
+            let reference = Database.database().reference()
+            let newRef = reference.child("allRequests").childByAutoId()
+            let notificationRecord = reference.child("notifications").childByAutoId()
+            
+            let post: [String: Any] = [
+                "bigId": newRef.key,
+                "borrowerAmount": amount,
+                "borrowerId": uid,
+                "requestId": self.filteredInvestorsList[sender.tag].id,
+                "status": 0
+            ]
+            self.banner.duration = 2
+            self.banner.show()
+            newRef.setValue(post)
+            
+            let investorId = self.filteredInvestorsList[sender.tag].investorId
+            let investorToken = self.filteredInvestorsList[sender.tag].token
+            
+            Notification.sendNotification(investorToken: investorToken!, title: .request, message: .request, id: investorId!, recordType: .requset)
+        }
+        alertView.showWarning("Отправить запрос?", subTitle: "\((filteredInvestorsList[sender.tag].name)!) на \((self.a.container.field.textField.text)!) Тенге,  \n на \((filteredInvestorsList[sender.tag].time)!) месяцев под \((filteredInvestorsList[sender.tag].rate)!) % годовых", closeButtonTitle: "Отменить", colorStyle: 0x4BA2D3, colorTextButton: 0xE3F2FC)
+    }
+    
+    //MARK: Text fields validation
+    func textFieldValidation() {
+        validator.styleTransformers(success:{ (validationRule) -> Void in
+            validationRule.errorLabel?.isHidden = true
+            validationRule.errorLabel?.text = ""
+            if let textField = validationRule.field as? UITextField {
+                textField.layer.borderColor = UIColor.green.cgColor
+                textField.layer.borderWidth = 0.5
+                
+            }
+        }, error:{ (validationError) -> Void in
+            validationError.errorLabel?.isHidden = false
+            validationError.errorLabel?.text = validationError.errorMessage
+            if let textField = validationError.field as? UITextField {
+                textField.layer.borderColor = UIColor.red.cgColor
+                textField.layer.borderWidth = 1.0
+            }
+        })
+        
+        validator.registerField(a.container.field.textField, errorLabel: nil, rules: [NumbersValidation()])
+        validator.registerField(a.container.field2.textField, errorLabel: nil, rules: [NumbersValidation()])
+    }
+    
 }
 
+//MARK: Table views data source
 extension TakeBorrowViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         self.label.text = "Найдено \(filteredInvestorsList.count) инвесторов"
@@ -343,16 +279,14 @@ extension TakeBorrowViewController: UITableViewDataSource {
     }
 }
 
+//MARK: Text fields validation delegate
 extension TakeBorrowViewController: ValidationDelegate {
     func validationSuccessful() {
         SVProgressHUD.show()
-        
         tableView.reloadData()
-        
         guard let moneyAmount = a.container.field.textField.text, a.container.field.textField.text != "", let time = a.container.field2.textField.text, a.container.field2.textField.text != "" else {
             return
         }
-        
         button.isHidden = true
         requestButton.isHidden = false
         investorSearchButton.isHidden = false

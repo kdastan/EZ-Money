@@ -38,17 +38,19 @@ struct RequestsInvestor {
     let requestId: String!
     let borrowerAmount: String!
     let borrowerId: String!
+    let borrowerToken: String!
 }
 
 class RequestListViewController: UIViewController {
     
+    //MARK: Properties
     var isInvestor: Bool?
+    
     let banner = NotificationBanner(title: "Ваш список запросов пуст", subtitle: nil, style: .warning)
     let notEnoughMoney = NotificationBanner(title: "Не достаточно средств", subtitle: "Пополните кошелек", style: .warning)
     let successTransaction = NotificationBanner(title: "Инвестирование прошло успешно", subtitle: nil, style: .success)
     
     var investorsMoney: Int?
-    
     var queryMessage = "Вам поступили деньги от инвестора"
     
     var requestList = [RequestsLists]()
@@ -67,10 +69,14 @@ class RequestListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
-        isInvestor = appDelegate.isInvestor
         setupView()
         setupConstraints()
+    }
+    
+    //MARK: Views configuration
+    func setupView() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+        isInvestor = appDelegate.isInvestor
         
         if isInvestor! {
             fetchForInvestorList()
@@ -78,25 +84,11 @@ class RequestListViewController: UIViewController {
         } else {
             fetchRequestList()
         }
-        
-        
-    }
-    
-    func fetchForInvestorsAmount() {
-        guard let uid = Auth.auth().currentUser?.uid else {
-            return
-        }
-        User.fetchForInvestorsAmount(uid: uid) { (balance) in
-            self.investorsMoney = balance
-            print("\(self.investorsMoney!) - Investors balance")
-        }
-    }
-    
-    func setupView() {
+
+        //MARK: Pull to refresh implementation
         let loadingView = DGElasticPullToRefreshLoadingViewCircle()
         loadingView.tintColor = UIColor(red: 78/255.0, green: 221/255.0, blue: 200/255.0, alpha: 1.0)
         tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
-            
             if (self?.isInvestor!)! {
                 self?.investorRequsest.removeAll()
                 self?.fetchForInvestorList()
@@ -104,26 +96,16 @@ class RequestListViewController: UIViewController {
                 self?.requestList.removeAll()
                 self?.fetchRequestList()
             }
-            
-            
-//            self?.requestList.removeAll()
-//            //self?.investorRequsest.removeAll()
-//            
-//            //self?.fetchForInvestorList()
-//            self?.fetchRequestList()
-            
             self?.tableView.dg_stopLoading()
-            
             }, loadingView: loadingView)
         tableView.dg_setPullToRefreshFillColor(UIColor(colorLiteralRed: 70/255, green: 161/255, blue: 213/255, alpha: 1))
         tableView.dg_setPullToRefreshBackgroundColor(tableView.backgroundColor!)
-
         view.backgroundColor = .blueBackground
         view.addSubview(tableView)
-        
         banner.duration = 1
     }
     
+    //MARK: Constraints configuration
     func setupConstraints() {
         edgesForExtendedLayout = []
         tableView <- [
@@ -134,9 +116,18 @@ class RequestListViewController: UIViewController {
         ]
     }
     
+    //MARK: Fetch - Investors money
+    func fetchForInvestorsAmount() {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            return
+        }
+        User.fetchForInvestorsAmount(uid: uid) { (balance) in
+            self.investorsMoney = balance
+            print("\(self.investorsMoney!) - Investors balance")
+        }
+    }
     
-  
-    //MARK: Fetch for user
+    //MARK: Fetch - for user
     func fetchRequestList(){
         self.tableView.reloadData()
         SVProgressHUD.show()
@@ -177,6 +168,7 @@ class RequestListViewController: UIViewController {
                 self.banner.show()
                 return
             }
+            //Of course hud won't stop cause your searching in investorsRequest
         User.fetchRequestID(fetchChild: "investorRequests") { (id, rate, time) in
             if id == nil {
                 SVProgressHUD.dismiss()
@@ -185,30 +177,46 @@ class RequestListViewController: UIViewController {
             }
             User.fetchAllRequests(fetchChild: id!, completion: { (borrowerId, status, requestId, borrowerAmount) in
                 User.fetchUserName(uid: borrowerId!, completion: { (name, surname, patronymic) in
-                    self.investorRequsest.insert(RequestsInvestor(name: name, surname: surname, patronymic: patronymic, status: status, rate: rate, time: time, requestId: requestId, borrowerAmount: borrowerAmount, borrowerId: borrowerId), at: 0)
-                    self.tableView.reloadData()
-                    SVProgressHUD.dismiss()
+                    User.fetchUsers(uid: borrowerId!, compleation: { (balance, email, isInvestor, token, userData, password) in
+                        self.investorRequsest.insert(RequestsInvestor(name: name, surname: surname, patronymic: patronymic, status: status, rate: rate, time: time, requestId: requestId, borrowerAmount: borrowerAmount, borrowerId: borrowerId, borrowerToken: token), at: 0)
+                        self.tableView.reloadData()
+                        SVProgressHUD.dismiss()
+                    })
                 })
             })
         }
         }
     }
     
+    //MARK: Acceptance button with notification sender
     func accepted(sender: UIButton) {
         let requestID = (investorRequsest[sender.tag].requestId)!
         User.setRequestStatus(requestId: requestID, status: 1) { (finished) in
         }
+        
+        guard let token = investorRequsest[sender.tag].borrowerToken else {return}
+        guard let borrowerId = investorRequsest[sender.tag].borrowerId else {return}
+        Notification.sendNotification(investorToken: token, title: .accept, message: .accept, id: borrowerId, recordType: .accept)
+        
         self.investorRequsest.removeAll()
         self.fetchForInvestorList()
     }
+    
+    //MARK: Rejection button with notification sender
     func declined(sender: UIButton) {
         let requestID = (investorRequsest[sender.tag].requestId)!
         User.setRequestStatus(requestId: requestID, status: 3) { (finished) in
         }
+        
+        guard let token = investorRequsest[sender.tag].borrowerToken else {return}
+        guard let borrowerId = investorRequsest[sender.tag].borrowerId else {return}
+        Notification.sendNotification(investorToken: token, title: .reject, message: .reject, id: borrowerId, recordType: .reject)
+        
         self.investorRequsest.removeAll()
         self.fetchForInvestorList()
     }
 
+    //MARK: Issue button with notification sender
     func issueAS(sender: UIButton) {
         SVProgressHUD.show()
         guard let uid = Auth.auth().currentUser?.uid else {
@@ -233,11 +241,10 @@ class RequestListViewController: UIViewController {
                 print(borrowerToken!)
                 SVProgressHUD.dismiss()
                 
-                
-                
-                self.notificationSender(investorToken: borrowerToken!)
+                Notification.sendNotification(investorToken: borrowerToken!, title: .issue, message: .issue, id: borrowerId!, recordType: .issue)
             })
         }
+        
         User.successTransactionForInvestor(amount: investorsMoney!, uid: uid) { (result) in
             self.successTransaction.duration = 1
             self.successTransaction.show()
@@ -246,51 +253,18 @@ class RequestListViewController: UIViewController {
         User.setRequestStatus(requestId: requestID, status: 2) { (finished) in
         }
         
-        
         self.investorRequsest.removeAll()
         self.fetchForInvestorList()
     }
-    
-    func notificationSender(investorToken: String) {
-        //        let ref = Database.database().reference()
-        let notificationUrl = "https://fcm.googleapis.com/fcm/send"
-        let serverKey = "AAAAiyp0u8w:APA91bEuiQ--qrKwl_ahYWvr0qbs30gN55XT-U5XNq2ptO_pznUyjSaYXwEFz1SK1pKyxcBIE7Y9ALxLj5gXjNCioqzre7jSNA8gG0Xu_YskTsX5HS1s6I527FXcc8lFz6dgF892jhr8"
-        
-        let token = investorToken
-        print(token)
-        print("asdadasdasdsadassada")
-        
-        var header: HTTPHeaders? = HTTPHeaders()
-        header = [
-            "Content-Type":"application/json",
-            "Authorization":"key=\(serverKey)"
-        ]
-        var notificationParameter: Parameters? = [
-            "notification": [
-                "title": "Проверьте кошелек",
-                "body": self.queryMessage
-            ],
-            "to" : "\(token)"
-        ]
-        
-        Alamofire.request(notificationUrl as URLConvertible, method: .post as HTTPMethod, parameters: notificationParameter, encoding: JSONEncoding.default, headers: header!).responseJSON { (resp) in
-            print(resp)
-        }
-    }
-    
-    
 }
 
 extension RequestListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         if isInvestor! {
             return investorRequsest.count
         } else {
             return requestList.count
         }
-        
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

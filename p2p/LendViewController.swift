@@ -15,6 +15,7 @@ import SwiftValidator
 
 class LendViewController: UIViewController {
     
+    //MARK: Properties
     let banner = NotificationBanner(title: "Запрос на инвестицию прошел успешно", subtitle: "Успех", style: .success)
     let infoBanner = NotificationBanner(title: "Пожалуйста заполните все поля", subtitle: ";(", style: .info)
     let banner2 = NotificationBanner(title: "Пожалуйста заполните все правильно", subtitle: ";(", style: .info)
@@ -42,6 +43,7 @@ class LendViewController: UIViewController {
         setupConstraints()
     }
     
+    //MARK: Views configuration
     func setupViews() {
         view.addSubview(container)
         container.addSubview(button)
@@ -51,6 +53,7 @@ class LendViewController: UIViewController {
         textFieldValidation()
     }
     
+    //MARK: Constraints configuration
     func setupConstraints() {
         container <- [
             Width(Screen.width - 20),
@@ -67,6 +70,7 @@ class LendViewController: UIViewController {
         ]
     }
     
+    //MARK: Text fields validation
     func textFieldValidation() {
         validator.styleTransformers(success:{ (validationRule) -> Void in
             validationRule.errorLabel?.isHidden = true
@@ -90,10 +94,12 @@ class LendViewController: UIViewController {
         validator.registerField(container.container.percentField.textField, errorLabel: nil, rules: [NumbersValidation()])
     }
     
+    //MARK: User interaction
     func pressed() {
         validator.validate(self)
     }
     
+    //MARK: Current date
     func currentDate() -> String {
         let data = Date()
         let formatter = DateFormatter()
@@ -104,6 +110,7 @@ class LendViewController: UIViewController {
     }
 }
 
+//MARK: Table views header validation
 extension LendViewController: ValidationDelegate {
     func validationSuccessful() {
         let ref = Database.database().reference()

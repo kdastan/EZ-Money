@@ -13,11 +13,11 @@ import SVProgressHUD
 import NotificationBannerSwift
 
 
-class LoginViewController: RegistrationView {
+class LoginViewController: RegistrationViewController {
     
+    //MARK: Properties
     let banner = NotificationBanner(title: "Необходимо подтверждение", subtitle: "Проверьте свою почту", style: .success)
     let errorBanner = NotificationBanner(title: "Ошибка авторизации", subtitle: nil, style: .warning)
-    
     
     lazy var textField = createTextField(true)
     lazy var textFieldPassword = createTextField(false)
@@ -45,8 +45,7 @@ class LoginViewController: RegistrationView {
         setupConstraints()
             }
     
-    //MARK:  Configurations
-    
+    //MARK: Views configurations
     func setupView() {
         view.backgroundColor = .white
         [imageView, labelName, labelProjectName, textField, textFieldPassword, button, registrationButton].forEach{
@@ -54,6 +53,7 @@ class LoginViewController: RegistrationView {
         }
     }
     
+    //MARK: Constraints configurations
     func setupConstraints() {
         imageView <- [
             Width(Screen.width),
@@ -89,8 +89,7 @@ class LoginViewController: RegistrationView {
         ]
     }
     
-    // MARK: User Interactions
-    
+    // MARK: User interactions
     func registrationButtonPressed() {
         self.navigationController?.pushViewController(SignUpViewController(), animated: true)
     }

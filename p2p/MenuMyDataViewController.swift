@@ -19,6 +19,7 @@ import NotificationBannerSwift
 
 class MenuMyDataViewController: UIViewController {
     
+    //MARK: Properties
     let banner = NotificationBanner(title: "Ошибка регистрации", subtitle: "Проверьте правильность заполнения полей", style: .info)
     
     let dateFormatter = DateFormatter()
@@ -160,6 +161,7 @@ class MenuMyDataViewController: UIViewController {
         setupConstraints()
     }
     
+    //MARK: Views configuration
     func setupViews() {
         [scroll, button, cancelButton].forEach{ view.addSubview($0) }
         [label, userName, userSurname, userPatronymic, userMobilePhone, userPhone, userBirthDate, userBirthPlace, userIdNumber, userIINnumber, userDateOfIssue, userDateOfValidaty, userIssuingAuthority].forEach{ scroll.addSubview($0) }
@@ -176,6 +178,7 @@ class MenuMyDataViewController: UIViewController {
         }
     }
     
+    //MARK: Constraints configuration
     func setupConstraints() {
         label <- [
             Width(UIScreen.main.bounds.width),
@@ -290,16 +293,14 @@ class MenuMyDataViewController: UIViewController {
         ]
     }
     
+    //MARK: Text field validation
     func textFieldValidation() {
         validator.styleTransformers(success:{ (validationRule) -> Void in
-//            print("here")
-            // clear error label
             validationRule.errorLabel?.isHidden = true
             validationRule.errorLabel?.text = ""
             if let textField = validationRule.field as? UITextField {
                 textField.layer.borderColor = UIColor.green.cgColor
                 textField.layer.borderWidth = 0.5
-                
             }
         }, error:{ (validationError) -> Void in
             print("error")
@@ -325,6 +326,7 @@ class MenuMyDataViewController: UIViewController {
         validator.registerField(userIssuingAuthority.textField, errorLabel: userIssuingAuthority.labelError, rules: [SSNVRule()])
     }
     
+    //MARK: User interaction
     func validatorButton() {
         validator.validate(self)
     }
@@ -333,6 +335,7 @@ class MenuMyDataViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
 
+    //MARK: DatePicker configuration for inputView
     func dateValueChanged(sender: UIDatePicker) {
         userBirthDate.textField.text = dateFormatter.string(from: sender.date)
     }
@@ -345,12 +348,10 @@ class MenuMyDataViewController: UIViewController {
         userDateOfValidaty.textField.text = dateFormatter.string(from: sender.date)
     }
     
+    //MARK: Fetch - user data: Need to optimize to model
     func updateUserData(uid: String, completionHandler: @escaping ((_ exist : Bool) -> Void)) {
-        
         SVProgressHUD.show()
-        
         let ref = Database.database().reference()
-        
         ref.child("users").child("\(uid)").observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
             let userData = value?["userData"] as? Bool

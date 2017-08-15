@@ -9,8 +9,9 @@
 import UIKit
 import EasyPeasy
 
-class RegistrationView: UIViewController { // name change to Viewcontroller
+class RegistrationViewController: UIViewController {
     
+    //MARK: Properties
     lazy var labelName: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Helvetica", size: 66)
@@ -40,11 +41,13 @@ class RegistrationView: UIViewController { // name change to Viewcontroller
         setupConstraint()
     }
     
+    //MARK: View configurations
     private func setupViews() {
         [imageView, labelName, labelProjectName].forEach {view.addSubview($0)}
         setupNavigationBar()
     }
     
+    //MARK: NavigationBar configurations
     private func setupNavigationBar() {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
@@ -54,6 +57,7 @@ class RegistrationView: UIViewController { // name change to Viewcontroller
         self.navigationController?.navigationBar.tintColor = .white
     }
     
+    //MARK: Constraints configurations
     private func setupConstraint() {
         imageView <- [
             Width(Screen.width),

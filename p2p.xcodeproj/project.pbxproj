@@ -21,6 +21,7 @@
 		18109F7A1F27B20C00DDA339 /* BorrowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18109F791F27B20C00DDA339 /* BorrowTableViewCell.swift */; };
 		18109F7C1F27B75C00DDA339 /* BarrowTableViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18109F7B1F27B75C00DDA339 /* BarrowTableViewContainer.swift */; };
 		18109F7E1F27C86200DDA339 /* BarrowContainerTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18109F7D1F27C86200DDA339 /* BarrowContainerTable.swift */; };
+		1813A9EF1F42AAA000F2B6F4 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1813A9EE1F42AAA000F2B6F4 /* Notification.swift */; };
 		181632041F3234DC004DA934 /* LendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181632031F3234DC004DA934 /* LendViewController.swift */; };
 		181632061F323568004DA934 /* LendContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181632051F323568004DA934 /* LendContainer.swift */; };
 		181632081F32396D004DA934 /* Container2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181632071F32396D004DA934 /* Container2.swift */; };
@@ -49,7 +50,7 @@
 		18ED1D461F2B7C3B001B7A90 /* userModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ED1D451F2B7C3B001B7A90 /* userModel.swift */; };
 		18ED8E241F28E3CB00848ACD /* MenuSideTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ED8E231F28E3CB00848ACD /* MenuSideTableViewCell.swift */; };
 		18F07DE51F26524A0095F3A0 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F07DE41F26524A0095F3A0 /* SignUpViewController.swift */; };
-		18F07DE71F2653000095F3A0 /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F07DE61F2653000095F3A0 /* RegistrationView.swift */; };
+		18F07DE71F2653000095F3A0 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F07DE61F2653000095F3A0 /* RegistrationViewController.swift */; };
 		18F07DE91F272BD00095F3A0 /* BorrowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F07DE81F272BD00095F3A0 /* BorrowViewController.swift */; };
 		18F07DEB1F272E630095F3A0 /* TakeBorrowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F07DEA1F272E630095F3A0 /* TakeBorrowViewController.swift */; };
 		18F07DED1F272E790095F3A0 /* RequestListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F07DEC1F272E790095F3A0 /* RequestListViewController.swift */; };
@@ -75,6 +76,7 @@
 		18109F791F27B20C00DDA339 /* BorrowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorrowTableViewCell.swift; sourceTree = "<group>"; };
 		18109F7B1F27B75C00DDA339 /* BarrowTableViewContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarrowTableViewContainer.swift; sourceTree = "<group>"; };
 		18109F7D1F27C86200DDA339 /* BarrowContainerTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarrowContainerTable.swift; sourceTree = "<group>"; };
+		1813A9EE1F42AAA000F2B6F4 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		181632031F3234DC004DA934 /* LendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LendViewController.swift; sourceTree = "<group>"; };
 		181632051F323568004DA934 /* LendContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LendContainer.swift; sourceTree = "<group>"; };
 		181632071F32396D004DA934 /* Container2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Container2.swift; sourceTree = "<group>"; };
@@ -105,7 +107,7 @@
 		18ED1D451F2B7C3B001B7A90 /* userModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = userModel.swift; sourceTree = "<group>"; };
 		18ED8E231F28E3CB00848ACD /* MenuSideTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuSideTableViewCell.swift; sourceTree = "<group>"; };
 		18F07DE41F26524A0095F3A0 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
-		18F07DE61F2653000095F3A0 /* RegistrationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
+		18F07DE61F2653000095F3A0 /* RegistrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
 		18F07DE81F272BD00095F3A0 /* BorrowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorrowViewController.swift; sourceTree = "<group>"; };
 		18F07DEA1F272E630095F3A0 /* TakeBorrowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TakeBorrowViewController.swift; sourceTree = "<group>"; };
 		18F07DEC1F272E790095F3A0 /* RequestListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestListViewController.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				18ED1D431F2B78BF001B7A90 /* userDataModel.swift */,
 				18ED1D451F2B7C3B001B7A90 /* userModel.swift */,
 				1879669D1F30FF330001ED8B /* User.swift */,
+				1813A9EE1F42AAA000F2B6F4 /* Notification.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -217,7 +220,7 @@
 		18540A501F25B97B0004CBD4 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				18F07DE61F2653000095F3A0 /* RegistrationView.swift */,
+				18F07DE61F2653000095F3A0 /* RegistrationViewController.swift */,
 				18540A4C1F25B8740004CBD4 /* LoginViewController.swift */,
 				18F07DE41F26524A0095F3A0 /* SignUpViewController.swift */,
 				18F07DE81F272BD00095F3A0 /* BorrowViewController.swift */,
@@ -433,7 +436,7 @@
 				180B03DE1F3AD5A8009EAB1B /* WalletAcountInfo.swift in Sources */,
 				18109F7A1F27B20C00DDA339 /* BorrowTableViewCell.swift in Sources */,
 				181632061F323568004DA934 /* LendContainer.swift in Sources */,
-				18F07DE71F2653000095F3A0 /* RegistrationView.swift in Sources */,
+				18F07DE71F2653000095F3A0 /* RegistrationViewController.swift in Sources */,
 				181632041F3234DC004DA934 /* LendViewController.swift in Sources */,
 				18540A3D1F25B5660004CBD4 /* ViewController.swift in Sources */,
 				184256B41F29A72500ECEDE3 /* PaddingTextField.swift in Sources */,
@@ -442,6 +445,7 @@
 				18F07DEB1F272E630095F3A0 /* TakeBorrowViewController.swift in Sources */,
 				184256B61F29AA5800ECEDE3 /* MenuHeaderView.swift in Sources */,
 				18F07DED1F272E790095F3A0 /* RequestListViewController.swift in Sources */,
+				1813A9EF1F42AAA000F2B6F4 /* Notification.swift in Sources */,
 				187966A01F310BB70001ED8B /* DataTableViewCell.swift in Sources */,
 				180B03E21F3C0E25009EAB1B /* userCardValidation.swift in Sources */,
 				180B03EA1F3D5671009EAB1B /* ArchiveViewController.swift in Sources */,

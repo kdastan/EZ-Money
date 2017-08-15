@@ -13,6 +13,7 @@ import SVProgressHUD
 
 class MenuViewController: UIViewController {
     
+    //MARK: Properties
     let arr = ["Мои данные", "Баланс", "История запросов", "Настройка аккаунта", "Выйти"]
     let imgArr = ["user", "wallet", "file", "settings", "logout"]
     
@@ -43,6 +44,26 @@ class MenuViewController: UIViewController {
             fetchFromDB()
     }
     
+    //MARK: Views configuration
+    func setupView() {
+        view.backgroundColor = .white
+        view.addSubview(tableView)
+        edgesForExtendedLayout = []
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        isInvestor = appDelegate.isInvestor
+    }
+    
+    //MARK: Constraints configuration
+    func setupConstraints() {
+        tableView <- [
+            Width(UIScreen.main.bounds.width),
+            Height(358),
+            CenterY(0),
+            Left(0)
+        ]
+    }
+    
+    //MARK: Fetch - Username data - Need to divide to model
     func fetchFromDB() {
         SVProgressHUD.show()
         let ref = Database.database().reference()
@@ -59,8 +80,8 @@ class MenuViewController: UIViewController {
             let value = snapshot.value as? NSDictionary
             //self.nameInfoLabel.text = value?["name"] as? String ?? "Name Surname"
             var name = value?["name"] as? String ?? "Name Surname"
-            var surname = value?["surname"] as? String ?? "Name Surname"
-            var newName = (name.characters.first)!
+            let surname = value?["surname"] as? String ?? "Name Surname"
+            let newName = (name.characters.first)!
             self.headerView.nameInfoLabel.text = "\(surname) \(newName)."
             SVProgressHUD.dismiss()
         }) {(error) in
@@ -68,23 +89,7 @@ class MenuViewController: UIViewController {
         }
     }
     
-    func setupView() {
-        view.backgroundColor = .white
-        view.addSubview(tableView)
-        edgesForExtendedLayout = []
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        isInvestor = appDelegate.isInvestor
-    }
-    
-    func setupConstraints() {
-        tableView <- [
-            Width(UIScreen.main.bounds.width),
-            Height(358),
-            CenterY(0),
-            Left(0)
-        ]
-    }
-    
+    //MARK: Sign out implementation
     func signOut() {
         let auth = Auth.auth()
         do {

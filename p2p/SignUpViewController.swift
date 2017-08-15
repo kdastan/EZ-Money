@@ -15,8 +15,9 @@ import FirebaseAuth
 import NotificationBannerSwift
 import SVProgressHUD
 
-class SignUpViewController: RegistrationView {
+class SignUpViewController: RegistrationViewController {
 
+    //MARK: Properties
     var tapped = false
     
     var errorlabel = ""
@@ -56,7 +57,6 @@ class SignUpViewController: RegistrationView {
         let label = UILabel()
         label.text = "Я - инвестор"
         label.textColor = .white
-        //label.backgroundColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0.3)
         label.layer.cornerRadius = 10
         return label
     }()
@@ -67,8 +67,7 @@ class SignUpViewController: RegistrationView {
         setupConstraints()
     }
     
-    // MARK: Configuarations
-    
+    //MARK: Views configuarations
     func setupView() {
         view.backgroundColor = .white
         [imageView, labelName, labelProjectName, textField, textFieldPassword, button, cBox, label].forEach{
@@ -77,6 +76,7 @@ class SignUpViewController: RegistrationView {
         banner?.duration = 1
     }
     
+    //MARK: Constraints configurations
     func setupConstraints() {
         textField <- [
             Width(280),
@@ -113,7 +113,6 @@ class SignUpViewController: RegistrationView {
     }
     
     // MARK: User Interactions
-    
     func signUpButtonPressed() {
         SVProgressHUD.show()
         guard let text = textField.text, let text2 = textFieldPassword.text, let token = InstanceID.instanceID().token() else { return }
@@ -161,6 +160,7 @@ class SignUpViewController: RegistrationView {
     }
 }
 
+//MARK: Checkbox delegate
 extension SignUpViewController: BEMCheckBoxDelegate {
     func didTap(_ checkBox: BEMCheckBox) {
         tapped = !tapped

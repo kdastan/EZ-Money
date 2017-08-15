@@ -15,6 +15,7 @@ import SVProgressHUD
 
 class UserSettingsViewController: UIViewController {
     
+    //MARK: Properties
     let successBanner = NotificationBanner(title: "Успешно", subtitle: "Ваш пароль изменен", style: .success)
     let oldPasswordBanner = NotificationBanner(title: "Текущий пароль введен неверно", subtitle: "", style: .warning)
     let newPasswordsBanner = NotificationBanner(title: "Новые пароли не совпадают", subtitle: "", style: .warning)
@@ -57,6 +58,7 @@ class UserSettingsViewController: UIViewController {
         setupConstraints()
     }
     
+    //MARK: Views configuration
     func setupViews() {
         view.backgroundColor = .white
         view.addSubview(backButton)
@@ -66,8 +68,8 @@ class UserSettingsViewController: UIViewController {
         bannerDuration()
     }
     
+    //MARK: Constraints configuration
     func setupConstraints() {
-        
         passwordView <- [
             Width(Screen.width - 20),
             Height(190),
@@ -90,6 +92,7 @@ class UserSettingsViewController: UIViewController {
         ]
     }
     
+    //MARK: Banners duration
     func bannerDuration() {
         successBanner.duration = 1
         oldPasswordBanner.duration = 1
@@ -98,8 +101,8 @@ class UserSettingsViewController: UIViewController {
         validationBanner.duration = 1
     }
     
+    //MARK: User's password change
     func fetchUser() {
-        
         guard let oldPassword = passwordView.oldPasswordTextField.text else {return}
         guard let uid = Auth.auth().currentUser?.uid else {return}
         
@@ -140,6 +143,7 @@ class UserSettingsViewController: UIViewController {
         }
     }
     
+    //MARK: Text field validation
     func inputValidation() {
         
         validator.styleTransformers(success:{ (validationRule) -> Void in
@@ -165,7 +169,7 @@ class UserSettingsViewController: UIViewController {
         validator.registerField(passwordView.reNewPasswordTextField, errorLabel: nil, rules: [RequiredRule()])
     }
 
-    
+    //MARK: User interaction
     func backPressed(sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
     }

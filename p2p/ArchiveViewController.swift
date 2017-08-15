@@ -42,6 +42,7 @@ struct InvestorsList {
 
 class ArchiveViewController: UIViewController {
     
+    //MARK: Properties
     var counter = 0
     
     var requestList: [RequestList] = []
@@ -111,8 +112,55 @@ class ArchiveViewController: UIViewController {
         super.viewDidLoad()
         setupViews()
         setupConstraints()
+    }
+    
+    //MARK: Views configuration
+    func setupViews() {
+        view.backgroundColor = .blueBackground
+        view.addSubview(button)
+        view.addSubview(tableView)
+        view.addSubview(searchBar)
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+        isInvestor = appDelegate.isInvestor
+        view.addSubview(control)
         fetch()
+        gestureRecognition()
+    }
+    
+    //MARK: Constraints configuration
+    func setupConstraints() {
         
+        button <- [
+            Bottom(0),
+            CenterX(0),
+            Width(Screen.width),
+            Height(44)
+        ]
+        
+        searchBar <- [
+            Top(20),
+            CenterX(0),
+            Height(44),
+            Width(Screen.width)
+        ]
+        
+        control <- [
+            Top(0).to(searchBar, .bottom),
+            CenterX(0),
+            Width(Screen.width - 20),
+            Height(26)
+        ]
+        
+        tableView <- [
+            Top(0).to(control, .bottom),
+            CenterX(0),
+            Width(Screen.width - 20),
+            Bottom(44)
+        ]
+    }
+    
+    //MARK: Gestures recognition
+    func gestureRecognition() {
         let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(leftSwipe(sender:)))
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(rightSwipe(sender:)))
         leftSwipe.direction = .left
@@ -147,6 +195,7 @@ class ArchiveViewController: UIViewController {
         filterReq(selectedScope: counter)
     }
     
+    //MARK: Segmented Control
     func filterReq(selectedScope: Int) {
         if isInvestor! {
             switch selectedScope {
@@ -174,53 +223,13 @@ class ArchiveViewController: UIViewController {
         self.tableView.reloadData()
     }
     
-    func setupViews() {
-        view.backgroundColor = .blueBackground
-        view.addSubview(button)
-        view.addSubview(tableView)
-        view.addSubview(searchBar)
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
-        isInvestor = appDelegate.isInvestor
-        view.addSubview(control)
-    }
-    
-    func setupConstraints() {
-        
-        button <- [
-            Bottom(0),
-            CenterX(0),
-            Width(Screen.width),
-            Height(44)
-        ]
-        
-        searchBar <- [
-            Top(20),
-            CenterX(0),
-            Height(44),
-            Width(Screen.width)
-        ]
-        
-        control <- [
-            Top(0).to(searchBar, .bottom),
-            CenterX(0),
-            Width(Screen.width - 20),
-            Height(26)
-        ]
-        
-        tableView <- [
-            Top(0).to(control, .bottom),
-            CenterX(0),
-            Width(Screen.width - 20),
-            Bottom(44)
-        ]
-    }
-    
+    //MARK: User interaction
     func backPressed(sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
     
+    //MARK: Fetch data for ArchiveVC
     func fetch() {
-        
         SVProgressHUD.show()
         
         if isInvestor! {

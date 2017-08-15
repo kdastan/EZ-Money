@@ -17,6 +17,7 @@ import BetterSegmentedControl
 
 class BorrowViewController: UIViewController {
 
+    //MARK: Properties
     var isInvestor = false
     var indexCounter = 0
     
@@ -37,7 +38,6 @@ class BorrowViewController: UIViewController {
     
     lazy var control: BetterSegmentedControl = {
         let control = BetterSegmentedControl()
-        
         control.titleFont = UIFont(name: "HelveticaNeue", size: 14.0)!
         control.selectedTitleFont = UIFont(name: "HelveticaNeue-Medium", size: 14.0)!
         control.backgroundColor = .blueBackground
@@ -51,14 +51,15 @@ class BorrowViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupViews()
+        setupConstraints()
+    }
+    
+    //MARK: Views configuration
+    func setupViews() {
+        edgesForExtendedLayout = []
+        navigationBarConfiguration()
         view.backgroundColor = .blueBackground
-        
-        navigationController?.navigationBar.barTintColor = UIColor(colorLiteralRed: 70/255, green: 161/255, blue: 213/255, alpha: 1)
-        navigationItem.titleView = control
-//        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(push))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "menu"), style: .plain, target: self, action: #selector(push))
-        navigationItem.leftBarButtonItem?.tintColor = .white
-        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.orange]
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
         isInvestor = appDelegate.isInvestor
@@ -74,17 +75,29 @@ class BorrowViewController: UIViewController {
             vc1.didMove(toParentViewController: self)
             control.titles = ["Получить займ", "Список запросов"]
         }
+        
+        swipeControl()
+    }
+    
+    //MARK: Constraints configuration
+    func setupConstraints() {
+        control <- [
+            CenterY(0),
+            CenterX(0),
+            Height(30),
+            Width(Screen.width - 50)
+        ]
+    }
+    
+    //MARK: Swipe configuration
+    func swipeControl() {
         let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(swipeLeft(sender:)))
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(swipeRight(sender:)))
         leftSwipe.direction = .left
         rightSwipe.direction = .right
         view.addGestureRecognizer(leftSwipe)
         view.addGestureRecognizer(rightSwipe)
-        
-        setupViews()
-        setupConstraints()
     }
-    
     
     func swipeLeft(sender: UISwipeGestureRecognizer) {
         indexCounter += 1
@@ -92,7 +105,6 @@ class BorrowViewController: UIViewController {
         do {
             try control.setIndex(UInt(indexCounter), animated: true)
         } catch  {
-            
         }
     }
     
@@ -103,14 +115,39 @@ class BorrowViewController: UIViewController {
         do {
             try control.setIndex(UInt(indexCounter), animated: true)
         } catch  {
-            
         }
     }
     
+    //MARK: NavigationBar configuration
+    func navigationBarConfiguration() {
+        navigationController?.navigationBar.barTintColor = UIColor(colorLiteralRed: 70/255, green: 161/255, blue: 213/255, alpha: 1)
+        navigationItem.titleView = control
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "menu"), style: .plain, target: self, action: #selector(push))
+        navigationItem.leftBarButtonItem?.tintColor = .white
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.orange]
+    }
     
-    func setupViews() {
-        edgesForExtendedLayout = []
-        //view.addSubview(control)
+    //MARK: NavigationBar's segment control interaction
+    func pressed(sender: BetterSegmentedControl) {
+        if isInvestor {
+            switch sender.index{
+            case 0:
+                switcher(from: vc2, to: vc3)
+            case 1:
+                switcher(from: vc3, to: vc2)
+            default:
+                print("error")
+            }
+        } else {
+            switch sender.index{
+            case 0:
+                switcher(from: vc2, to: vc1)
+            case 1:
+                switcher(from: vc1, to: vc2)
+            default:
+                print("error")
+            }
+        }
     }
     
     func switcher(from: UIViewController, to: UIViewController) {
@@ -123,42 +160,9 @@ class BorrowViewController: UIViewController {
         to.didMove(toParentViewController: self)
     }
     
-    func pressed(sender: BetterSegmentedControl) {
-        if isInvestor {
-            switch sender.index{
-                case 0:
-                    switcher(from: vc2, to: vc3)
-                case 1:
-                switcher(from: vc3, to: vc2)
-                default:
-                    print("error")
-            }
-        } else {
-            switch sender.index{
-                case 0:
-                    switcher(from: vc2, to: vc1)
-                case 1:
-                    switcher(from: vc1, to: vc2)
-                default:
-                    print("error")
-            }
-        
-        }
-
-    }
-    
-    func setupConstraints() {
-        control <- [
-            CenterY(0),
-            CenterX(0),
-            Height(30),
-            Width(Screen.width - 50)
-        ]
-    }
-    
+    //MARK: Show side menu
     func push() {
         sideMenuViewController?.presentLeftMenuViewController()
     }
-  
     
 }

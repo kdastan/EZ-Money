@@ -17,6 +17,7 @@ import SwiftValidator
 
 class BorrowerWalletViewController: UIViewController {
     
+    //MAKR: Properties
     let successBanner = NotificationBanner(title: "Успещное снятие", subtitle: "", style: .success)
     let errorBanner = NotificationBanner(title: "Возникла ошибка", subtitle: "Попробуйте повторить позже", style: .warning)
     let inputErrorBanner = NotificationBanner(title: "Ошибка ввода", subtitle: "Пожалуйста заполните все поля", style: .warning)
@@ -73,6 +74,7 @@ class BorrowerWalletViewController: UIViewController {
         fetchUserInfo()
     }
     
+    //MARK: Views configuration
     func setupViews() {
         view.backgroundColor = .white
         view.addSubview(userInfoLabel)
@@ -82,6 +84,7 @@ class BorrowerWalletViewController: UIViewController {
         view.addSubview(submitButton)
     }
     
+    //MARK: Constraints configuration
     func setupConstraints() {
         titleLabel <- [
             Top(44),
@@ -118,10 +121,8 @@ class BorrowerWalletViewController: UIViewController {
         ]
     }
     
-    
-    
+    //MARK: Text Field validation
     func inputValidation() {
-        
         validator.styleTransformers(success:{ (validationRule) -> Void in
             validationRule.errorLabel?.isHidden = true
             validationRule.errorLabel?.text = ""
@@ -146,6 +147,7 @@ class BorrowerWalletViewController: UIViewController {
         validator.registerField(userRefillView.refillAmountTextField, errorLabel: nil, rules: [NumbersValidation()])
     }
     
+    //MARK: Fetch for user info
     func fetchUserInfo() {
         SVProgressHUD.show()
         guard let uid = Auth.auth().currentUser?.uid else { return }
@@ -164,6 +166,7 @@ class BorrowerWalletViewController: UIViewController {
         }
     }
     
+    //MARK: User interaction
     func backButtonPressed(sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
     }
