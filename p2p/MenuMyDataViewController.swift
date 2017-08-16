@@ -25,6 +25,8 @@ class MenuMyDataViewController: UIViewController {
     let dateFormatter = DateFormatter()
     let validator = Validator()
     
+    var userDataNew: Bool?
+    
     let uid = Auth.auth().currentUser?.uid
     
     lazy var label: UILabel = {
@@ -158,7 +160,7 @@ class MenuMyDataViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        setupConstraints()
+        //setupConstraints()
     }
     
     //MARK: Views configuration
@@ -175,6 +177,13 @@ class MenuMyDataViewController: UIViewController {
         
         updateUserData(uid: uid!) { success in
             SVProgressHUD.dismiss()
+        }
+        
+        updateUserData(uid: uid!) { (result, userData) in
+            
+            self.userDataNew = userData
+            self.setupConstraints()
+            
         }
     }
     
@@ -286,7 +295,12 @@ class MenuMyDataViewController: UIViewController {
         ]
         
         button <- [
-            Width(Screen.width / 2),
+            Width(Screen.width / 2).when({ () -> Bool in
+                self.userDataNew == true
+            }),
+            Width(Screen.width).when({ () -> Bool in
+                self.userDataNew == false
+            }),
             Height(44),
             Right(0),
             Bottom(0)
@@ -349,14 +363,14 @@ class MenuMyDataViewController: UIViewController {
     }
     
     //MARK: Fetch - user data: Need to optimize to model
-    func updateUserData(uid: String, completionHandler: @escaping ((_ exist : Bool) -> Void)) {
+    func updateUserData(uid: String, completionHandler: @escaping ((_ exist : Bool, Bool) -> Void)) {
         SVProgressHUD.show()
         let ref = Database.database().reference()
         ref.child("users").child("\(uid)").observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
             let userData = value?["userData"] as? Bool
+            
             if userData! {
-                
                     ref.child("userData").child("\(uid)").observeSingleEvent(of: .value, with: { (snapshot) in
                         let valueUserData = snapshot.value as? NSDictionary
                         
@@ -377,10 +391,15 @@ class MenuMyDataViewController: UIViewController {
                     }) {(error) in
                         print(error.localizedDescription)
                 }
-             completionHandler(true)   
+             completionHandler(true, userData!)
             } else {
-            SVProgressHUD.dismiss()
+                self.cancelButton.isEnabled = false
+                self.cancelButton.isHidden = true
+                self.button.frame = CGRect(x: 0, y: Screen.height - 44, width: Screen.width, height: 44)
+                SVProgressHUD.dismiss()
+                completionHandler(true, userData!)
             }
+            
         }) {(error) in
             print(error.localizedDescription)
         }

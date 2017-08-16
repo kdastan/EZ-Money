@@ -69,6 +69,16 @@ class BorrowViewController: UIViewController {
             view.addSubview(vc3.view)
             vc1.didMove(toParentViewController: self)
             control.titles = ["Инвестировать", "Список запросов"]
+            
+            guard let uid = Auth.auth().currentUser?.uid else {return}
+            User.fetchUserData(uid: uid, compleation: { (userData) in
+                guard let userData = userData else {
+                    return
+                }
+                if !userData {
+                    self.present(MenuMyDataViewController(), animated: true, completion: nil)
+                }
+            })
         } else {
             addChildViewController(vc1)
             view.addSubview(vc1.view)

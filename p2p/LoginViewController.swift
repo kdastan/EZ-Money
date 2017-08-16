@@ -36,6 +36,17 @@ class LoginViewController: RegistrationViewController {
         let button = UIButton()
         button.setTitle("Нет аккаунта? Создай тут", for: .normal)
         button.addTarget(self, action: #selector(registrationButtonPressed), for: .touchUpInside)
+        button.backgroundColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0.3)
+        button.layer.cornerRadius = 4
+        return button
+    }()
+    
+    lazy var forgotPasswordButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Забыли пароль?", for: .normal)
+        button.addTarget(self, action: #selector(passwordReset), for: .touchUpInside)
+        button.backgroundColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0.3)
+        button.layer.cornerRadius = 4
         return button
     }()
     
@@ -48,7 +59,7 @@ class LoginViewController: RegistrationViewController {
     //MARK: Views configurations
     func setupView() {
         view.backgroundColor = .white
-        [imageView, labelName, labelProjectName, textField, textFieldPassword, button, registrationButton].forEach{
+        [imageView, labelName, labelProjectName, textField, textFieldPassword, button, registrationButton, forgotPasswordButton].forEach{
             view.addSubview($0)
         }
     }
@@ -82,10 +93,18 @@ class LoginViewController: RegistrationViewController {
         ]
         
         registrationButton <- [
-            Width(280),
-            Height(42),
-            Top(0).to(button, .bottom),
+            Width(240),
+            Height(21),
+            Top(10).to(button, .bottom),
             CenterX(0)
+        ]
+        
+        forgotPasswordButton <- [
+            Width(150),
+            Height(21),
+            CenterX(0),
+            Top(10).to(textFieldPassword, .bottom)
+        
         ]
     }
     
@@ -137,5 +156,10 @@ class LoginViewController: RegistrationViewController {
                 SVProgressHUD.dismiss()
             }
         }
+    }
+    
+    func passwordReset() {
+        self.navigationController?.pushViewController(PasswordResetViewController(), animated: true)
+    
     }
 }

@@ -36,6 +36,7 @@
 		18540A4D1F25B8740004CBD4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18540A4C1F25B8740004CBD4 /* LoginViewController.swift */; };
 		18540A531F25C5450004CBD4 /* helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18540A521F25C5450004CBD4 /* helpers.swift */; };
 		18540A551F260C030004CBD4 /* TextFieldWithIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18540A541F260C030004CBD4 /* TextFieldWithIcon.swift */; };
+		18706FEA1F44056700DCADE4 /* PasswordResetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18706FE91F44056700DCADE4 /* PasswordResetViewController.swift */; };
 		187966911F3034FC0001ED8B /* phoneValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187966901F3034FC0001ED8B /* phoneValidation.swift */; };
 		187966941F3051740001ED8B /* documentNumbersValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187966931F3051740001ED8B /* documentNumbersValidation.swift */; };
 		187966971F3067C50001ED8B /* RadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187966961F3067C50001ED8B /* RadioButton.swift */; };
@@ -93,6 +94,7 @@
 		18540A4C1F25B8740004CBD4 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		18540A521F25C5450004CBD4 /* helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = helpers.swift; sourceTree = "<group>"; };
 		18540A541F260C030004CBD4 /* TextFieldWithIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldWithIcon.swift; sourceTree = "<group>"; };
+		18706FE91F44056700DCADE4 /* PasswordResetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordResetViewController.swift; sourceTree = "<group>"; };
 		187966901F3034FC0001ED8B /* phoneValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = phoneValidation.swift; sourceTree = "<group>"; };
 		187966931F3051740001ED8B /* documentNumbersValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = documentNumbersValidation.swift; sourceTree = "<group>"; };
 		187966961F3067C50001ED8B /* RadioButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadioButton.swift; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 				18F07DE61F2653000095F3A0 /* RegistrationViewController.swift */,
 				18540A4C1F25B8740004CBD4 /* LoginViewController.swift */,
 				18F07DE41F26524A0095F3A0 /* SignUpViewController.swift */,
+				18706FE91F44056700DCADE4 /* PasswordResetViewController.swift */,
 				18F07DE81F272BD00095F3A0 /* BorrowViewController.swift */,
 				18F07DEA1F272E630095F3A0 /* TakeBorrowViewController.swift */,
 				181632031F3234DC004DA934 /* LendViewController.swift */,
@@ -437,6 +440,7 @@
 				18109F7A1F27B20C00DDA339 /* BorrowTableViewCell.swift in Sources */,
 				181632061F323568004DA934 /* LendContainer.swift in Sources */,
 				18F07DE71F2653000095F3A0 /* RegistrationViewController.swift in Sources */,
+				18706FEA1F44056700DCADE4 /* PasswordResetViewController.swift in Sources */,
 				181632041F3234DC004DA934 /* LendViewController.swift in Sources */,
 				18540A3D1F25B5660004CBD4 /* ViewController.swift in Sources */,
 				184256B41F29A72500ECEDE3 /* PaddingTextField.swift in Sources */,

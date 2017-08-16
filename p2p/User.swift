@@ -216,15 +216,18 @@ class User {
     
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    //MARK: Fetch - confirmation - userData filled
+    static func fetchUserData(uid: String, compleation: @escaping (Bool?) -> Void){
+        let ref = Database.database().reference().child("users")
+        
+        ref.child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+            guard let value = snapshot.value as? [String: Any] else {
+                compleation(nil)
+                return
+            }
+            compleation(value["userData"] as? Bool)
+        })
+    }
     
     
     
