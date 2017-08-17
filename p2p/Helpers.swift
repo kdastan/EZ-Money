@@ -40,4 +40,5 @@ extension UIColor {
     static let declineColor = UIColor(colorLiteralRed: 188/255, green: 75/255, blue: 75/255, alpha: 1)
     static let issuedColor = UIColor(colorLiteralRed: 75/255, green: 171/255, blue: 188/255, alpha: 1)
     static let accepteColor = UIColor(colorLiteralRed: 75/255, green: 188/255, blue: 131/255, alpha: 1)
+    static let borderColor = UIColor(red: 147/255, green: 148/255, blue: 150/255, alpha: 1)
 }

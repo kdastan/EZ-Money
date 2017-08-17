@@ -12,6 +12,7 @@ import Firebase
 import SVProgressHUD
 import HMSegmentedControl
 import BetterSegmentedControl
+import NotificationBannerSwift
 
 struct RequestList {
     let name: String!
@@ -44,6 +45,8 @@ class ArchiveViewController: UIViewController {
     
     //MARK: Properties
     var counter = 0
+    
+    let banner = NotificationBanner(title: "Ваш список запросов пуст", subtitle: nil, style: .warning)
     
     var requestList: [RequestList] = []
     var filteredRequestList: [RequestList] = []
@@ -234,7 +237,15 @@ class ArchiveViewController: UIViewController {
         
         if isInvestor! {
         User.fetchRequestID(fetchChild: "investorRequests") { (id, rate, time) in
-            User.fetchAllRequests(fetchChild: id!, completion: { (borrowerId, status, requestId, borrowerAmount) in
+            
+            guard let id = id else {
+                SVProgressHUD.dismiss()
+                self.banner.duration = 1
+                self.banner.show()
+                return
+            }
+            
+            User.fetchAllRequests(fetchChild: id, completion: { (borrowerId, status, requestId, borrowerAmount) in
                 User.fetchUserName(uid: borrowerId!, completion: { (name, surname, patronymic) in
                     self.requestList.insert(RequestList(name: name, surname: surname, patronymic: patronymic, status: status, rate: rate, time: time, requestId: requestId, nameForSearch: "\(name) \(surname) \(patronymic)", borroweAmount: borrowerAmount), at: 0)
                     self.filteredRequestList = self.requestList
@@ -246,16 +257,30 @@ class ArchiveViewController: UIViewController {
             
         } else {
         //User
-            User.fetchRequests(fetchChild: "allRequests") { (bigId, borrowerAmount, borrowerId, requestId, status) in
-                User.fetchRequestId(requestId: requestId!, completion: { (investorId, rate, time) in
-                    User.fetchUserName(uid: investorId!, completion: { (name, surname, patronymic) in
-                        self.investorList.insert(InvestorsList(bigId: bigId, borrowerAmount: borrowerAmount, borrowerId: borrowerId, requestId: requestId, status: status, investorId: investorId, rate: rate, time: time, name: name, surname: surname, patronymic: patronymic, nameForSearch: "\(name) \(surname) \(patronymic)"), at: 0)
-                        self.filteredInvestorsList = self.investorList
-                        self.tableView.reloadData()
-                        SVProgressHUD.dismiss()
-                    })
-                })
+    User.fetchRequests(fetchChild: "allRequests") { (bigId, borrowerAmount, borrowerId, requestId, status) in
+        
+        guard let bigId = bigId else {
+            SVProgressHUD.dismiss()
+            self.banner.duration = 1
+            self.banner.show()
+            return
+        }
+        
+        User.fetchRequestId(requestId: requestId!, completion: {(investorId, rate, time) in
+            
+            if investorId == nil {
+                SVProgressHUD.dismiss()
+                return
             }
+            
+            User.fetchUserName(uid: investorId!, completion: { (name, surname, patronymic) in
+                self.investorList.insert(InvestorsList(bigId: bigId, borrowerAmount: borrowerAmount, borrowerId: borrowerId, requestId: requestId, status: status, investorId: investorId, rate: rate, time: time, name: name, surname: surname, patronymic: patronymic, nameForSearch: "\(name) \(surname) \(patronymic)"), at: 0)
+                self.filteredInvestorsList = self.investorList
+                self.tableView.reloadData()
+                SVProgressHUD.dismiss()
+            })
+        })
+    }
         }
     }
     //Investor

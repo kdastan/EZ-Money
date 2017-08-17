@@ -104,6 +104,7 @@ class User {
                 print(snapshot)
                 
                 let value = snapshot.value as? [String: Any]
+                print(value?["id"] as? String)
                 
                 completion(value?["id"] as? String, value?["rate"] as? String, value?["time"] as? String)
             })
@@ -120,6 +121,14 @@ class User {
         }
         
         allRequestObserverId = ref.queryOrdered(byChild: "requestId").queryEqual(toValue: fetchChild).observe(.childAdded, with: { (snapshot) in
+            
+            guard snapshot.exists() else{
+                print("User doesn't exist")
+                completion(nil, nil, nil, nil)
+                return
+            }
+            
+            print(snapshot)
             let value = snapshot.value as? [String: Any]
             completion(value?["borrowerId"] as? String, value?["status"] as? Int, value?["bigId"] as? String, value?["borrowerAmount"] as? String)
         })
@@ -227,6 +236,22 @@ class User {
             }
             compleation(value["userData"] as? Bool)
         })
+    }
+    
+    
+    static func fetchallReq(id: String, completion: @escaping (Bool?) -> Void){
+        let ref = Database.database().reference().child("allRequests")
+        ref.queryOrdered(byChild: "requestId").queryEqual(toValue: id).observeSingleEvent(of: .value, with: { (snapshot) in
+            guard snapshot.exists() else {
+                print("User doesn't exist")
+                completion(nil)
+                return
+            }
+            completion(true)
+        })
+        
+        
+       
     }
     
     

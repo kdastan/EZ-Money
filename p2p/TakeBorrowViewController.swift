@@ -229,96 +229,94 @@ class TakeBorrowViewController: UIViewController {
             if let textField = validationRule.field as? UITextField {
                 textField.layer.borderColor = UIColor.green.cgColor
                 textField.layer.borderWidth = 0.5
-                
             }
         }, error:{ (validationError) -> Void in
-            validationError.errorLabel?.isHidden = false
-            validationError.errorLabel?.text = validationError.errorMessage
-            if let textField = validationError.field as? UITextField {
-                textField.layer.borderColor = UIColor.red.cgColor
-                textField.layer.borderWidth = 1.0
-            }
+                validationError.errorLabel?.isHidden = false
+                validationError.errorLabel?.text = validationError.errorMessage
+                if let textField = validationError.field as? UITextField {
+                    textField.layer.borderColor = UIColor.red.cgColor
+                    textField.layer.borderWidth = 1.0
+                }
         })
-        
         validator.registerField(a.container.field.textField, errorLabel: nil, rules: [NumbersValidation()])
         validator.registerField(a.container.field2.textField, errorLabel: nil, rules: [NumbersValidation()])
     }
     
 }
 
-//MARK: Table views data source
-extension TakeBorrowViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.label.text = "Найдено \(filteredInvestorsList.count) инвесторов"
-        return filteredInvestorsList.count
+    //MARK: Table views data source
+    extension TakeBorrowViewController: UITableViewDataSource {
+        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            self.label.text = "Найдено \(filteredInvestorsList.count) инвесторов"
+            return filteredInvestorsList.count
+        }
+        
+        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! BorrowTableViewCell
+            cell.backgroundColor = .blueBackground
+            
+            cell.label.isHidden = true
+            cell.investorButtonAccept.isHidden = true
+            cell.investorButtonDecline.isHidden = true
+            cell.investorIssue.isHidden = true
+           
+            let name = filteredInvestorsList[indexPath.row].name
+            let surname = filteredInvestorsList[indexPath.row].surname
+            let patronymic = filteredInvestorsList[indexPath.row].patronymic
+            let time = filteredInvestorsList[indexPath.row].time
+            
+            cell.container.firstField.labelName.text = "\(surname!) \(name!) \(patronymic!)"
+            cell.container.secondField.labelName.text = "\(time!) месяцев"
+            cell.container.thirdField.labelName.text = filteredInvestorsList[indexPath.row].rate
+            cell.container.fourthField.labelName.text = filteredInvestorsList[indexPath.row].amount
+            
+            cell.button.tag = indexPath.row
+            cell.button.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
+            
+            return cell
+        }
     }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! BorrowTableViewCell
-        cell.backgroundColor = .blueBackground
-        
-        cell.label.isHidden = true
-        cell.investorButtonAccept.isHidden = true
-        cell.investorButtonDecline.isHidden = true
-        cell.investorIssue.isHidden = true
-       
-        let name = filteredInvestorsList[indexPath.row].name
-        let surname = filteredInvestorsList[indexPath.row].surname
-        let patronymic = filteredInvestorsList[indexPath.row].patronymic
-        let time = filteredInvestorsList[indexPath.row].time
-        
-        cell.container.firstField.labelName.text = "\(surname!) \(name!) \(patronymic!)"
-        cell.container.secondField.labelName.text = "\(time!) месяцев"
-        cell.container.thirdField.labelName.text = filteredInvestorsList[indexPath.row].rate
-        cell.container.fourthField.labelName.text = filteredInvestorsList[indexPath.row].amount
-        
-        cell.button.tag = indexPath.row
-        cell.button.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
-        
-        return cell
-    }
-}
 
-//MARK: Text fields validation delegate
-extension TakeBorrowViewController: ValidationDelegate {
-    func validationSuccessful() {
-        SVProgressHUD.show()
-        tableView.reloadData()
-        guard let moneyAmount = a.container.field.textField.text, a.container.field.textField.text != "", let time = a.container.field2.textField.text, a.container.field2.textField.text != "" else {
-            return
-        }
-        button.isHidden = true
-        requestButton.isHidden = false
-        investorSearchButton.isHidden = false
-        label.isHidden = false
-        
-        let ref = Database.database().reference()
-        let auth = Auth.auth().currentUser?.uid
-        ref.child("users").child(auth!).observeSingleEvent(of: .value, with: { (snapshot) in
-            let value = snapshot.value as? NSDictionary
-            let isData = value?["userData"] as? Bool ?? false
-            SVProgressHUD.dismiss()
-            if !isData {
-                self.present(MenuMyDataViewController(), animated: true, completion: nil)
+    //MARK: Text fields validation delegate
+    extension TakeBorrowViewController: ValidationDelegate {
+        func validationSuccessful() {
+            SVProgressHUD.show()
+            tableView.reloadData()
+            guard let moneyAmount = a.container.field.textField.text, a.container.field.textField.text != "", let time = a.container.field2.textField.text, a.container.field2.textField.text != "" else {
+                return
             }
-        }) {(error) in
-            SVProgressHUD.dismiss()
-            print(error.localizedDescription)
-        }
-        investorsList.removeAll()
-        SVProgressHUD.show()
-        User.fetchInvestor(request: "investorRequests") { (amount, date, id, investorId, rate, time) in
-            guard let investorId = investorId else {return}
-            User.fetchUserName(uid: investorId, completion: { (name, surname, patronymic) in
-                User.fetchUserEmail(uid: investorId, compleation: { (email, token) in
-                    self.investorsList.insert(Investors(amount: amount, date: date, id: id, investorId: investorId, rate: rate, time: time, name: name, surname: surname, patronymic: patronymic, nameForSearch: "\(name) \(surname) \(patronymic)", token: token), at: 0)
-                    SVProgressHUD.dismiss()
-                    self.filteredInvestorsList = self.investorsList
-                    self.tableView.reloadData()
+            button.isHidden = true
+            requestButton.isHidden = false
+            investorSearchButton.isHidden = false
+            label.isHidden = false
+            
+            let ref = Database.database().reference()
+            let auth = Auth.auth().currentUser?.uid
+            ref.child("users").child(auth!).observeSingleEvent(of: .value, with: { (snapshot) in
+                let value = snapshot.value as? NSDictionary
+                let isData = value?["userData"] as? Bool ?? false
+                SVProgressHUD.dismiss()
+                if !isData {
+                    self.present(MenuMyDataViewController(), animated: true, completion: nil)
+                }
+            }) {(error) in
+                SVProgressHUD.dismiss()
+                print(error.localizedDescription)
+            }
+            investorsList.removeAll()
+            SVProgressHUD.show()
+            User.fetchInvestor(request: "investorRequests") { (amount, date, id, investorId, rate, time) in
+                guard let investorId = investorId else {return}
+                User.fetchUserName(uid: investorId, completion: { (name, surname, patronymic) in
+                    User.fetchUserEmail(uid: investorId, compleation: { (email, token) in
+                        self.investorsList.insert(Investors(amount: amount, date: date, id: id, investorId: investorId, rate: rate, time: time, name: name, surname: surname, patronymic: patronymic, nameForSearch: "\(name) \(surname) \(patronymic)", token: token), at: 0)
+                        SVProgressHUD.dismiss()
+                        self.filteredInvestorsList = self.investorsList
+                        self.tableView.reloadData()
+                    })
                 })
-            })
-        }
-        
+            }
+            
     }
     
     func validationFailed(_ errors:[(Validatable ,ValidationError)]) {

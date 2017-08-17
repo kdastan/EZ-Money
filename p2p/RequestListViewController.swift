@@ -148,6 +148,12 @@ class RequestListViewController: UIViewController {
             }
             
             User.fetchRequestId(requestId: requestId!, completion: { (investorId, rate, time) in
+                
+                if investorId == nil {
+                    SVProgressHUD.dismiss()
+                    return
+                }
+                
                 User.fetchUserName(uid: investorId!, completion: { (name, surname, patronymic) in
                     self.requestList.insert(RequestsLists(bigId: bigId, borrowerAmount: borrowerAmount, borrowerId: borrowerId, requestId: requestId, status: status, investorId: investorId, rate: rate, time: time, name: name, surname: surname, patronymic: patronymic), at: 0)
                     self.tableView.reloadData()
@@ -175,15 +181,30 @@ class RequestListViewController: UIViewController {
                 self.banner.show()
                 return
             }
-            User.fetchAllRequests(fetchChild: id!, completion: { (borrowerId, status, requestId, borrowerAmount) in
-                User.fetchUserName(uid: borrowerId!, completion: { (name, surname, patronymic) in
-                    User.fetchUsers(uid: borrowerId!, compleation: { (balance, email, isInvestor, token, userData, password) in
-                        self.investorRequsest.insert(RequestsInvestor(name: name, surname: surname, patronymic: patronymic, status: status, rate: rate, time: time, requestId: requestId, borrowerAmount: borrowerAmount, borrowerId: borrowerId, borrowerToken: token), at: 0)
-                        self.tableView.reloadData()
-                        SVProgressHUD.dismiss()
+            
+            User.fetchallReq(id: id!, completion: { (result) in
+                if result != true {
+                    print("No result")
+                    SVProgressHUD.dismiss()
+                    self.banner.show()
+                    return
+                }
+
+                
+                User.fetchAllRequests(fetchChild: id!, completion: { (borrowerId, status, requestId, borrowerAmount) in
+                    User.fetchUserName(uid: borrowerId!, completion: { (name, surname, patronymic) in
+                        User.fetchUsers(uid: borrowerId!, compleation: { (balance, email, isInvestor, token, userData, password) in
+                            self.investorRequsest.insert(RequestsInvestor(name: name, surname: surname, patronymic: patronymic, status: status, rate: rate, time: time, requestId: requestId, borrowerAmount: borrowerAmount, borrowerId: borrowerId, borrowerToken: token), at: 0)
+                            self.tableView.reloadData()
+                            SVProgressHUD.dismiss()
+                        })
                     })
                 })
+                
+                
             })
+            
+            
         }
         }
     }

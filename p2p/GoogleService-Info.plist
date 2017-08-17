@@ -7,9 +7,9 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>597712747468-pq9addrf20lm0p2rujpfqjtmskgaa8l9.apps.googleusercontent.com</string>
+	<string>597712747468-l32l7cj3eoas9n7471uvm0v6kkebs9c8.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.597712747468-pq9addrf20lm0p2rujpfqjtmskgaa8l9</string>
+	<string>com.googleusercontent.apps.597712747468-l32l7cj3eoas9n7471uvm0v6kkebs9c8</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBTv2obhtGDhY1pxeQeL5IJwUa_q3rzwMo</string>
 	<key>GCM_SENDER_ID</key>
@@ -17,7 +17,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.kumardastan.p2pAIFC</string>
+	<string>com.kumardastan.AIFCp2p</string>
 	<key>PROJECT_ID</key>
 	<string>aifcproject</string>
 	<key>STORAGE_BUCKET</key>
@@ -33,7 +33,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true/>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:597712747468:ios:14a78581275c6d12</string>
+	<string>1:597712747468:ios:ea3496b5d813f80b</string>
 	<key>DATABASE_URL</key>
 	<string>https://aifcproject.firebaseio.com</string>
 </dict>

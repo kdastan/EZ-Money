@@ -38,31 +38,6 @@ class Notification {
         let reference = Database.database().reference()
         let notifRecord = reference.child("notifications").childByAutoId()
         guard let uid = Auth.auth().currentUser?.uid else {return}
-//
-//        
-//        let notificationUrl = "https://fcm.googleapis.com/fcm/send"
-//        let serverKey = "AAAAiyp0u8w:APA91bEuiQ--qrKwl_ahYWvr0qbs30gN55XT-U5XNq2ptO_pznUyjSaYXwEFz1SK1pKyxcBIE7Y9ALxLj5gXjNCioqzre7jSNA8gG0Xu_YskTsX5HS1s6I527FXcc8lFz6dgF892jhr8"
-//        
-//        
-//        let token = investorToken
-//
-//        var header: HTTPHeaders? = HTTPHeaders()
-//        header = [
-//            "Content-Type":"application/json",
-//            "Authorization":"key=\(serverKey)"
-//        ]
-//        let notificationParameter: Parameters? = [
-//            "notification": [
-//                "title": title.rawValue,
-//                "body": message.rawValue
-//            ],
-//            "to" : "\(token)"
-//        ]
-//        
-//        Alamofire.request(notificationUrl as URLConvertible, method: .post as HTTPMethod, parameters: notificationParameter, encoding: JSONEncoding.default, headers: header!).responseJSON { (resp) in
-//            print(resp)
-//        }
-        
         User.fetchUserEmail(uid: uid, compleation: { (email, token) in
             let message = "\(email!) \(recordType.rawValue)"
             var post = [

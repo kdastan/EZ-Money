@@ -61,6 +61,8 @@ class SignUpViewController: RegistrationViewController {
         return label
     }()
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -69,6 +71,7 @@ class SignUpViewController: RegistrationViewController {
     
     //MARK: Views configuarations
     func setupView() {
+        edgesForExtendedLayout = []
         view.backgroundColor = .white
         [imageView, labelName, labelProjectName, textField, textFieldPassword, button, cBox, label].forEach{
             view.addSubview($0)
@@ -110,6 +113,8 @@ class SignUpViewController: RegistrationViewController {
             Top(Screen.height / 4 * 3),
             CenterX(0)
         ]
+        
+        
     }
     
     // MARK: User Interactions
