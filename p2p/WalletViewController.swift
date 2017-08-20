@@ -33,7 +33,6 @@ class WalletViewController: UIViewController {
 
     lazy var userInfoLabel: WalletAcountInfo = {
         let label = WalletAcountInfo()
-        label.nameTextField.text = "Инвестор: "
         label.emailTextField.text = "Email: "
         label.balanceTextField.text = "Текущий баланс: "
         return label
@@ -92,14 +91,14 @@ class WalletViewController: UIViewController {
             Top(22).to(titleLabel, .bottom),
             CenterX(0),
             Width(Screen.width - 40),
-            Height(130)
+            Height(80)
         ]
         
         userRefillView <- [
             Top(0).to(userInfoLabel, .bottom),
             CenterX(0),
             Width(Screen.width - 20),
-            Height(160)
+            Height(55)
         ]
         
         submitButton <- [
@@ -137,9 +136,7 @@ class WalletViewController: UIViewController {
             }
         })
         
-        validator.registerField(userRefillView.cardNumberTextField, errorLabel: nil, rules: [userCardValidation()])
-        validator.registerField(userRefillView.cardExpirationTextField, errorLabel: nil, rules: [RequiredRule()])
-        validator.registerField(userRefillView.cardCodeTextField, errorLabel: nil, rules: [userCardValidation()])
+        
         validator.registerField(userRefillView.refillAmountTextField, errorLabel: nil, rules: [NumbersValidation()])
     }
     
@@ -148,17 +145,12 @@ class WalletViewController: UIViewController {
         SVProgressHUD.show()
         guard let uid = Auth.auth().currentUser?.uid else { return }
         User.fetchUsers(uid: uid) { (balance, email, isInvestor, token, userData, password) in
-            User.fetchUserName(uid: uid, completion: { (name, surname, patronymic) in
-                let firstLetter = name!.characters.first
-                self.userInfoLabel.nameTextField.text = "\(surname!) \(firstLetter!)."
+            
                 self.userInfoLabel.emailTextField.text = "\(email!)"
                 self.userInfoLabel.balanceTextField.text = "\(balance!) Тг."
                 SVProgressHUD.dismiss()
                 self.userRefillView.refillAmountTextField.text = ""
-                self.userRefillView.cardNumberTextField.text = ""
-                self.userRefillView.cardExpirationTextField.text = ""
-                self.userRefillView.cardCodeTextField.text = ""
-            })
+            
         }
     }
     

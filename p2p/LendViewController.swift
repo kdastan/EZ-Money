@@ -113,41 +113,43 @@ class LendViewController: UIViewController {
 //MARK: Table views header validation
 extension LendViewController: ValidationDelegate {
     func validationSuccessful() {
+        
         let ref = Database.database().reference()
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        guard let fieldMoney = container.container.investmentField.textField.text, let fieldTime = container.container.periodField.textField.text, let fieldRate = container.container.percentField.textField.text else {
-        
-            infoBanner.show()
-            return
-        }
-        
-        let appearance = SCLAlertView.SCLAppearance(kTitleFont: UIFont(name: "HelveticaNeue", size: 14)!)
-        let alertView = SCLAlertView(appearance: appearance)
-        alertView.addButton("Подтверждаю"){
-            ref.child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
             let isData = value?["userData"] as? Bool ?? false
-            if isData {
-                let newRef = ref.child("investorRequests").childByAutoId()
-                let post: [String: Any] = [
-                    "amount": fieldMoney,
-                    "date": self.currentDate(),
-                    "id": newRef.key,
-                    "investorId": uid,
-                    "rate": fieldRate,
-                    "time": fieldTime
-                ]
-                newRef.setValue(post)
-            } else {
+            if !isData {
                 self.present(MenuMyDataViewController(), animated: true, completion: nil)
+            } else {
+                guard let fieldMoney = self.container.container.investmentField.textField.text, let fieldTime = self.container.container.periodField.textField.text, let fieldRate = self.container.container.percentField.textField.text else {
+                    self.infoBanner.show()
+                    return
+                }
+                
+                let appearance = SCLAlertView.SCLAppearance(kTitleFont: UIFont(name: "HelveticaNeue", size: 14)!)
+                let alertView = SCLAlertView(appearance: appearance)
+                alertView.addButton("Подтверждаю"){
+                    let newRef = ref.child("investorRequests").childByAutoId()
+                    let post: [String: Any] = [
+                        "amount": fieldMoney,
+                        "date": self.currentDate(),
+                        "id": newRef.key,
+                        "investorId": uid,
+                        "rate": fieldRate,
+                        "time": fieldTime
+                    ]
+                    newRef.setValue(post)
+                    self.banner.show()
+                }
+                alertView.showWarning("Отправить запрос?", subTitle: "\(fieldMoney) Тенге,  \n на \(fieldTime) месяцев под \(fieldRate) % годовых", closeButtonTitle: "Отменить", colorStyle: 0x4BA2D3, colorTextButton: 0xE3F2FC)
             }
-            }) {(error) in
-                print(error.localizedDescription)
-            }
-            self.banner.show()
+        }) {(error) in
+            print(error.localizedDescription)
         }
-        alertView.showWarning("Отправить запрос?", subTitle: "\(fieldMoney) Тенге,  \n на \(fieldTime) месяцев под \(fieldRate) % годовых", closeButtonTitle: "Отменить", colorStyle: 0x4BA2D3, colorTextButton: 0xE3F2FC)
+        
+        
     }
     
     func validationFailed(_ errors:[(Validatable ,ValidationError)]) {

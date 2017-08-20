@@ -217,7 +217,7 @@ class RequestListViewController: UIViewController {
         
         guard let token = investorRequsest[sender.tag].borrowerToken else {return}
         guard let borrowerId = investorRequsest[sender.tag].borrowerId else {return}
-        Notification.sendNotification(investorToken: token, title: .accept, message: .accept, id: borrowerId, recordType: .accept)
+        Notification.sendNotification(message: .accept, id: borrowerId, recordType: .accept)
         
         self.investorRequsest.removeAll()
         self.fetchForInvestorList()
@@ -231,7 +231,7 @@ class RequestListViewController: UIViewController {
         
         guard let token = investorRequsest[sender.tag].borrowerToken else {return}
         guard let borrowerId = investorRequsest[sender.tag].borrowerId else {return}
-        Notification.sendNotification(investorToken: token, title: .reject, message: .reject, id: borrowerId, recordType: .reject)
+        Notification.sendNotification(message: .reject, id: borrowerId, recordType: .reject)
         
         self.investorRequsest.removeAll()
         self.fetchForInvestorList()
@@ -262,7 +262,7 @@ class RequestListViewController: UIViewController {
                 print(borrowerToken!)
                 SVProgressHUD.dismiss()
                 
-                Notification.sendNotification(investorToken: borrowerToken!, title: .issue, message: .issue, id: borrowerId!, recordType: .issue)
+                Notification.sendNotification(message: .issue, id: borrowerId!, recordType: .issue)
             })
         }
         

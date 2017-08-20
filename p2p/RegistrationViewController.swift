@@ -14,9 +14,9 @@ class RegistrationViewController: UIViewController {
     //MARK: Properties
     lazy var labelName: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Helvetica", size: 66)
+        label.font = UIFont(name: "Helvetica", size: 32)
         label.textColor = .white
-        label.text = "AIFC"
+        label.text = "EZ Money"
         return label
     }()
     
@@ -24,7 +24,8 @@ class RegistrationViewController: UIViewController {
         let label = UILabel()
         label.font = UIFont(name: "Helvetica", size: 32)
         label.textColor = .white
-        label.text = "p2p"
+        label.adjustsFontSizeToFitWidth = true
+        label.text = "Образовательная программа"
         return label
     }()
     
@@ -65,13 +66,16 @@ class RegistrationViewController: UIViewController {
         ]
         
         labelName <- [
-            Top(Screen.height * 0.15),
-            CenterX(0)
+            Top(80),
+            CenterX(0),
+            Width(Screen.width / 2),
+            Height(40)
         ]
         
         labelProjectName <- [
-            Top(0).to(labelName, .bottom),
-            Left(-15).to(labelName, .right)
+            CenterX(0),
+            Width(Screen.width - 20),
+            Top(0).to(labelName, .bottom)
         ]
     }
 

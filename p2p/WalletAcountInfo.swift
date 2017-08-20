@@ -10,15 +10,6 @@ import UIKit
 import EasyPeasy
 
 class WalletAcountInfo: UIView {
-    
-    lazy var nameTextField: PaddingTextFieldForUserData = {
-        let textField = PaddingTextFieldForUserData()
-        textField.layer.cornerRadius = 4
-        textField.placeholder = "Пользователь"
-        textField.isEnabled = false
-        textField.backgroundColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0.1)
-        return textField
-    }()
 
     lazy var emailTextField: PaddingTextFieldForUserData = {
         let textField = PaddingTextFieldForUserData()
@@ -46,23 +37,16 @@ class WalletAcountInfo: UIView {
     }
     
     func setupViews() {
-        addSubview(nameTextField)
         addSubview(emailTextField)
         addSubview(balanceTextField)
     }
     
     func setupConstraints() {
-        nameTextField <- [
+
+        emailTextField <- [
             Top(0),
             CenterX(0),
-            Width(Screen.width - 40)
-        ]
-        
-        emailTextField <- [
-            Top(10).to(nameTextField, .bottom),
-            Left(0),
-            Width(Screen.width - 40)
-        ]
+            Width(Screen.width - 40)        ]
         
         balanceTextField <- [
             Top(10).to(emailTextField, .bottom),

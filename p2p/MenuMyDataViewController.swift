@@ -21,7 +21,12 @@ class MenuMyDataViewController: UIViewController {
     
     //MARK: Properties
     let banner = NotificationBanner(title: "Ошибка регистрации", subtitle: "Проверьте правильность заполнения полей", style: .info)
-    
+    let succesBanner = NotificationBanner(title: "Регистация прошла успешно", subtitle: nil, style: .success)
+
+    var mobile  = ""
+    var birthDate = ""
+
+
     let dateFormatter = DateFormatter()
     let validator = Validator()
     
@@ -35,12 +40,6 @@ class MenuMyDataViewController: UIViewController {
         label.textAlignment = .center
         label.font = UIFont(name: "Helvetica", size: 24)
         return label
-    }()
-    
-    lazy var scroll: UIScrollView = {
-        let scroll = UIScrollView()
-        scroll.contentSize = CGSize(width: Screen.width, height: 1150)
-        return scroll
     }()
     
     lazy var button: UIButton = {
@@ -79,19 +78,13 @@ class MenuMyDataViewController: UIViewController {
     
     lazy var userMobilePhone: MenuFieldContainer = {
         let userMobilePhoneField = MenuFieldContainer()
-        userMobilePhoneField.textField.placeholder = "Номер моб. телефона без +7 или 8"
+        userMobilePhoneField.textField.placeholder = "Номер моб. (без +7 или 8) xxx-xxx-xx-xx - (не обязательно)"
         return userMobilePhoneField
-    }()
-    
-    lazy var userPhone: MenuFieldContainer = {
-        let userPhoneField = MenuFieldContainer()
-        userPhoneField.textField.placeholder = "Номер дом. телефона без +7 или 8"
-        return userPhoneField
     }()
     
     lazy var userBirthDate: MenuFieldContainer = {
         let userBirthDateField = MenuFieldContainer()
-        userBirthDateField.textField.placeholder = "Дата рождения"
+        userBirthDateField.textField.placeholder = "Дата рождения - (не обязательно)"
         return userBirthDateField
     }()
     
@@ -103,87 +96,24 @@ class MenuMyDataViewController: UIViewController {
         return datePicker
     }()
     
-    lazy var userBirthPlace: MenuFieldContainer = {
-        let userBirthPlaceField = MenuFieldContainer()
-        userBirthPlaceField.textField.placeholder = "Место рождения"
-        return userBirthPlaceField
-    }()
-    
-    lazy var userIdNumber: MenuFieldContainer = {
-        let userIdNumberField = MenuFieldContainer()
-        userIdNumberField.textField.placeholder = "Номер документа"
-        userIdNumberField.textField.keyboardType = .numberPad
-        return userIdNumberField
-    }()
-    
-    lazy var userIINnumber: MenuFieldContainer = {
-        let userIINnumberField = MenuFieldContainer()
-        userIINnumberField.textField.placeholder = "ИИН документа"
-        userIINnumberField.textField.keyboardType = .numberPad
-        return userIINnumberField
-    }()
-
-    lazy var userDateOfIssue: MenuFieldContainer = {
-        let userDateOfIssueField = MenuFieldContainer()
-        userDateOfIssueField.textField.placeholder = "Дата выдачи документа"
-        return userDateOfIssueField
-    }()
-    
-    lazy var datePickerDateOfIssue: UIDatePicker = {
-        let datePicker = UIDatePicker()
-        datePicker.datePickerMode = .date
-        datePicker.maximumDate = Calendar.current.date(byAdding: .year, value: 0, to: Date())
-        datePicker.addTarget(self, action: #selector(dateIssueChanged(sender:)), for: .valueChanged)
-        return datePicker
-    }()
-    
-    lazy var userDateOfValidaty: MenuFieldContainer = {
-        let userDateOfValidatyField = MenuFieldContainer()
-        userDateOfValidatyField.textField.placeholder = "Дата истечения документа"
-        return userDateOfValidatyField
-    }()
-    
-    lazy var datePickerDateOfValidaty: UIDatePicker = {
-        let datePicker = UIDatePicker()
-        datePicker.datePickerMode = .date
-        datePicker.minimumDate = Calendar.current.date(byAdding: .year, value: 0, to: Date())
-        datePicker.addTarget(self, action: #selector(dateValidatyChanged(sender:)), for: .valueChanged)
-        return datePicker
-    }()
-    
-    lazy var userIssuingAuthority: MenuFieldContainer = {
-        let userIssuingAuthorityLabel = MenuFieldContainer()
-        userIssuingAuthorityLabel.textField.placeholder = "Орган выдачи: пример МВД или МЮ"
-        return userIssuingAuthorityLabel
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        //setupConstraints()
+        setupConstraints()
     }
     
     //MARK: Views configuration
     func setupViews() {
-        [scroll, button, cancelButton].forEach{ view.addSubview($0) }
-        [label, userName, userSurname, userPatronymic, userMobilePhone, userPhone, userBirthDate, userBirthPlace, userIdNumber, userIINnumber, userDateOfIssue, userDateOfValidaty, userIssuingAuthority].forEach{ scroll.addSubview($0) }
+        [button, cancelButton].forEach{ view.addSubview($0) }
+        [label, userName, userSurname, userPatronymic, userMobilePhone, userBirthDate].forEach{ view.addSubview($0) }
         textFieldValidation()
         edgesForExtendedLayout = []
         view.backgroundColor = .white
         dateFormatter.dateFormat = "dd/MM/yyyy"
         userBirthDate.textField.inputView = datePicker
-        userDateOfIssue.textField.inputView = datePickerDateOfIssue
-        userDateOfValidaty.textField.inputView = datePickerDateOfValidaty
         
         updateUserData(uid: uid!) { success in
             SVProgressHUD.dismiss()
-        }
-        
-        updateUserData(uid: uid!) { (result, userData) in
-            
-            self.userDataNew = userData
-            self.setupConstraints()
-            
         }
     }
     
@@ -194,13 +124,6 @@ class MenuMyDataViewController: UIViewController {
             Height(44),
             CenterX(0),
             Top(44)
-        ]
-        
-        scroll <- [
-            Width(Screen.width),
-            Height(Screen.height),
-            Top(0),
-            Left(0)
         ]
         
         userName <- [
@@ -231,60 +154,11 @@ class MenuMyDataViewController: UIViewController {
             Top(10).to(userPatronymic, .bottom)
         ]
         
-        userPhone <- [
-            Width(Screen.width - 15),
-            Height(70),
-            CenterX(0),
-            Top(10).to(userMobilePhone, .bottom)
-        ]
-        
         userBirthDate <- [
             Width(Screen.width - 15),
             Height(70),
             CenterX(0),
-            Top(10).to(userPhone, .bottom)
-        ]
-        
-        userBirthPlace <- [
-            Width(Screen.width - 15),
-            Height(70),
-            CenterX(0),
-            Top(10).to(userBirthDate, .bottom)
-        ]
-        
-        userIdNumber <- [
-            Width(Screen.width - 15),
-            Height(70),
-            CenterX(0),
-            Top(10).to(userBirthPlace, .bottom)
-        ]
-        
-        userIINnumber <- [
-            Width(Screen.width - 15),
-            Height(70),
-            CenterX(0),
-            Top(10).to(userIdNumber, .bottom)
-        ]
-        
-        userDateOfIssue <- [
-            Width(Screen.width - 15),
-            Height(70),
-            CenterX(0),
-            Top(10).to(userIINnumber, .bottom)
-        ]
-        
-        userDateOfValidaty <- [
-            Width(Screen.width - 15),
-            Height(70),
-            CenterX(0),
-            Top(10).to(userDateOfIssue, .bottom)
-        ]
-        
-        userIssuingAuthority <- [
-            Width(Screen.width - 15),
-            Height(70),
-            CenterX(0),
-            Top(10).to(userDateOfValidaty, .bottom)
+            Top(10).to(userMobilePhone, .bottom)
         ]
         
         cancelButton <- [
@@ -295,12 +169,7 @@ class MenuMyDataViewController: UIViewController {
         ]
         
         button <- [
-            Width(Screen.width / 2).when({ () -> Bool in
-                self.userDataNew == true
-            }),
-            Width(Screen.width).when({ () -> Bool in
-                self.userDataNew == false
-            }),
+            Width(Screen.width / 2),
             Height(44),
             Right(0),
             Bottom(0)
@@ -329,15 +198,8 @@ class MenuMyDataViewController: UIViewController {
         validator.registerField(userName.textField, errorLabel: userName.labelError, rules: [SSNVRule()])
         validator.registerField(userSurname.textField, errorLabel: userSurname.labelError, rules: [SSNVRule()])
         validator.registerField(userPatronymic.textField, errorLabel: userPatronymic.labelError, rules: [SSNVRule()])
-        validator.registerField(userMobilePhone.textField, errorLabel: userMobilePhone.labelError, rules: [phoneValidation()])
-        validator.registerField(userPhone.textField, errorLabel: userPhone.labelError, rules: [phoneValidation()])
-        validator.registerField(userBirthDate.textField, errorLabel: userBirthDate.labelError, rules: [RequiredRule()])
-        validator.registerField(userBirthPlace.textField, errorLabel: userBirthPlace.labelError, rules: [SSNVRule()])
-        validator.registerField(userIdNumber.textField, errorLabel: userIdNumber.labelError, rules: [documentNumbersValidation()])
-        validator.registerField(userIINnumber.textField, errorLabel: userIINnumber.labelError, rules: [documentNumbersValidation()])
-        validator.registerField(userDateOfIssue.textField, errorLabel: userDateOfIssue.labelError, rules: [RequiredRule()])
-        validator.registerField(userDateOfValidaty.textField, errorLabel: userDateOfValidaty.labelError, rules: [RequiredRule()])
-        validator.registerField(userIssuingAuthority.textField, errorLabel: userIssuingAuthority.labelError, rules: [SSNVRule()])
+        //validator.registerField(userMobilePhone.textField, errorLabel: userMobilePhone.labelError, rules: [phoneValidation()])
+        //validator.registerField(userBirthDate.textField, errorLabel: userBirthDate.labelError, rules: [RequiredRule()])
     }
     
     //MARK: User interaction
@@ -352,14 +214,6 @@ class MenuMyDataViewController: UIViewController {
     //MARK: DatePicker configuration for inputView
     func dateValueChanged(sender: UIDatePicker) {
         userBirthDate.textField.text = dateFormatter.string(from: sender.date)
-    }
-    
-    func dateIssueChanged(sender: UIDatePicker) {
-        userDateOfIssue.textField.text = dateFormatter.string(from: sender.date)
-    }
-    
-    func dateValidatyChanged(sender: UIDatePicker) {
-        userDateOfValidaty.textField.text = dateFormatter.string(from: sender.date)
     }
     
     //MARK: Fetch - user data: Need to optimize to model
@@ -378,14 +232,7 @@ class MenuMyDataViewController: UIViewController {
                         self.userSurname.textField.text = valueUserData?["surname"] as? String
                         self.userPatronymic.textField.text = valueUserData?["patronymic"] as? String
                         self.userMobilePhone.textField.text = valueUserData?["mobilePhone"] as? String
-                        self.userPhone.textField.text = valueUserData?["homePhone"] as? String
                         self.userBirthDate.textField.text = valueUserData?["birthDate"] as? String
-                        self.userBirthPlace.textField.text = valueUserData?["birthPlace"] as? String
-                        self.userIdNumber.textField.text = valueUserData?["idNumber"] as? String
-                        self.userIINnumber.textField.text = valueUserData?["iinNumber"] as? String
-                        self.userDateOfIssue.textField.text = valueUserData?["dateOfIssue"] as? String
-                        self.userDateOfValidaty.textField.text = valueUserData?["validatyDate"] as? String
-                        self.userIssuingAuthority.textField.text = valueUserData?["issuingAuthority"] as? String
                         
                         self.button.setTitle("Обновить", for: .normal)
                     }) {(error) in
@@ -393,9 +240,6 @@ class MenuMyDataViewController: UIViewController {
                 }
              completionHandler(true, userData!)
             } else {
-                self.cancelButton.isEnabled = false
-                self.cancelButton.isHidden = true
-                self.button.frame = CGRect(x: 0, y: Screen.height - 44, width: Screen.width, height: 44)
                 SVProgressHUD.dismiss()
                 completionHandler(true, userData!)
             }
@@ -409,21 +253,29 @@ class MenuMyDataViewController: UIViewController {
 extension MenuMyDataViewController: ValidationDelegate {
     func validationSuccessful() {
         
-        guard let name = userName.textField.text, let surname = userSurname.textField.text, let patronymic = userPatronymic.textField.text, let mobile = userMobilePhone.textField.text, let phone = userPhone.textField.text, let birthDate = userBirthDate.textField.text, let birthPlace = userBirthPlace.textField.text, let id = userIdNumber.textField.text, let iin = userIINnumber.textField.text, let dateIssue = userDateOfIssue.textField.text, let dateValidaty = userDateOfValidaty.textField.text, let authority = userIssuingAuthority.textField.text else { return }
+        guard let name = userName.textField.text, let surname = userSurname.textField.text, let patronymic = userPatronymic.textField.text else { return }
+        
+        if userMobilePhone.textField.text != nil, userMobilePhone.textField.text != "" {
+            mobile = userMobilePhone.textField.text!
+        }
+        
+        if userBirthDate.textField.text != nil, userBirthDate.textField.text != "" {
+            birthDate = userBirthDate.textField.text!
+        }
         
         var post: [String: Any] = [
             "birthDate" : birthDate,
-            "birthPlace" : birthPlace,
-            "dateOfIssue" : dateIssue,
-            "homePhone" : phone,
-            "idNumber" : id,
-            "iinNumber" : iin,
-            "issuingAuthority" : authority,
+            "birthPlace" : "Алматы",
+            "dateOfIssue" : "12/12/1234",
+            "homePhone" : "8888888888",
+            "idNumber" : "977666666",
+            "iinNumber" : "7898998999",
+            "issuingAuthority" : "MID",
             "mobilePhone" : mobile,
             "name" : name,
             "patronymic" : patronymic,
             "surname" : surname,
-            "validatyDate" : dateValidaty
+            "validatyDate" : "9877666677"
         ]
         
         guard let uid = Auth.auth().currentUser?.uid else { return }
@@ -431,8 +283,8 @@ extension MenuMyDataViewController: ValidationDelegate {
         ref.child("userData").child("\(uid)").setValue(post)
         ref.child("users").child("\(uid)").child("userData").setValue(true)
         
-        
-        
+        succesBanner.duration = 1
+        succesBanner.show()
         self.dismiss(animated: true, completion: nil)
         
     }

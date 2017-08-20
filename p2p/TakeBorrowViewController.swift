@@ -216,7 +216,7 @@ class TakeBorrowViewController: UIViewController {
             let investorId = self.filteredInvestorsList[sender.tag].investorId
             let investorToken = self.filteredInvestorsList[sender.tag].token
             
-            Notification.sendNotification(investorToken: investorToken!, title: .request, message: .request, id: investorId!, recordType: .requset)
+            Notification.sendNotification(message: .request, id: investorId!, recordType: .requset)
         }
         alertView.showWarning("Отправить запрос?", subTitle: "\((filteredInvestorsList[sender.tag].name)!) на \((self.a.container.field.textField.text)!) Тенге,  \n на \((filteredInvestorsList[sender.tag].time)!) месяцев под \((filteredInvestorsList[sender.tag].rate)!) % годовых", closeButtonTitle: "Отменить", colorStyle: 0x4BA2D3, colorTextButton: 0xE3F2FC)
     }
@@ -285,10 +285,7 @@ class TakeBorrowViewController: UIViewController {
             guard let moneyAmount = a.container.field.textField.text, a.container.field.textField.text != "", let time = a.container.field2.textField.text, a.container.field2.textField.text != "" else {
                 return
             }
-            button.isHidden = true
-            requestButton.isHidden = false
-            investorSearchButton.isHidden = false
-            label.isHidden = false
+            
             
             let ref = Database.database().reference()
             let auth = Auth.auth().currentUser?.uid
@@ -298,25 +295,31 @@ class TakeBorrowViewController: UIViewController {
                 SVProgressHUD.dismiss()
                 if !isData {
                     self.present(MenuMyDataViewController(), animated: true, completion: nil)
+                } else {
+                    
+                    self.button.isHidden = true
+                    self.requestButton.isHidden = false
+                    self.investorSearchButton.isHidden = false
+                    self.label.isHidden = false
+                    
+                    self.investorsList.removeAll()
+                    SVProgressHUD.show()
+                    User.fetchInvestor(request: "investorRequests") { (amount, date, id, investorId, rate, time) in
+                        guard let investorId = investorId else {return}
+                        User.fetchUserName(uid: investorId, completion: { (name, surname, patronymic) in
+                            User.fetchUserEmail(uid: investorId, compleation: { (email, token) in
+                                self.investorsList.insert(Investors(amount: amount, date: date, id: id, investorId: investorId, rate: rate, time: time, name: name, surname: surname, patronymic: patronymic, nameForSearch: "\(name) \(surname) \(patronymic)", token: token), at: 0)
+                                SVProgressHUD.dismiss()
+                                self.filteredInvestorsList = self.investorsList
+                                self.tableView.reloadData()
+                            })
+                        })
+                    }
                 }
             }) {(error) in
                 SVProgressHUD.dismiss()
                 print(error.localizedDescription)
             }
-            investorsList.removeAll()
-            SVProgressHUD.show()
-            User.fetchInvestor(request: "investorRequests") { (amount, date, id, investorId, rate, time) in
-                guard let investorId = investorId else {return}
-                User.fetchUserName(uid: investorId, completion: { (name, surname, patronymic) in
-                    User.fetchUserEmail(uid: investorId, compleation: { (email, token) in
-                        self.investorsList.insert(Investors(amount: amount, date: date, id: id, investorId: investorId, rate: rate, time: time, name: name, surname: surname, patronymic: patronymic, nameForSearch: "\(name) \(surname) \(patronymic)", token: token), at: 0)
-                        SVProgressHUD.dismiss()
-                        self.filteredInvestorsList = self.investorsList
-                        self.tableView.reloadData()
-                    })
-                })
-            }
-            
     }
     
     func validationFailed(_ errors:[(Validatable ,ValidationError)]) {

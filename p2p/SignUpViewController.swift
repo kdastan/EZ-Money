@@ -71,7 +71,6 @@ class SignUpViewController: RegistrationViewController {
     
     //MARK: Views configuarations
     func setupView() {
-        edgesForExtendedLayout = []
         view.backgroundColor = .white
         [imageView, labelName, labelProjectName, textField, textFieldPassword, button, cBox, label].forEach{
             view.addSubview($0)
