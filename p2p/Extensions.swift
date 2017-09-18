@@ -11,18 +11,6 @@ import SwiftValidator
 
 
 
-extension MenuViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arr.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "menuReusableCell", for: indexPath) as! MenuSideTableViewCell
-        cell.label.text = arr[indexPath.row]
-        cell.iconImage.image = UIImage(named: "\(imgArr[indexPath.row])")
-        return cell
-    }
-}
 
 
 extension MenuViewController: UITableViewDelegate {
