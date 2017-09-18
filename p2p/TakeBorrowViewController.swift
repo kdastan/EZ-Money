@@ -216,7 +216,7 @@ class TakeBorrowViewController: UIViewController {
             let investorId = self.filteredInvestorsList[sender.tag].investorId
             let investorToken = self.filteredInvestorsList[sender.tag].token
             
-            Notification.sendNotification(message: .request, id: investorId!, recordType: .requset)
+            Notification.sendNotification(message: .request, id: investorId!, recordType: .requset, investorToken: investorToken!)
         }
         alertView.showWarning("Отправить запрос?", subTitle: "\((filteredInvestorsList[sender.tag].name)!) на \((self.a.container.field.textField.text)!) Тенге,  \n на \((filteredInvestorsList[sender.tag].time)!) месяцев под \((filteredInvestorsList[sender.tag].rate)!) % годовых", closeButtonTitle: "Отменить", colorStyle: 0x4BA2D3, colorTextButton: 0xE3F2FC)
     }

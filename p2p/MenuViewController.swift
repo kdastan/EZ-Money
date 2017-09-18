@@ -29,7 +29,6 @@ class MenuViewController: UIViewController {
         tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: Int(Screen.width), height: 58)
         tableView.dataSource = self
         tableView.delegate = self
-        
         return tableView
     }()
     

@@ -24,6 +24,7 @@ class User {
     var userNameAndSurname = ""
 
     static func fetchUserName(uid: String, completion: @escaping (String?, String?, String?) -> Void) {
+        
         let refUsers = Database.database().reference().child("userData")
         
         refUsers.child("\(uid)").observeSingleEvent(of: .value, with: { snapshot in

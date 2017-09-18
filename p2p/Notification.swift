@@ -33,7 +33,11 @@ class Notification {
         case issue = "оформил запрос"
     }
     
-    static func sendNotification(message: notificationMessage, id: String, recordType: notificationRecord) {
+    static func sendNotification(message: notificationMessage, id: String, recordType: notificationRecord, investorToken: String) {
+        
+        //
+        
+        //
     
         let reference = Database.database().reference()
         let notifRecord = reference.child("notifications").childByAutoId()

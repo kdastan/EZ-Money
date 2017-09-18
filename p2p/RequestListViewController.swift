@@ -135,7 +135,7 @@ class RequestListViewController: UIViewController {
         User.fetchInvestorExisting(uid: "asd") { (result) in
         guard let _ = result else {
             SVProgressHUD.dismiss()
-            self.banner.show()
+            //self.banner.show()
             return
         }
             
@@ -143,7 +143,7 @@ class RequestListViewController: UIViewController {
             
             if borrowerId == nil {
                 SVProgressHUD.dismiss()
-                self.banner.show()
+                //self.banner.show()
                 return
             }
             
@@ -171,14 +171,14 @@ class RequestListViewController: UIViewController {
         User.fetchAllRequestExisting(uid: "asd") { (result) in
             guard let _ = result else {
                 SVProgressHUD.dismiss()
-                self.banner.show()
+                //self.banner.show()
                 return
             }
             //Of course hud won't stop cause your searching in investorsRequest
         User.fetchRequestID(fetchChild: "investorRequests") { (id, rate, time) in
             if id == nil {
                 SVProgressHUD.dismiss()
-                self.banner.show()
+                //self.banner.show()
                 return
             }
             
@@ -186,7 +186,7 @@ class RequestListViewController: UIViewController {
                 if result != true {
                     print("No result")
                     SVProgressHUD.dismiss()
-                    self.banner.show()
+                    //self.banner.show()
                     return
                 }
 
@@ -217,7 +217,7 @@ class RequestListViewController: UIViewController {
         
         guard let token = investorRequsest[sender.tag].borrowerToken else {return}
         guard let borrowerId = investorRequsest[sender.tag].borrowerId else {return}
-        Notification.sendNotification(message: .accept, id: borrowerId, recordType: .accept)
+        Notification.sendNotification(message: .accept, id: borrowerId, recordType: .accept, investorToken: token)
         
         self.investorRequsest.removeAll()
         self.fetchForInvestorList()
@@ -231,7 +231,7 @@ class RequestListViewController: UIViewController {
         
         guard let token = investorRequsest[sender.tag].borrowerToken else {return}
         guard let borrowerId = investorRequsest[sender.tag].borrowerId else {return}
-        Notification.sendNotification(message: .reject, id: borrowerId, recordType: .reject)
+        Notification.sendNotification(message: .reject, id: borrowerId, recordType: .reject, investorToken: token)
         
         self.investorRequsest.removeAll()
         self.fetchForInvestorList()
@@ -262,7 +262,7 @@ class RequestListViewController: UIViewController {
                 print(borrowerToken!)
                 SVProgressHUD.dismiss()
                 
-                Notification.sendNotification(message: .issue, id: borrowerId!, recordType: .issue)
+                Notification.sendNotification(message: .issue, id: borrowerId!, recordType: .issue, investorToken: borrowerToken!)
             })
         }
         
