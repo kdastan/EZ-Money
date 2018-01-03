@@ -20,4 +20,4 @@ As a code style was choosen 'raywenderlich.com Swift Style Guide'.
 <img src="/Screenshots/mainViewController.png?raw=true" width="30%"> <img src="/Screenshots/investmentRequest.png?raw=true" width="30%">
 
 ## Credentials
-© [Kumar Dastan]()
+© [Kumar Dastan](https://github.com/kdastan)
